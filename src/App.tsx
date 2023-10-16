@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ThemeProvider } from 'styled-components';
+import { defaultTheme } from "./styles/theme";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { Route, Routes, Navigate } from "react-router-dom";
+import GlobalStyle from "./styles/global";
+import Header from "./components/header";
+import CreateRoom from "./authorization/createRoom";
+import Login from "./authorization/login";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+    return (
+        <ThemeProvider theme={defaultTheme} >
+            <GlobalStyle />
+            <QueryClientProvider client={new QueryClient()}>
+                <Header />
+                <Routes>
+                    <Route path="/" element={<Navigate to="/register" />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<CreateRoom />} />
+                </Routes>
+            </QueryClientProvider>
+        </ThemeProvider>
+    );
 }
 
 export default App;
