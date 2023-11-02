@@ -111,19 +111,19 @@ const Home = () => {
           <RoomElement
             key={room.id}
             name={room.name}
-            onClick={() => navigate("room/" + room.id)}
+            onClick={() => navigate(room.id)}
             onClickClose={() => {
               setList(list.filter((r) => r.name !== room.name));
-              if (location.pathname.includes(room.id)) navigate("room/add");
+              if (location.pathname.includes(room.id)) navigate("add");
             }}
           />
         ))}
-        <AddRoomElement onClick={() => navigate("room/add")} />
+        <AddRoomElement onClick={() => navigate("add")} />
       </Bar>
       <Content>
         <Routes key={location.pathname} location={location}>
-          <Route path="room/add" element={<AddRoom />} />
-          <Route path="room/:id" element={<div>essa</div>} />
+          <Route path="add" element={<AddRoom />} />
+          <Route path=":id" element={<div>essa</div>} />
         </Routes>
       </Content>
     </Container>
