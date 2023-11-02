@@ -1,7 +1,7 @@
 import { styled, ThemeProvider } from "styled-components";
 import { defaultTheme } from "./styles/theme";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import GlobalStyle from "./styles/global";
 import Header from "./components/header";
 import Home from "./home";
@@ -17,13 +17,15 @@ const App = () => {
           <Content>
             <Routes>
               <Route
-                path="/*"
+                path="/room/*"
                 element={
                   <RoomListProvider>
                     <Home />
                   </RoomListProvider>
                 }
               />
+              <Route path="" element={<Navigate to="room/add" />} />
+              <Route path="*" element={<h1>404</h1>} />
             </Routes>
           </Content>
         </Container>

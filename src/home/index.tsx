@@ -109,6 +109,7 @@ const Home = () => {
       <Bar>
         {list.map((room) => (
           <RoomElement
+            key={room.id}
             name={room.name}
             onClick={() => navigate("room/" + room.id)}
             onClickClose={() => {
