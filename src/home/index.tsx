@@ -37,9 +37,9 @@ const CloseButton = styled.div`
   height: 10px;
   width: 10px;
   border-radius: 5px;
-  background-color: black;
+  background-color: ${(props) => props.theme.colors.background};
   font-size: 10px;
-  color: white;
+  color: ${(props) => props.theme.colors.foreground};
   display: flex;
   justify-content: center;
   text-align: top;
@@ -64,6 +64,7 @@ const RoomInner = styled.div`
   font-size: 40px;
   border-radius: 5px;
   background-color: ${(props) => props.theme.colors.foreground2};
+  color: ${(props) => props.theme.colors.dark};
   transition: 0.2s all;
   &:hover {
     background-color: ${(props) => props.theme.colors.darkMiddle};
@@ -99,6 +100,12 @@ const AddRoomElementContainer = styled.div`
   }
 `;
 
+const Container = styled.div`
+  display: grid;
+  grid-template-columns: 60px auto;
+  height: 100%;
+`;
+
 const Home = () => {
   const { list, setList } = useList();
   const location = useLocation();
@@ -129,11 +136,5 @@ const Home = () => {
     </Container>
   );
 };
-
-const Container = styled.div`
-  display: grid;
-  grid-template-columns: 60px auto;
-  height: 100%;
-`;
 
 export default Home;
