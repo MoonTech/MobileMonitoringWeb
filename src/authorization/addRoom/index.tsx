@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useList } from "../../contexts/roomListContext";
 import {
   AuthorizationForm,
   Button,
@@ -6,35 +7,31 @@ import {
   ErrorMessage,
   Header,
   Input,
-  StyledLink,
 } from "../formComponents";
 
-const CreateRoom: React.FC = () => {
+const AddRoom: React.FC = () => {
   const [roomName, setRoomName] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const { list, setList } = useList();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!roomName || !password || !confirmPassword) {
+    if (!roomName || !password) {
       setError("Please fill in all fields.");
-    } else if (password !== confirmPassword) {
-      setError("Passwords do not match.");
     } else {
       setError("");
       setRoomName("");
       setPassword("");
-      setConfirmPassword("");
-      // Perform room creation logic here (e.g., API call to create room)
+      setList([...list, { name: roomName, id: "id" + Math.random() }]);
     }
   };
 
   return (
     <Container>
       <AuthorizationForm onSubmit={handleSubmit}>
-        <Header>Create Room</Header>
+        <Header>Add Observed Room</Header>
         {error && <ErrorMessage>{error}</ErrorMessage>}
         <Input
           type="text"
@@ -48,17 +45,10 @@ const CreateRoom: React.FC = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Input
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
-        <Button type="submit">Create Room</Button>
-        <StyledLink to="/login">Go to Login</StyledLink>
+        <Button type="submit">Submit</Button>
       </AuthorizationForm>
     </Container>
   );
 };
 
-export default CreateRoom;
+export default AddRoom;
