@@ -2,12 +2,7 @@ import { styled } from "styled-components";
 import AddRoom from "../authorization/addRoom";
 import { useList } from "../contexts/roomListContext";
 import AddIcon from "@mui/icons-material/Add";
-import {
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 
 const Bar = styled.div`
   background-color: ${(props) => props.theme.colors.background};
