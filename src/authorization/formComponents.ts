@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: ${(props) => props.theme.colors.foreground};
+  height: 100%;
 `;
 
 export const AuthorizationForm = styled.form`
@@ -58,6 +57,6 @@ export const StyledLink = styled(Link)`
   transition: color 0.1s;
 
   &:hover {
-    color: #fff
+    color: #fff;
   }
 `;

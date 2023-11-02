@@ -6,8 +6,6 @@ const Container = styled.div`
   padding: 10px 30px;
   background-color: ${(props) => props.theme.colors.background2};
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  position: fixed;
-  width: 100%;
 `;
 
 const Logo = styled.h1`
@@ -21,11 +19,11 @@ const Logo = styled.h1`
 `;
 
 const Header: React.FC = () => {
-    return (
-        <Container>
-            <Logo>WatchTower</Logo>
-        </Container>
-    );
+  return (
+    <Container>
+      <Logo>WatchTower</Logo>
+    </Container>
+  );
 };
 
 export default Header;
