@@ -1,6 +1,6 @@
 import { useMutation } from "react-query";
 import { useCache, UserData } from "../contexts/roomListContext";
-import { SERVER_URL } from "../serverUrl";
+// import { SERVER_URL } from "../serverUrl";
 import { LoginRequest } from "../types/loginRequest";
 
 export const useLogin = () => {
