@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSignUp } from "../../mutations/signUp";
 import {
   AuthorizationForm,
   Button,
@@ -7,40 +9,46 @@ import {
   Header,
   Input,
   StyledLink,
-} from "../formComponents";
+} from "../components/formComponents";
 
-const CreateRoom: React.FC = () => {
-  const [roomName, setRoomName] = useState("");
+const SignUp: React.FC = () => {
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const mutateAsync = useSignUp();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!roomName || !password || !confirmPassword) {
+    if (!name || !password || !confirmPassword) {
       setError("Please fill in all fields.");
     } else if (password !== confirmPassword) {
       setError("Passwords do not match.");
     } else {
-      setError("");
-      setRoomName("");
+      setName("");
       setPassword("");
       setConfirmPassword("");
-      // Perform room creation logic here (e.g., API call to create room)
+      const result = await mutateAsync({ password: password, login: name });
+      if (result) {
+        navigate("../room/add");
+      } else {
+        setError("Sign up failed, please try again");
+      }
     }
   };
 
   return (
     <Container>
       <AuthorizationForm onSubmit={handleSubmit}>
-        <Header>Create Room</Header>
+        <Header>Sign up</Header>
         {error && <ErrorMessage>{error}</ErrorMessage>}
         <Input
           type="text"
-          placeholder="Room name"
-          value={roomName}
-          onChange={(e) => setRoomName(e.target.value)}
+          placeholder="Username"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
         <Input
           type="password"
@@ -54,11 +62,11 @@ const CreateRoom: React.FC = () => {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        <Button type="submit">Create Room</Button>
+        <Button type="submit">Submit</Button>
         <StyledLink to="/login">Go to Login</StyledLink>
       </AuthorizationForm>
     </Container>
   );
 };
 
-export default CreateRoom;
+export default SignUp;

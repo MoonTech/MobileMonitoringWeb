@@ -5,30 +5,29 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import GlobalStyle from "./styles/global";
 import Header from "./components/header";
 import Home from "./home";
-import { RoomListProvider } from "./contexts/roomListContext";
+import { DataCacheProvider } from "./contexts/roomListContext";
+import SignUp from "./forms/signUp";
+import Login from "./forms/login";
 
 const App = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
       <QueryClientProvider client={new QueryClient()}>
-        <Container>
-          <Header />
-          <Content>
-            <Routes>
-              <Route
-                path="/room/*"
-                element={
-                  <RoomListProvider>
-                    <Home />
-                  </RoomListProvider>
-                }
-              />
-              <Route path="" element={<Navigate to="room/add" />} />
-              <Route path="*" element={<h1>404</h1>} />
-            </Routes>
-          </Content>
-        </Container>
+        <DataCacheProvider>
+          <Container>
+            <Header />
+            <Content>
+              <Routes>
+                <Route path="/room/*" element={<Home />} />
+                <Route path="" element={<Navigate to="room/add" />} />
+                <Route path="signup" element={<SignUp />} />
+                <Route path="login" element={<Login />} />
+                <Route path="*" element={<h1>404</h1>} />
+              </Routes>
+            </Content>
+          </Container>
+        </DataCacheProvider>
       </QueryClientProvider>
     </ThemeProvider>
   );

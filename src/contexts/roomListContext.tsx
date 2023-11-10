@@ -1,16 +1,23 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Room } from "../types/room";
 
-interface RoomListContextProps {
+export type UserData = {
+  name: string;
+  token: string;
+};
+
+interface DataCacheContextProps {
   list: Room[];
   setList: React.Dispatch<React.SetStateAction<Room[]>>;
+  userData: UserData | null;
+  setUserData: React.Dispatch<React.SetStateAction<UserData | null>>;
 }
 
-const RoomListContext = createContext<RoomListContextProps | undefined>(
+const DataCacheContext = createContext<DataCacheContextProps | undefined>(
   undefined,
 );
 
-export const RoomListProvider: React.FC<{ children: React.ReactNode }> = ({
+export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [list, setList] = useState<Room[]>(() => {
@@ -18,22 +25,28 @@ export const RoomListProvider: React.FC<{ children: React.ReactNode }> = ({
     return storedList ? JSON.parse(storedList) : [];
   });
 
+  const [userData, setUserData] = useState<UserData | null>(() => {
+    const storedUser = localStorage.getItem("userData");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+
   useEffect(() => {
     localStorage.setItem("list", JSON.stringify(list));
-  }, [list]);
+    localStorage.setItem("userData", JSON.stringify(userData));
+  }, [list, userData]);
 
   return (
-    <RoomListContext.Provider value={{ list, setList }}>
+    <DataCacheContext.Provider value={{ list, setList, userData, setUserData }}>
       {children}
-    </RoomListContext.Provider>
+    </DataCacheContext.Provider>
   );
 };
 
-export const useList = () => {
-  const context = useContext(RoomListContext);
+export const useCache = () => {
+  const context = useContext(DataCacheContext);
 
   if (context === undefined) {
-    throw new Error("useList must be used within a ListProvider");
+    throw new Error("useCache must be used within a DataCacheProvider");
   }
 
   return context;

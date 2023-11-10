@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
-import AddRoom from "../authorization/addRoom";
-import { useList } from "../contexts/roomListContext";
+import AddRoom from "../forms/addRoom";
+import { useCache } from "../contexts/roomListContext";
 import AddIcon from "@mui/icons-material/Add";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 
@@ -107,7 +107,7 @@ const Container = styled.div`
 `;
 
 const Home = () => {
-  const { list, setList } = useList();
+  const { list, setList } = useCache();
   const location = useLocation();
   const navigate = useNavigate();
 
