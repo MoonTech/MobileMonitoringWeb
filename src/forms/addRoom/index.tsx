@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useList } from "../../contexts/roomListContext";
+import { useCache } from "../../contexts/roomListContext";
 import {
   AuthorizationForm,
   Button,
@@ -7,13 +7,13 @@ import {
   ErrorMessage,
   Header,
   Input,
-} from "../formComponents";
+} from "../components/formComponents";
 
 const AddRoom: React.FC = () => {
   const [roomName, setRoomName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { list, setList } = useList();
+  const { list, setList } = useCache();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
