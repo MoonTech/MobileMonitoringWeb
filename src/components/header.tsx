@@ -40,7 +40,7 @@ const Header: React.FC = () => {
   const mutateAsync = useLogout();
   return (
     <Container>
-      <Logo>WatchTower</Logo>
+      <Logo>MobileMonitoring</Logo>
       {userData === null ? (
         <Link to="/login">
           <AuthStateButton>
