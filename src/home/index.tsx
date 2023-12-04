@@ -8,11 +8,12 @@ import MultiCamera from "../roomViews/multiCamera";
 import AcceptCameras from "../roomViews/acceptCameras";
 
 const Bar = styled.div`
-  background-color: ${(props) => props.theme.colors.background};
+  background-color: ${(props) => props.theme.colors.background2Light};
   height: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 `;
 
 const Content = styled.div``;
@@ -26,32 +27,31 @@ type RoomElementProps = {
 const RoomElement = (props: RoomElementProps) => {
   return (
     <RoomOuter>
-      <CloseButton onClick={props.onClickClose}>x</CloseButton>
       <RoomInner onClick={props.onClick}>{props.name.charAt(0)}</RoomInner>
     </RoomOuter>
   );
 };
 
-const CloseButton = styled.div`
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  cursor: pointer;
-  height: 10px;
-  width: 10px;
-  border-radius: 5px;
-  background-color: ${(props) => props.theme.colors.background};
-  font-size: 10px;
-  color: ${(props) => props.theme.colors.foreground};
-  display: flex;
-  justify-content: center;
-  text-align: top;
-  transition: all 0.5s;
-  &:hover {
-    transform: scale(1.3, 1.3) rotate(1turn);
-    cursor: pointer;
-  }
-`;
+// const CloseButton = styled.div`
+//   position: absolute;
+//   top: 5px;
+//   right: 5px;
+//   cursor: pointer;
+//   height: 10px;
+//   width: 10px;
+//   border-radius: 5px;
+//   background-color: ${(props) => props.theme.colors.background2};
+//   font-size: 10px;
+//   color: ${(props) => props.theme.colors.foreground};
+//   display: flex;
+//   justify-content: center;
+//   text-align: top;
+//   transition: all 0.5s;
+//   &:hover {
+//     background-color: ${(props) => props.theme.colors.black};
+//     cursor: pointer;
+//   }
+// `;
 
 const RoomOuter = styled.div`
   padding: 5px;
@@ -66,12 +66,12 @@ const RoomInner = styled.div`
   height: 50px;
   font-size: 40px;
   border-radius: 5px;
-  background-color: ${(props) => props.theme.colors.foreground2};
+  background-color: ${(props) => props.theme.colors.background};
   color: ${(props) => props.theme.colors.dark};
-  transition: 0.2s all;
+  transition: all 0.3s;
   &:hover {
-    background-color: ${(props) => props.theme.colors.darkMiddle};
     cursor: pointer;
+    background-color: ${(props) => props.theme.colors.backgroundDark};
   }
 `;
 
@@ -95,10 +95,10 @@ const AddRoomElementContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => props.theme.colors.background};
-  transition: 0.2s all;
+  background-color: ${(props) => props.theme.colors.background2Light};
+  transition: 0.3s all;
   &:hover {
-    background-color: ${(props) => props.theme.colors.background2};
+    background-color: ${(props) => props.theme.colors.backgroundDark};
     cursor: pointer;
   }
 `;

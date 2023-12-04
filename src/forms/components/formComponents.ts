@@ -14,35 +14,35 @@ export const AuthorizationForm = styled.form`
   width: 300px;
   padding: 20px;
   border-radius: 10px;
+  border: 2px solid ${(props) => props.theme.colors.background2};
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  background-color: ${(props) => props.theme.colors.background};
+  background-color: ${(props) => props.theme.colors.background2Light};
 `;
 
 export const Header = styled.h2`
-  color: ${(props) => props.theme.colors.light};
+  color: ${(props) => props.theme.colors.background2};
 `;
 
 export const Input = styled.input`
   padding: 10px;
   margin-bottom: 10px;
-  border: 1px solid ${(props) => props.theme.colors.foreground2};
   border-radius: 5px;
   font-size: 16px;
+  background-color: ${(props) => props.theme.colors.background2Light};
 `;
 
 export const Button = styled.button`
   padding: 10px;
-  background-color: ${(props) => props.theme.colors.middle};
-  color: ${(props) => props.theme.colors.light};
+  background-color: ${(props) => props.theme.colors.background2};
+  color: ${(props) => props.theme.colors.white};
   font-weight: bolder;
   border: none;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.1s;
-
+  transition: all 0.3s;
   &:hover {
-    background-color: ${(props) => props.theme.colors.darkMiddle};
+    background-color: ${(props) => props.theme.colors.background2Dark};
   }
 `;
 export const ErrorMessage = styled.div`
@@ -51,12 +51,12 @@ export const ErrorMessage = styled.div`
 `;
 export const StyledLink = styled(Link)`
   text-decoration: none;
-  color: ${(props) => props.theme.colors.foreground};
+  color: ${(props) => props.theme.colors.background2};
   font-size: 14px;
   margin-top: 10px;
   transition: color 0.1s;
 
   &:hover {
-    color: #fff;
+  color: ${(props) => props.theme.colors.background2Dark};
   }
 `;

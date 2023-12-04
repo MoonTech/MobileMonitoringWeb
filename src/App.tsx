@@ -42,7 +42,7 @@ const Content = styled.div`
   align-items: stretch;
   flex-direction: column;
   height: 100%;
-  background-color: ${(props) => props.theme.colors.foreground};
+  background-color: ${(props) => props.theme.colors.white};
 `;
 
 export default App;
