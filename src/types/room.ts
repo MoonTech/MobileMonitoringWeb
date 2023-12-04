@@ -1,4 +1,10 @@
 export type Room = {
-  id: string;
   name: string;
+  cameras: string[];
+  owner: RoomOwner;
 };
+
+export type RoomOwner = {
+  login: string;
+  rooms: string[];
+}

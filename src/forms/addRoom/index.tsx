@@ -24,7 +24,7 @@ const AddRoom: React.FC = () => {
       setError("");
       setRoomName("");
       setPassword("");
-      setList([...list, { name: roomName, id: "id" + Math.random() }]);
+      setList([...list, { name: roomName, cameras: [], owner: { login: "owner", rooms: [] } }]);
     }
   };
 
