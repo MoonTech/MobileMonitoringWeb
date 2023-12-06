@@ -17,7 +17,17 @@ export const useCameraToAccept = (roomName: string) => {
   //     }).then((res) => res.json())
   // );
   // const response = query.isLoading ? null : query.data;
-  console.log(roomName)
-  const response = [{ id: "iasdfsad", acceptationState: false, room: { cameras: [], name: "dasf", owner: { rooms: [], login: "dfasfas" } } }] as Camera[];
+  console.log(roomName);
+  const response = [
+    {
+      id: "iasdfsad",
+      acceptationState: false,
+      room: {
+        cameras: [],
+        name: "dasf",
+        owner: { rooms: [], login: "dfasfas" },
+      },
+    },
+  ] as Camera[];
   return { response };
-}
+};

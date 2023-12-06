@@ -12,6 +12,7 @@ const Container = styled.div`
   background-color: ${(props) => props.theme.colors.background2};
   justify-content: space-between;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  height: 80px;
 `;
 
 const Logo = styled.h1`

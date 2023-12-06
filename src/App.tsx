@@ -41,8 +41,9 @@ const Container = styled.div`
 const Content = styled.div`
   align-items: stretch;
   flex-direction: column;
-  height: 100%;
+  display: flex;
   background-color: ${(props) => props.theme.colors.white};
+  height: calc(100vh - 80px);
 `;
 
 export default App;

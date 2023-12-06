@@ -6,7 +6,9 @@ export const useAcceptCamera = () => {
   // const { userData } = useCache();
 
   const { mutateAsync } = useMutation(
-    async (cameraId: string) => { console.log(cameraId) },
+    async (cameraId: string) => {
+      console.log(cameraId);
+    },
     // fetch(SERVER_URL + "camera/" + cameraId, {
     //   method: "PUT",
     //   headers: {
@@ -21,7 +23,7 @@ export const useAcceptCamera = () => {
       onError: (error) => {
         console.log(error);
       },
-    }
+    },
   );
 
   return mutateAsync;

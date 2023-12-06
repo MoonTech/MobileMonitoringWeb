@@ -2,6 +2,7 @@ export const defaultTheme = {
   colors: {
     background: "#BB86FC",
     backgroundDark: "#9039fa",
+    backgroundDarker: "#7b13f9",
     background2: "#6200EE",
     background2Light: "#f5eeff",
     background2Dark: "#4a00b3",
@@ -13,7 +14,7 @@ export const defaultTheme = {
     foreground: "#F2FBE0",
     light: "#EEE",
     red: "#ff6961",
-    white: "#FFF"
+    white: "#FFF",
   },
   fonts: ["sans-serif", "Roboto"],
   fontSizes: {
