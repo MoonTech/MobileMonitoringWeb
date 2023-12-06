@@ -20,7 +20,7 @@ export const lightTheme = {
     backgroundLight: "#E7E4FE",
     backgroundFont: "#2b2927"
   },
-  fonts: ["sans-serif", "Roboto"],
+  fonts: ["sans-serif", "Montserrat"],
   fontSizes: {
     small: "1em",
     medium: "2em",

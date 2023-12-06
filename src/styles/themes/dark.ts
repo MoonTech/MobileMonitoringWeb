@@ -20,7 +20,7 @@ export const darkTheme = {
     backgroundLight: "#625a67",
     backgroundFont: "#EEE"
   },
-  fonts: ["sans-serif", "Roboto"],
+  fonts: ["sans-serif", "Montserrat"],
   fontSizes: {
     small: "1em",
     medium: "2em",
