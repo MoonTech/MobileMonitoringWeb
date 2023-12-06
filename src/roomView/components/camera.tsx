@@ -1,14 +1,5 @@
 import ReactPlayer from "react-player";
-import { styled } from "styled-components";
-
-const CameraContainer = styled.div`
-  height: 250px;
-  margin: 5px;
-  background-color: #333;
-  margin-bottom: 10px;
-  border: 2px solid black;
-  border-radius: 10px;
-`;
+import { CameraContainer } from "./cameraContainer";
 
 export const Camera = () => {
   return (
