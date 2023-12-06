@@ -16,7 +16,7 @@ export const AuthorizationForm = styled.form`
   border-radius: 10px;
   border: 2px solid ${(props) => props.theme.colors.background2};
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  background-color: ${(props) => props.theme.colors.background2Light};
+  background-color: ${(props) => props.theme.colors.lightColored};
 `;
 
 export const Header = styled.h2`
@@ -28,13 +28,13 @@ export const Input = styled.input`
   margin-bottom: 10px;
   border-radius: 5px;
   font-size: 16px;
-  background-color: ${(props) => props.theme.colors.background2Light};
+  background-color: ${(props) => props.theme.colors.lightColoredDarker};
 `;
 
 export const Button = styled.button`
   padding: 10px;
   background-color: ${(props) => props.theme.colors.background2};
-  color: ${(props) => props.theme.colors.white};
+  color: ${(props) => props.theme.colors.light};
   font-weight: bolder;
   border: none;
   border-radius: 5px;
@@ -42,7 +42,7 @@ export const Button = styled.button`
   cursor: pointer;
   transition: all 0.3s;
   &:hover {
-    background-color: ${(props) => props.theme.colors.background2Dark};
+    background-color: ${(props) => props.theme.colors.background2Hover};
   }
 `;
 export const ErrorMessage = styled.div`
@@ -58,6 +58,6 @@ export const StyledLink = styled(Link)`
   transition: color 0.1s;
 
   &:hover {
-    color: ${(props) => props.theme.colors.background2Dark};
+    color: ${(props) => props.theme.colors.background2Hover};
   }
 `;

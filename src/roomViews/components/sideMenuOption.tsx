@@ -8,7 +8,7 @@ const StyledLink = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${(props) => props.theme.colors.white};
+  color: ${(props) => props.theme.colors.light};
 `;
 
 type SideMenuOptionProps = {
@@ -27,16 +27,16 @@ const SideMenuOptionContainer = styled.div<{ isClickable?: boolean }>`
   transition: 0.2s all;
   &:hover {
     ${(props) =>
-      props.isClickable
-        ? `background-color: ${props.theme.colors.background};\n
+    props.isClickable
+      ? `background-color: ${props.theme.colors.background};\n
     cursor: pointer;`
-        : ""}
+      : ""}
   }
   font-size: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${(props) => props.theme.colors.white};
+  color: ${(props) => props.theme.colors.light};
 `;
 
 export const SideMenuOption = ({

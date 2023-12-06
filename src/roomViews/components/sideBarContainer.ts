@@ -7,4 +7,5 @@ export const SideBarContainer = styled.div`
   background-color: ${(props) => props.theme.colors.background2Light};
   display: flex;
   flex-direction: column;
+  transition: 0.2s all;
 `;

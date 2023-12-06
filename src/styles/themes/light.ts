@@ -1,11 +1,12 @@
-export const defaultTheme = {
+export const lightTheme = {
   colors: {
-    background: "#BB86FC",
-    backgroundDark: "#9039fa",
-    backgroundDarker: "#7b13f9",
-    background2: "#6200EE",
-    background2Light: "#f5eeff",
-    background2Dark: "#4a00b3",
+    background: "#9B50E0",
+    backgroundDark: "#733EB3",
+    backgroundDarker: "#5C328F",
+    background2: "#4C3EB3",
+    background2Light: "#E7E4FE",
+    background2Dark: "#2B2466",
+    background2Hover: "#2B2466",
     dark: "#2b2927",
     black: "#000",
     middle: "#ACC18A",
@@ -13,6 +14,8 @@ export const defaultTheme = {
     foreground2: "#DAFEB7",
     foreground: "#F2FBE0",
     light: "#EEE",
+    lightColored: "#E7E4FE",
+    lightColoredDarker: "#CECAFE",
     red: "#ff6961",
     white: "#FFF",
   },

@@ -1,5 +1,5 @@
 import { useMutation } from "react-query";
-import { useCache } from "../contexts/roomListContext";
+import { useCache } from "../contexts/dataCacheContext";
 import { SERVER_URL } from "../serverUrl";
 
 export const useLogout = () => {

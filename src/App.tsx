@@ -1,17 +1,20 @@
 import { styled, ThemeProvider } from "styled-components";
-import { defaultTheme } from "./styles/theme";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Navigate, Route, Routes } from "react-router-dom";
 import GlobalStyle from "./styles/global";
 import Header from "./components/header";
 import Home from "./home";
-import { DataCacheProvider } from "./contexts/roomListContext";
+import { DataCacheProvider } from "./contexts/dataCacheContext";
 import SignUp from "./forms/signUp";
 import Login from "./forms/login";
+import { lightTheme } from "./styles/themes/light";
+import { darkTheme } from "./styles/themes/dark";
+import { ThemeSettingProvider, useTheme } from "./contexts/themeContext";
 
-const App = () => {
+const ThemedApp = () => {
+  const { theme } = useTheme();
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyle />
       <QueryClientProvider client={new QueryClient()}>
         <DataCacheProvider>
@@ -29,9 +32,18 @@ const App = () => {
           </Container>
         </DataCacheProvider>
       </QueryClientProvider>
-    </ThemeProvider>
+    </ThemeProvider >
+  );
+}
+
+const App = () => {
+  return (
+    <ThemeSettingProvider>
+      <ThemedApp />
+    </ThemeSettingProvider>
   );
 };
+
 const Container = styled.div`
   height: 100vh;
   display: flex;

@@ -1,0 +1,28 @@
+export const darkTheme = {
+  colors: {
+    background: "#5C328F",
+    backgroundDark: "#733EB3",
+    backgroundDarker: "#9B50E0",
+    background2: "#6352bc",
+    background2Light: "#2B2466",
+    background2Dark: "#E7E4FE",
+    background2Hover: "#2B2466",
+    dark: "#b4a5de",
+    black: "#000",
+    middle: "#ACC18A",
+    darkMiddle: "#81926a",
+    foreground2: "#DAFEB7",
+    foreground: "#F2FBE0",
+    light: "#EEE",
+    lightColored: "#C8C5DB",
+    lightColoredDarker: "#A8A5B8",
+    red: "#ff6961",
+    white: "#443f48",
+  },
+  fonts: ["sans-serif", "Roboto"],
+  fontSizes: {
+    small: "1em",
+    medium: "2em",
+    large: "3em",
+  },
+} as const;
