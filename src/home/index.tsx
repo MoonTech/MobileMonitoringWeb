@@ -8,7 +8,7 @@ import MultiCamera from "../roomViews/multiCamera";
 import AcceptCameras from "../roomViews/acceptCameras";
 
 const Bar = styled.div`
-  background-color: ${(props) => props.theme.colors.background2Light};
+  background-color: ${(props) => props.theme.colors.primaryLight};
   height: 100%;
   display: flex;
   align-items: center;
@@ -46,7 +46,7 @@ const RoomElement = (props: RoomElementProps) => {
 //   height: 10px;
 //   width: 10px;
 //   border-radius: 5px;
-//   background-color: ${(props) => props.theme.colors.background2};
+//   background-color: ${(props) => props.theme.colors.primary};
 //   font-size: 10px;
 //   color: ${(props) => props.theme.colors.foreground};
 //   display: flex;
@@ -72,12 +72,12 @@ const RoomInner = styled.div`
   height: 50px;
   font-size: 40px;
   border-radius: 5px;
-  background-color: ${(props) => props.theme.colors.background};
+  background-color: ${(props) => props.theme.colors.secondary};
   color: ${(props) => props.theme.colors.light};
   transition: all 0.2s;
   &:hover {
     cursor: pointer;
-    background-color: ${(props) => props.theme.colors.backgroundDark};
+    background-color: ${(props) => props.theme.colors.secondaryDark};
   }
 `;
 
@@ -103,7 +103,7 @@ const AddRoomElementContainer = styled.div`
   align-items: center;
   transition: 0.2s all;
   &:hover {
-    background-color: ${(props) => props.theme.colors.backgroundDark};
+    background-color: ${(props) => props.theme.colors.secondaryDark};
     cursor: pointer;
   }
 `;

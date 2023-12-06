@@ -21,14 +21,14 @@ const SideMenuOptionContainer = styled.div<{ isClickable?: boolean }>`
   flex: 1;
   background-color: ${(props) =>
     props.isClickable
-      ? props.theme.colors.backgroundDark
-      : props.theme.colors.backgroundDarker};
+      ? props.theme.colors.secondaryDark
+      : props.theme.colors.secondaryDarker};
   border-radius: 10px;
   transition: 0.2s all;
   &:hover {
     ${(props) =>
     props.isClickable
-      ? `background-color: ${props.theme.colors.background};\n
+      ? `background-color: ${props.theme.colors.secondary};\n
     cursor: pointer;`
       : ""}
   }

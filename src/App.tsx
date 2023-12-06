@@ -54,7 +54,7 @@ const Content = styled.div`
   align-items: stretch;
   flex-direction: column;
   display: flex;
-  background-color: ${(props) => props.theme.colors.white};
+  background-color: ${(props) => props.theme.colors.background};
   height: calc(100vh - 80px);
 `;
 
