@@ -8,6 +8,7 @@ import { OneCameraIcon } from "../components/oneCameraIcon";
 import { SplitCameraIcon } from "../components/splitCameraIcon";
 import { Camera } from "../components/camera";
 import { Container } from "../components/container";
+import ReactPlayer from "react-player";
 
 const CameraBox = styled.div`
   background-color: #333;
@@ -32,7 +33,9 @@ const SingleCamera = () => {
     <Container>
       <MainCameraContainer>
         <CameraOutside>
-          <CameraBox />
+          <CameraBox >
+            <ReactPlayer url={'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'} height="100%" width="100%" muted={true} playing={true} />
+          </CameraBox >
         </CameraOutside>
       </MainCameraContainer>
       <SideBarContainer>
