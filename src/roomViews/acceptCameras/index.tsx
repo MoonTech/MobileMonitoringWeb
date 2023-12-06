@@ -36,12 +36,14 @@ const CameraElementContainer = styled.div`
   width: 100%;
   border-radius: 5px;
   padding: 10px;
-  background-color: ${(props) => props.theme.colors.light};
+  background-color: ${(props) => props.theme.colors.backgroundLight};
+  color: ${(props) => props.theme.colors.backgroundFont};
   height: 80px;
   display: flex;
   flex-direction: row;
   margin-right: 20px;
   margin-left: 20px;
+  transition: 0.2s all;
 `;
 
 const ClickContainer = styled.div<{ accept: boolean }>`
@@ -58,9 +60,9 @@ const ClickContainer = styled.div<{ accept: boolean }>`
   }
   &:hover {
     background-color: ${(props) =>
-      props.accept ? props.theme.colors.middle : props.theme.colors.red};
+                props.accept ? props.theme.colors.green : props.theme.colors.red};
     .icon {
-      color: ${(props) => (props.accept ? "green" : "red")};
+      color: ${(props) => (props.accept ? props.theme.colors.greenDark : props.theme.colors.redDark)};
       font-size: 50px;
     }
   }
@@ -73,75 +75,75 @@ const MiddleContainer = styled.div`
 `;
 
 type CameraElementProps = {
-  cameraName: string;
+        cameraName: string;
 };
 
 const CameraElement = (props: CameraElementProps) => {
-  const acceptCamera = useAcceptCamera();
-  const rejectCamera = useRejectCamera();
-  return (
-    <CameraElementContainer>
-      <ClickContainer
-        onClick={async () => {
-          await acceptCamera(props.cameraName);
-        }}
-        accept={false}
-        className="left"
-      >
-        <CloseIcon fontSize="inherit" className="icon" />
-      </ClickContainer>
-      <MiddleContainer>
-        <h1>Camera: {props.cameraName}</h1>
-      </MiddleContainer>
-      <ClickContainer
-        onClick={async () => {
-          await rejectCamera(props.cameraName);
-        }}
-        accept={true}
-        className="right"
-      >
-        <CheckIcon fontSize="inherit" className="icon" />
-      </ClickContainer>
-    </CameraElementContainer>
-  );
+        const acceptCamera = useAcceptCamera();
+        const rejectCamera = useRejectCamera();
+        return (
+                <CameraElementContainer>
+                        <ClickContainer
+                                onClick={async () => {
+                                        await acceptCamera(props.cameraName);
+                                }}
+                                accept={false}
+                                className="left"
+                        >
+                                <CloseIcon fontSize="inherit" className="icon" />
+                        </ClickContainer>
+                        <MiddleContainer>
+                                <h1>Camera: {props.cameraName}</h1>
+                        </MiddleContainer>
+                        <ClickContainer
+                                onClick={async () => {
+                                        await rejectCamera(props.cameraName);
+                                }}
+                                accept={true}
+                                className="right"
+                        >
+                                <CheckIcon fontSize="inherit" className="icon" />
+                        </ClickContainer>
+                </CameraElementContainer>
+        );
 };
 
 const AcceptCameras = () => {
-  const { id } = useParams();
-  const cameras = useCameraToAccept(id as string);
-  return (
-    <Container>
-      <Content>
-        <List>
-          <h1>Accept cameras for room: {id}</h1>
-          {cameras.response?.map((camera) => (
-            <CameraElement cameraName={camera.id} key={camera.id} />
-          ))}
-        </List>
-      </Content>
-      <SideBarContainer>
-        <SideMenuContainer>
-          <SideMenuOption isClickable={true} link={`../${id}`}>
-            <OneCameraIcon />
-          </SideMenuOption>
-          <SideMenuOption isClickable={true} link={`../${id}/split`}>
-            <SplitCameraIcon />
-          </SideMenuOption>
-          <SideMenuOption isClickable={false}>
-            <CheckBoxIcon fontSize="inherit" />
-          </SideMenuOption>
-        </SideMenuContainer>
-        <CameraListContainer>
-          <Camera />
-          <Camera />
-          <Camera />
-          <Camera />
-          <Camera />
-          <Camera />
-        </CameraListContainer>
-      </SideBarContainer>
-    </Container>
-  );
+        const { id } = useParams();
+        const cameras = useCameraToAccept(id as string);
+        return (
+                <Container>
+                        <Content>
+                                <List>
+                                        <h1>Accept cameras for room: {id}</h1>
+                                        {cameras.response?.map((camera) => (
+                                                <CameraElement cameraName={camera.id} key={camera.id} />
+                                        ))}
+                                </List>
+                        </Content>
+                        <SideBarContainer>
+                                <SideMenuContainer>
+                                        <SideMenuOption isClickable={true} link={`../${id}`}>
+                                                <OneCameraIcon />
+                                        </SideMenuOption>
+                                        <SideMenuOption isClickable={true} link={`../${id}/split`}>
+                                                <SplitCameraIcon />
+                                        </SideMenuOption>
+                                        <SideMenuOption isClickable={false}>
+                                                <CheckBoxIcon fontSize="inherit" color="inherit" />
+                                        </SideMenuOption>
+                                </SideMenuContainer>
+                                <CameraListContainer>
+                                        <Camera />
+                                        <Camera />
+                                        <Camera />
+                                        <Camera />
+                                        <Camera />
+                                        <Camera />
+                                </CameraListContainer>
+                        </SideBarContainer>
+                </Container>
+        );
 };
 
 export default AcceptCameras;

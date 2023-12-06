@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import AddRoom from "../forms/addRoom";
-import { useCache } from "../contexts/roomListContext";
+import { useCache } from "../contexts/dataCacheContext";
 import AddIcon from "@mui/icons-material/Add";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import SingleCamera from "../roomViews/singleCamera";
@@ -8,18 +8,20 @@ import MultiCamera from "../roomViews/multiCamera";
 import AcceptCameras from "../roomViews/acceptCameras";
 
 const Bar = styled.div`
-  background-color: ${(props) => props.theme.colors.background2Light};
+  background-color: ${(props) => props.theme.colors.primaryLight};
   height: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   width: 60px;
+  transition: 0.2s all;
 `;
 
 const Content = styled.div`
   max-height: 100%;
   width: 100%;
+  transition: 0.2s all;
 `;
 
 type RoomElementProps = {
@@ -44,7 +46,7 @@ const RoomElement = (props: RoomElementProps) => {
 //   height: 10px;
 //   width: 10px;
 //   border-radius: 5px;
-//   background-color: ${(props) => props.theme.colors.background2};
+//   background-color: ${(props) => props.theme.colors.primary};
 //   font-size: 10px;
 //   color: ${(props) => props.theme.colors.foreground};
 //   display: flex;
@@ -70,12 +72,12 @@ const RoomInner = styled.div`
   height: 50px;
   font-size: 40px;
   border-radius: 5px;
-  background-color: ${(props) => props.theme.colors.background};
-  color: ${(props) => props.theme.colors.dark};
-  transition: all 0.3s;
+  background-color: ${(props) => props.theme.colors.secondary};
+  color: ${(props) => props.theme.colors.light};
+  transition: all 0.2s;
   &:hover {
     cursor: pointer;
-    background-color: ${(props) => props.theme.colors.backgroundDark};
+    background-color: ${(props) => props.theme.colors.secondaryDark};
   }
 `;
 
@@ -99,10 +101,9 @@ const AddRoomElementContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => props.theme.colors.background2Light};
-  transition: 0.3s all;
+  transition: 0.2s all;
   &:hover {
-    background-color: ${(props) => props.theme.colors.backgroundDark};
+    background-color: ${(props) => props.theme.colors.secondaryDark};
     cursor: pointer;
   }
 `;
@@ -110,6 +111,7 @@ const AddRoomElementContainer = styled.div`
 const Container = styled.div`
   display: flex;
   height: 100%;
+  transition: 0.2s all;
 `;
 
 const Home = () => {

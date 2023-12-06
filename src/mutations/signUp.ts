@@ -1,5 +1,5 @@
 import { useMutation } from "react-query";
-import { useCache, UserData } from "../contexts/roomListContext";
+import { useCache, UserData } from "../contexts/dataCacheContext";
 // import { SERVER_URL } from "../serverUrl";
 import { SignUpRequest } from "../types/signUpRequest";
 
