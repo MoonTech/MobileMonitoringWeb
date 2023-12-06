@@ -5,7 +5,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: calc(100vh - 80px);
 `;
 
 export const AuthorizationForm = styled.form`
@@ -49,6 +49,7 @@ export const ErrorMessage = styled.div`
   color: ${(props) => props.theme.colors.red};
   margin-top: 10px;
 `;
+
 export const StyledLink = styled(Link)`
   text-decoration: none;
   color: ${(props) => props.theme.colors.background2};
@@ -57,6 +58,6 @@ export const StyledLink = styled(Link)`
   transition: color 0.1s;
 
   &:hover {
-  color: ${(props) => props.theme.colors.background2Dark};
+    color: ${(props) => props.theme.colors.background2Dark};
   }
 `;

@@ -14,9 +14,13 @@ const Bar = styled.div`
   align-items: center;
   flex-direction: column;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  width: 60px;
 `;
 
-const Content = styled.div``;
+const Content = styled.div`
+  max-height: 100%;
+  width: 100%;
+`;
 
 type RoomElementProps = {
   name: string;
@@ -104,8 +108,7 @@ const AddRoomElementContainer = styled.div`
 `;
 
 const Container = styled.div`
-  display: grid;
-  grid-template-columns: 60px auto;
+  display: flex;
   height: 100%;
 `;
 

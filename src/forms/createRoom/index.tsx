@@ -7,7 +7,7 @@ import {
   Header,
   Input,
   StyledLink,
-} from "../components/formComponents";
+} from "../components";
 
 const CreateRoom: React.FC = () => {
   const [roomName, setRoomName] = useState("");

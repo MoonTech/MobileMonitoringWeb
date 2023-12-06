@@ -9,7 +9,7 @@ import {
   Header,
   Input,
   StyledLink,
-} from "../components/formComponents";
+} from "../components";
 
 const SignUp: React.FC = () => {
   const [name, setName] = useState("");

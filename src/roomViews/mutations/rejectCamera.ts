@@ -6,7 +6,9 @@ export const useRejectCamera = () => {
   // const { userData } = useCache();
 
   const { mutateAsync } = useMutation(
-    async (cameraId: string) => { console.log(cameraId) },
+    async (cameraId: string) => {
+      console.log(cameraId);
+    },
     // fetch(SERVER_URL + "camera/" + cameraId, {
     //   method: "DELETE",
     //   headers: {
@@ -21,7 +23,7 @@ export const useRejectCamera = () => {
       onError: (error) => {
         console.log(error);
       },
-    }
+    },
   );
 
   return mutateAsync;

@@ -7,7 +7,7 @@ import {
   ErrorMessage,
   Header,
   Input,
-} from "../components/formComponents";
+} from "../components";
 
 const AddRoom: React.FC = () => {
   const [roomName, setRoomName] = useState("");
@@ -24,7 +24,10 @@ const AddRoom: React.FC = () => {
       setError("");
       setRoomName("");
       setPassword("");
-      setList([...list, { name: roomName, cameras: [], owner: { login: "owner", rooms: [] } }]);
+      setList([
+        ...list,
+        { name: roomName, cameras: [], owner: { login: "owner", rooms: [] } },
+      ]);
     }
   };
 

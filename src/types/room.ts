@@ -7,4 +7,4 @@ export type Room = {
 export type RoomOwner = {
   login: string;
   rooms: string[];
-}
+};

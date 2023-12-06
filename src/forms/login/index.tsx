@@ -11,7 +11,7 @@ import {
   Header,
   Input,
   StyledLink,
-} from "../components/formComponents";
+} from "../components";
 
 const Login: React.FC = () => {
   const [name, setName] = useState("");
