@@ -23,9 +23,15 @@ const SingleCamera = () => {
   return (
     <MainCameraContainer>
       <CameraOutside>
-        <CameraBox >
-          <ReactPlayer url={'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'} height="100%" width="100%" muted={true} playing={true} />
-        </CameraBox >
+        <CameraBox>
+          <ReactPlayer
+            url={"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"}
+            height="100%"
+            width="100%"
+            muted={true}
+            playing={true}
+          />
+        </CameraBox>
       </CameraOutside>
     </MainCameraContainer>
   );

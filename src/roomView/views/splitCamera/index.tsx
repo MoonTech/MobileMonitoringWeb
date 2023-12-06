@@ -21,10 +21,16 @@ const CameraBoxContainer = styled.div`
 const CameraBox = () => {
   return (
     <CameraBoxContainer>
-      <ReactPlayer url={'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'} height="100%" width="100%" muted={true} playing={true} />
+      <ReactPlayer
+        url={"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"}
+        height="100%"
+        width="100%"
+        muted={true}
+        playing={true}
+      />
     </CameraBoxContainer>
   );
-}
+};
 
 const SplitCamera = () => {
   return (

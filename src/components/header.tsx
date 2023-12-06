@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
 import { useCache } from "../contexts/dataCacheContext";
 import { Link } from "react-router-dom";
 import { useLogout } from "../mutations/logout";
@@ -20,7 +20,7 @@ const Container = styled.div`
 
 const RightConstainer = styled.div`
   display: flex;
-`
+`;
 
 const Logo = styled.h1`
   font-family: "Droid Sans", serif;
@@ -51,8 +51,12 @@ const Header: React.FC = () => {
     <Container>
       <Logo>MobileMonitoring</Logo>
       <RightConstainer>
-        <HeaderButton onClick={() => { setTheme(theme === 'light' ? 'dark' : 'light') }}>
-          {theme === 'light' ? (<DarkModeIcon />) : (<LightModeIcon />)}
+        <HeaderButton
+          onClick={() => {
+            setTheme(theme === "light" ? "dark" : "light");
+          }}
+        >
+          {theme === "light" ? <DarkModeIcon /> : <LightModeIcon />}
         </HeaderButton>
         {userData === null ? (
           <Link to="/login">

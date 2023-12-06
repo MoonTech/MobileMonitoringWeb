@@ -22,7 +22,7 @@ const MainCameraContainer = styled.div`
 export const RoomView = () => {
   const location = useLocation();
   const { id } = useParams();
-  const screenType = location.pathname.split('/').at(-1);
+  const screenType = location.pathname.split("/").at(-1);
   return (
     <Container>
       <MainCameraContainer>
@@ -35,13 +35,22 @@ export const RoomView = () => {
       </MainCameraContainer>
       <SideBarContainer>
         <SideMenuContainer>
-          <SideMenuOption isClickable={screenType !== 'single'} link={`../${id}/single`}>
+          <SideMenuOption
+            isClickable={screenType !== "single"}
+            link={`../${id}/single`}
+          >
             <OneCameraIcon />
           </SideMenuOption>
-          <SideMenuOption isClickable={screenType !== 'split'} link={`../${id}/split`}>
+          <SideMenuOption
+            isClickable={screenType !== "split"}
+            link={`../${id}/split`}
+          >
             <SplitCameraIcon />
           </SideMenuOption>
-          <SideMenuOption isClickable={screenType !== 'accept'} link={`../${id}/accept`}>
+          <SideMenuOption
+            isClickable={screenType !== "accept"}
+            link={`../${id}/accept`}
+          >
             <CheckBoxIcon fontSize="inherit" />
           </SideMenuOption>
         </SideMenuContainer>
@@ -57,4 +66,3 @@ export const RoomView = () => {
     </Container>
   );
 };
-

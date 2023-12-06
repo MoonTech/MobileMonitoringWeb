@@ -18,7 +18,7 @@ export const darkTheme = {
     greenDark: "#5F9E55",
     background: "#443f48",
     backgroundLight: "#625a67",
-    backgroundFont: "#EEE"
+    backgroundFont: "#EEE",
   },
   fonts: ["sans-serif", "Roboto"],
   fontSizes: {

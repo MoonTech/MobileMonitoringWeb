@@ -7,4 +7,3 @@ export const CameraContainer = styled.div`
   border: 2px solid black;
   border-radius: 10px;
 `;
-
