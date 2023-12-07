@@ -12,6 +12,7 @@ import { Route, Routes, useLocation, useParams } from "react-router-dom";
 import SingleCamera from "./views/singleCamera";
 import SplitCamera from "./views/splitCamera";
 import AcceptCameras from "./views/acceptCameras";
+import { useWatchRoom } from "./queries/watchRoom";
 
 const MainCameraContainer = styled.div`
   height: 100%;
@@ -23,6 +24,7 @@ export const RoomView = () => {
   const location = useLocation();
   const { id } = useParams();
   const screenType = location.pathname.split("/").at(-1);
+  const cameras = useWatchRoom("roomname");
   return (
     <Container>
       <MainCameraContainer>
@@ -55,12 +57,12 @@ export const RoomView = () => {
           </SideMenuOption>
         </SideMenuContainer>
         <CameraListContainer>
-          <Camera />
-          <Camera />
-          <Camera />
-          <Camera />
-          <Camera />
-          <Camera />
+          {cameras.response.map((camera) => (
+            <Camera
+              url={"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"}
+              name={camera.name}
+            />
+          ))}
         </CameraListContainer>
       </SideBarContainer>
     </Container>
