@@ -18,7 +18,7 @@ export const lightTheme = {
     greenDark: "#5F9E55",
     background: "#FFF",
     backgroundLight: "#E7E4FE",
-    backgroundFont: "#2b2927"
+    backgroundFont: "#2b2927",
   },
   fonts: ["sans-serif", "Montserrat"],
   fontSizes: {

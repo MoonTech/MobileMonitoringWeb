@@ -3,9 +3,7 @@ import AddRoom from "../forms/addRoom";
 import { useCache } from "../contexts/dataCacheContext";
 import AddIcon from "@mui/icons-material/Add";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import SingleCamera from "../roomViews/singleCamera";
-import MultiCamera from "../roomViews/multiCamera";
-import AcceptCameras from "../roomViews/acceptCameras";
+import { RoomView } from "../roomView";
 
 const Bar = styled.div`
   background-color: ${(props) => props.theme.colors.primaryLight};
@@ -126,7 +124,7 @@ const Home = () => {
           <RoomElement
             key={room.name}
             name={room.name}
-            onClick={() => navigate(room.name)}
+            onClick={() => navigate(`${room.name}/single`)}
             onClickClose={() => {
               setList(list.filter((r) => r.name !== room.name));
               if (location.pathname.includes(room.name)) navigate("add");
@@ -138,9 +136,7 @@ const Home = () => {
       <Content>
         <Routes key={location.pathname} location={location}>
           <Route path="add" element={<AddRoom />} />
-          <Route path=":id" element={<SingleCamera />} />
-          <Route path=":id/split" element={<MultiCamera />} />
-          <Route path=":id/accept" element={<AcceptCameras />} />
+          <Route path=":id/*" element={<RoomView />} />
         </Routes>
       </Content>
     </Container>

@@ -22,11 +22,7 @@ export const useCameraToAccept = (roomName: string) => {
     {
       id: "iasdfsad",
       acceptationState: false,
-      room: {
-        cameras: [],
-        name: "dasf",
-        owner: { rooms: [], login: "dfasfas" },
-      },
+      name: "camera1"
     },
   ] as Camera[];
   return { response };

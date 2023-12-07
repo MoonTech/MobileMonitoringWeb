@@ -26,7 +26,7 @@ const AddRoom: React.FC = () => {
       setPassword("");
       setList([
         ...list,
-        { name: roomName, cameras: [], owner: { login: "owner", rooms: [] } },
+        { name: roomName, cameras: [] },
       ]);
     }
   };

@@ -14,7 +14,7 @@ import { ThemeSettingProvider, useTheme } from "./contexts/themeContext";
 const ThemedApp = () => {
   const { theme } = useTheme();
   return (
-    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <GlobalStyle />
       <QueryClientProvider client={new QueryClient()}>
         <DataCacheProvider>
@@ -32,9 +32,9 @@ const ThemedApp = () => {
           </Container>
         </DataCacheProvider>
       </QueryClientProvider>
-    </ThemeProvider >
+    </ThemeProvider>
   );
-}
+};
 
 const App = () => {
   return (
