@@ -23,7 +23,6 @@ const RightConstainer = styled.div`
 `
 
 const Logo = styled.h1`
-  font-family: "Droid Sans", serif;
   margin: 0;
   padding: 0;
   font-weight: bold;
