@@ -25,6 +25,7 @@ export const RoomView = () => {
   const { id } = useParams();
   const screenType = location.pathname.split("/").at(-1);
   const cameras = useWatchRoom("roomname");
+
   return (
     <Container>
       <MainCameraContainer>
