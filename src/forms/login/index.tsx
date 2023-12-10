@@ -18,7 +18,7 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { userData } = useCache();
+  const { userData, setUserData } = useCache();
   const mutateAsync = useLogin();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,6 +34,8 @@ const Login: React.FC = () => {
         password: password,
       } as LoginRequest);
       if (result) {
+        console.log(userData)
+        setUserData(result);
         navigate("../room/add");
       } else {
         setError("Login failed, please try again");

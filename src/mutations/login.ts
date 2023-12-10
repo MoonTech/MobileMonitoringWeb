@@ -20,7 +20,7 @@ export const useLogin = () => {
         .then(res => {
           setUserData({ token: res.accessToken, name: request.login } as UserData)
           console.log(userData)
-          return true;
+          return { token: res.accessToken, name: request.login } as UserData;
         });
     },
     {
