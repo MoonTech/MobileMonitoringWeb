@@ -113,11 +113,12 @@ const Home = () => {
     <Container>
       <Bar>
         {roomList.map((room) => (
-          <RoomElement
-            key={room.name}
-            name={room.name}
-            onClick={() => navigate(`${room.name}/single`)}
-          />
+          room ?
+            <RoomElement
+              key={room.name}
+              name={room.name}
+              onClick={() => navigate(`${room.name}/single`)}
+            /> : <></>
         ))}
         <AddRoomElement onClick={() => navigate("add")} />
         {userData ? (<NewRoomElement onClick={() => navigate("new")} />) : (<></>)}
