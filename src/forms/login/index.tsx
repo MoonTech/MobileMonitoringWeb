@@ -33,8 +33,9 @@ const Login: React.FC = () => {
         login: name,
         password: password,
       } as LoginRequest);
+      console.log(result)
       if (result) {
-        console.log(userData)
+        console.log(result)
         setUserData(result);
         navigate("../room/add");
       } else {
