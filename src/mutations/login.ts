@@ -18,8 +18,9 @@ export const useLogin = () => {
           return res.json();
         })
         .then(res => {
+          console.log("chuj")
           setUserData({ token: res.accessToken, name: request.login } as UserData)
-          console.log(userData)
+          console.log({ token: res.accessToken, name: request.login } as UserData)
           return { token: res.accessToken, name: request.login } as UserData;
         });
     },
