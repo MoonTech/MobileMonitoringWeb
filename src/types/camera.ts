@@ -1,6 +1,6 @@
 export type Camera = {
   id: string;
   acceptationState: boolean;
-  name: string;
+  cameraName: string;
   cameraToken: string;
 };
