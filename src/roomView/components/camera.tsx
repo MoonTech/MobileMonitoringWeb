@@ -39,7 +39,6 @@ export const Camera = ({ url, name, onClick }: CameraProps) => {
         muted={true}
         playing={true}
       />
-      <NameContainer>{name}</NameContainer>
     </CameraContainer>
   );
 };
