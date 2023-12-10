@@ -14,8 +14,12 @@ export const useLogin = () => {
           "Content-Type": "application/json"
         },
       })
-        .then(res => res.json())
         .then(res => {
+          console.log(res.json())
+          return res.json();
+        })
+        .then(res => {
+          console.log(res.accessToken)
           setUserData({ token: res.accessToken, name: request.login } as UserData)
           return true;
         });
