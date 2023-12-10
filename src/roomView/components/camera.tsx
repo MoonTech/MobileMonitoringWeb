@@ -27,7 +27,7 @@ const NameContainer = styled.div`
 export type CameraProps = {
   url: string;
   name: string;
-  onClick?: any
+  onClick?: any;
 }
 export const Camera = ({ url, name, onClick }: CameraProps) => {
   return (

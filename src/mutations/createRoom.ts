@@ -6,7 +6,7 @@ import { PostRoomResponse } from "../types/postRoomResponse";
 export const useCreateRoom = () => {
   const { mutateAsync } = useMutation(
     async (request: PostRoomRequest) => {
-      return fetch(SERVER_URL + "room/token", {
+      return fetch(SERVER_URL + "room", {
         method: "POST",
         body: JSON.stringify(request),
         headers: {
@@ -18,7 +18,7 @@ export const useCreateRoom = () => {
     },
     {
       onSuccess: async () => {
-        console.log("token successful");
+        console.log("creation successful");
       },
       onError: async (error) => {
         console.log(error);
