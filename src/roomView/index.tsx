@@ -26,7 +26,7 @@ export const RoomView = () => {
   const location = useLocation();
   const { id } = useParams();
   const screenType = location.pathname.split("/").at(-1);
-  const cameras = useWatchRoom("roomname");
+  const cameras = useWatchRoom(id!);
   console.log(cameras);
   const [singleCamera, setSingleCamera] = useState(screenType === 'single' ? cameras.data?.connectedCameras[0] : null);
   const [splitCameras, setSplitCameras] = useState(screenType === 'split' ? cameras.data?.connectedCameras : null);
