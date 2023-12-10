@@ -4,7 +4,7 @@ import { SERVER_URL } from "../serverUrl";
 import { LoginRequest } from "../types/loginRequest";
 
 export const useLogin = () => {
-  const { setUserData } = useCache();
+  const { setUserData, userData } = useCache();
   const { mutateAsync } = useMutation(
     async (request: LoginRequest) => {
       return fetch(SERVER_URL + "user/login", {
@@ -15,12 +15,11 @@ export const useLogin = () => {
         },
       })
         .then(res => {
-          console.log(res.json())
           return res.json();
         })
         .then(res => {
-          console.log(res.accessToken)
           setUserData({ token: res.accessToken, name: request.login } as UserData)
+          console.log(userData)
           return true;
         });
     },
