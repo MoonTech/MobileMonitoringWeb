@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import { useCache } from "../../contexts/dataCacheContext";
 import { SERVER_URL } from "../../serverUrl";
+import { WatchRoomRequest } from "../../types/watchRoomRequest";
 // import { WatchCamera } from "../../types/watchCamera";
 import { WatchRoomResponse } from "../../types/watchRoomResponse";
 
@@ -10,8 +11,9 @@ export const useWatchRoom = (roomName: string) => {
   const query = useQuery<WatchRoomResponse>(
     `watch-room-` + roomName,
     () =>
-      fetch(SERVER_URL + "room/" + roomName, {
-        method: "GET",
+      fetch(SERVER_URL + "room", {
+        method: "POST",
+        body: JSON.stringify({ roomName } as WatchRoomRequest),
         headers: {
           authorization: `Bearer ${roomIndex === -1 ? userData?.token : list[roomIndex].accessToken}`,
           "Content-Type": "application/json",
