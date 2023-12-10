@@ -14,11 +14,7 @@ export const useGetMyRooms = () => {
           authorization: `Bearer ${userData?.token}`,
           "Content-Type": "application/json",
         },
-      }).then((res) => (res.json())))
+      }).then((res) => (res.json())).then(res => res as GetMyRoomsResponse))
 
-  const response = userData ? (query.isLoading ? null : query.data) : { rooms: [] } as GetMyRoomsResponse;
-
-  // const response = { rooms: [{ name: "QQQ", accessToken: "" }] } as GetMyRoomsResponse;
-
-  return { response };
+  return query;
 };

@@ -106,7 +106,7 @@ const Home = () => {
   const myRooms = useGetMyRooms();
   const location = useLocation();
   const navigate = useNavigate();
-  const roomList = [...myRooms.response!.rooms, ...list]
+  const roomList = [...(myRooms.isLoading ? [] : myRooms.data!.rooms), ...list]
 
   return (
     <Container>

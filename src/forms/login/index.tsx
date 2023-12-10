@@ -37,7 +37,6 @@ const Login: React.FC = () => {
       if (result) {
         console.log(result)
         setUserData(result);
-        navigate("../room/add");
       } else {
         setError("Login failed, please try again");
       }
