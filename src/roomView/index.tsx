@@ -14,6 +14,7 @@ import SplitCamera from "./views/splitCamera";
 import AcceptCameras from "./views/acceptCameras";
 import { useWatchRoom } from "./queries/watchRoom";
 import { useState } from "react";
+import { WatchCamera } from "../types/watchCamera";
 
 const MainCameraContainer = styled.div`
   height: 100%;
@@ -27,14 +28,14 @@ export const RoomView = () => {
   const screenType = location.pathname.split("/").at(-1);
   const cameras = useWatchRoom("roomname");
   console.log(cameras);
-  const [singleCamera, setSingleCamera] = useState(screenType === 'single' ? cameras.response?.connectedCameras[0] : null);
-  const [splitCameras, setSplitCameras] = useState(screenType === 'split' ? cameras.response?.connectedCameras : null);
+  const [singleCamera, setSingleCamera] = useState(screenType === 'single' ? cameras.data?.connectedCameras[0] : null);
+  const [splitCameras, setSplitCameras] = useState(screenType === 'split' ? cameras.data?.connectedCameras : null);
 
   return (
     <Container>
       <MainCameraContainer>
         <Routes key={location.pathname} location={location}>
-          <Route path="single" element={<SingleCamera camera={singleCamera!} />} />
+          <Route path="single" element={<SingleCamera camera={singleCamera ?? undefined} />} />
           <Route path="split" element={<SplitCamera cameras={splitCameras!} />} />
           <Route path="accept" element={<AcceptCameras />} />
           <Route path="*" element={<h1>404</h1>} />
@@ -62,9 +63,9 @@ export const RoomView = () => {
           </SideMenuOption>
         </SideMenuContainer>
         <CameraListContainer>
-          {cameras.response?.connectedCameras.map((camera) => (
+          {cameras.data?.connectedCameras.map((camera) => (
             <Camera
-              url={camera.url}
+              url={camera.watchUrl}
               onClick={() => {
                 if (screenType === "split") {
                   setSplitCameras([]);
@@ -73,7 +74,7 @@ export const RoomView = () => {
                   setSingleCamera(camera);
                 }
               }}
-              name={camera.name}
+              name={camera.cameraName}
               key={camera.id}
             />
           ))}

@@ -1,7 +1,7 @@
 export type WatchCamera = {
   id: string;
   acceptationState: boolean;
-  name: string;
+  cameraName: string;
   cameraToken: string;
-  url: string;
+  watchUrl: string;
 };

@@ -20,10 +20,10 @@ export type SplitCameraProps = {
 const SplitCamera = ({ cameras }: SplitCameraProps) => {
   return (
     <CameraGridContainer>
-      <Camera url={cameras[0].url} name={cameras[0].name} />
-      <Camera url={cameras[1].url} name={cameras[1].name} />
-      <Camera url={cameras[2].url} name={cameras[2].name} />
-      <Camera url={cameras[3].url} name={cameras[3].name} />
+      <Camera url={cameras[0].watchUrl} name={cameras[0].cameraName} />
+      <Camera url={cameras[1].watchUrl} name={cameras[1].cameraName} />
+      <Camera url={cameras[2].watchUrl} name={cameras[2].cameraName} />
+      <Camera url={cameras[3].watchUrl} name={cameras[3].cameraName} />
     </CameraGridContainer>
   );
 };

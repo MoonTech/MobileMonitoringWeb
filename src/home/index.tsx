@@ -103,10 +103,10 @@ const Container = styled.div`
 
 const Home = () => {
   const { list, userData } = useCache();
-  const myRooms = useGetMyRooms();
+  // const myRooms = useGetMyRooms();
   const location = useLocation();
   const navigate = useNavigate();
-  const roomList = [...(myRooms.isLoading ? [] : myRooms.data!.rooms), ...list]
+  const roomList = [...list]
 
   return (
     <Container>

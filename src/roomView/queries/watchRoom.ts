@@ -17,8 +17,11 @@ export const useWatchRoom = (roomName: string) => {
           "Content-Type": "application/json",
         },
       }).then((res) => res.json())
+        .then(res => {
+          console.log(res)
+          return ({ ...res } as WatchRoomResponse)
+        })
   );
-  const response = query.isLoading ? null : query.data;
   // console.log(roomName);
   // const cameras = [
   //   {
@@ -53,5 +56,5 @@ export const useWatchRoom = (roomName: string) => {
   //   },
   // ] as WatchCamera[];
   // const response = { connectedCameras: cameras, roomName: roomName } as WatchRoomResponse;
-  return { response };
+  return query;
 };

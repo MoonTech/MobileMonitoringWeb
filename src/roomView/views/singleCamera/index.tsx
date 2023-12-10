@@ -14,14 +14,14 @@ const MainCameraContainer = styled.div`
 `;
 
 export type SingleCameraProps = {
-  camera: WatchCamera,
+  camera?: WatchCamera,
 }
 
 const SingleCamera = ({ camera }: SingleCameraProps) => {
   return (
     <MainCameraContainer>
       <CameraOutside>
-        <Camera url={camera.url} name={camera.name} />
+        <Camera url={camera?.watchUrl ?? ""} name={camera?.cameraName ?? "name"} />
       </CameraOutside>
     </MainCameraContainer>
   );
