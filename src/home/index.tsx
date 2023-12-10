@@ -31,6 +31,7 @@ type RoomElementProps = {
 };
 
 const RoomElement = (props: RoomElementProps) => {
+  console.log(props.name);
   return (
     <RoomOuter>
       <RoomInner onClick={props.onClick}>{props.name.charAt(0)}</RoomInner>
@@ -106,7 +107,7 @@ const Home = () => {
   const myRooms = useGetMyRooms();
   const location = useLocation();
   const navigate = useNavigate();
-  const roomList = [...myRooms.data?.rooms ?? [], ...list]
+  const roomList = [...(myRooms.isLoading ? [] : myRooms.data!.rooms) ?? [], ...list]
 
   return (
     <Container>
