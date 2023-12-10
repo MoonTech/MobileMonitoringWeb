@@ -28,7 +28,7 @@ const CreateRoom: React.FC = () => {
       setRoomName("");
       setPassword("");
       setConfirmPassword("");
-      const token = await mutateAsync({ name: roomName, password: password })
+      const token = await mutateAsync({ roomName: roomName, password: password })
       if (!token) {
         setError("Could not create room");
       }

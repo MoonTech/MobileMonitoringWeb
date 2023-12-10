@@ -1,4 +1,4 @@
 export type PostRoomRequest = {
-  name: string;
+  roomName: string;
   password: string;
 }
