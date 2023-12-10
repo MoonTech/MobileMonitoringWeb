@@ -11,7 +11,7 @@ export const useWatchRoom = (roomName: string) => {
   const query = useQuery<WatchRoomResponse>(
     `watch-room-` + roomName,
     () =>
-      fetch(SERVER_URL + "room", {
+      fetch(SERVER_URL + "room/watch", {
         method: "POST",
         body: JSON.stringify({ roomName } as WatchRoomRequest),
         headers: {
