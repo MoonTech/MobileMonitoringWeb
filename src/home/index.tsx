@@ -108,7 +108,7 @@ const Home = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const roomList = [...(myRooms.isLoading ? [] : myRooms.data!.rooms) ?? [], ...list]
-
+  console.log(roomList)
   return (
     <Container>
       <Bar>
