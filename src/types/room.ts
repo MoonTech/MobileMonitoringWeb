@@ -1,5 +1,5 @@
 export type Room = {
   name: string;
-  cameras: string[];
+  accessToken: string;
 };
 

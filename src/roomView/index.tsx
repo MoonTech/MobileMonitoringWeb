@@ -13,6 +13,7 @@ import SingleCamera from "./views/singleCamera";
 import SplitCamera from "./views/splitCamera";
 import AcceptCameras from "./views/acceptCameras";
 import { useWatchRoom } from "./queries/watchRoom";
+import { useState } from "react";
 
 const MainCameraContainer = styled.div`
   height: 100%;
@@ -25,13 +26,16 @@ export const RoomView = () => {
   const { id } = useParams();
   const screenType = location.pathname.split("/").at(-1);
   const cameras = useWatchRoom("roomname");
+  console.log(cameras);
+  const [singleCamera, setSingleCamera] = useState(screenType === 'single' ? cameras.response?.connectedCameras[0] : null);
+  const [splitCameras, setSplitCameras] = useState(screenType === 'split' ? cameras.response?.connectedCameras : null);
 
   return (
     <Container>
       <MainCameraContainer>
         <Routes key={location.pathname} location={location}>
-          <Route path="single" element={<SingleCamera />} />
-          <Route path="split" element={<SplitCamera />} />
+          <Route path="single" element={<SingleCamera camera={singleCamera!} />} />
+          <Route path="split" element={<SplitCamera cameras={splitCameras!} />} />
           <Route path="accept" element={<AcceptCameras />} />
           <Route path="*" element={<h1>404</h1>} />
         </Routes>
@@ -58,10 +62,19 @@ export const RoomView = () => {
           </SideMenuOption>
         </SideMenuContainer>
         <CameraListContainer>
-          {cameras.response.map((camera) => (
+          {cameras.response?.connectedCameras.map((camera) => (
             <Camera
-              url={"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"}
+              url={camera.url}
+              onClick={() => {
+                if (screenType === "split") {
+                  setSplitCameras([]);
+                }
+                if (screenType === "single") {
+                  setSingleCamera(camera);
+                }
+              }}
               name={camera.name}
+              key={camera.id}
             />
           ))}
         </CameraListContainer>

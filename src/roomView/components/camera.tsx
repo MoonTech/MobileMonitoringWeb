@@ -6,6 +6,10 @@ const CameraContainer = styled.div`
   margin-bottom: 10px;
   border: 2px solid black;
   border-radius: 10px;
+  &:hover {
+    background-color: #666;
+    cursor: pointer;
+  }
 `;
 
 const NameContainer = styled.div`
@@ -21,10 +25,11 @@ const NameContainer = styled.div`
 export type CameraProps = {
   url: string;
   name: string;
+  onClick?: any
 }
-export const Camera = ({ url, name }: CameraProps) => {
+export const Camera = ({ url, name, onClick }: CameraProps) => {
   return (
-    <CameraContainer>
+    <CameraContainer onClick={onClick}>
       <ReactPlayer
         url={url}
         height="100%"

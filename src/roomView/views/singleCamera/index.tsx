@@ -1,12 +1,6 @@
 import { styled } from "styled-components";
-import ReactPlayer from "react-player";
-
-const CameraBox = styled.div`
-  background-color: #333;
-  border-radius: 10px;
-  width: 100%;
-  height: 100%;
-`;
+import { WatchCamera } from "../../../types/watchCamera";
+import { Camera } from "../../components/camera";
 
 const CameraOutside = styled.div`
   padding: 10px;
@@ -19,19 +13,15 @@ const MainCameraContainer = styled.div`
   display: flex;
 `;
 
-const SingleCamera = () => {
+export type SingleCameraProps = {
+  camera: WatchCamera,
+}
+
+const SingleCamera = ({ camera }: SingleCameraProps) => {
   return (
     <MainCameraContainer>
       <CameraOutside>
-        <CameraBox>
-          <ReactPlayer
-            url={"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"}
-            height="100%"
-            width="100%"
-            muted={true}
-            playing={true}
-          />
-        </CameraBox>
+        <Camera url={camera.url} name={camera.name} />
       </CameraOutside>
     </MainCameraContainer>
   );

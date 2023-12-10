@@ -1,5 +1,6 @@
-import ReactPlayer from "react-player";
 import { styled } from "styled-components";
+import { WatchCamera } from "../../../types/watchCamera";
+import { Camera } from "../../components/camera";
 
 const CameraGridContainer = styled.div`
   height: 100%;
@@ -11,34 +12,18 @@ const CameraGridContainer = styled.div`
   grid-row-gap: 10px;
 `;
 
-const CameraBoxContainer = styled.div`
-  background-color: #333;
-  border-radius: 10px;
-  color: #fff;
-  margin: 5px;
-`;
 
-const CameraBox = () => {
-  return (
-    <CameraBoxContainer>
-      <ReactPlayer
-        url={"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"}
-        height="100%"
-        width="100%"
-        muted={true}
-        playing={true}
-      />
-    </CameraBoxContainer>
-  );
-};
+export type SplitCameraProps = {
+  cameras: WatchCamera[]
+}
 
-const SplitCamera = () => {
+const SplitCamera = ({ cameras }: SplitCameraProps) => {
   return (
     <CameraGridContainer>
-      <CameraBox />
-      <CameraBox />
-      <CameraBox />
-      <CameraBox />
+      <Camera url={cameras[0].url} name={cameras[0].name} />
+      <Camera url={cameras[1].url} name={cameras[1].name} />
+      <Camera url={cameras[2].url} name={cameras[2].name} />
+      <Camera url={cameras[3].url} name={cameras[3].name} />
     </CameraGridContainer>
   );
 };

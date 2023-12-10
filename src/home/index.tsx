@@ -4,6 +4,9 @@ import { useCache } from "../contexts/dataCacheContext";
 import AddIcon from "@mui/icons-material/Add";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { RoomView } from "../roomView";
+import CreateIcon from '@mui/icons-material/Create';
+import CreateRoom from "../forms/createRoom";
+import { useGetMyRooms } from "../queries/myRooms";
 
 const Bar = styled.div`
   background-color: ${(props) => props.theme.colors.primaryLight};
@@ -25,7 +28,6 @@ const Content = styled.div`
 type RoomElementProps = {
   name: string;
   onClick: any;
-  onClickClose: any;
 };
 
 const RoomElement = (props: RoomElementProps) => {
@@ -35,27 +37,6 @@ const RoomElement = (props: RoomElementProps) => {
     </RoomOuter>
   );
 };
-
-// const CloseButton = styled.div`
-//   position: absolute;
-//   top: 5px;
-//   right: 5px;
-//   cursor: pointer;
-//   height: 10px;
-//   width: 10px;
-//   border-radius: 5px;
-//   background-color: ${(props) => props.theme.colors.primary};
-//   font-size: 10px;
-//   color: ${(props) => props.theme.colors.foreground};
-//   display: flex;
-//   justify-content: center;
-//   text-align: top;
-//   transition: all 0.5s;
-//   &:hover {
-//     background-color: ${(props) => props.theme.colors.black};
-//     cursor: pointer;
-//   }
-// `;
 
 const RoomOuter = styled.div`
   padding: 5px;
@@ -91,6 +72,14 @@ const AddRoomElement = (props: AddRoomElementProps) => {
   );
 };
 
+const NewRoomElement = (props: AddRoomElementProps) => {
+  return (
+    <AddRoomElementContainer onClick={props.onClick}>
+      <CreateIcon fontSize="large" />
+    </AddRoomElementContainer>
+  );
+};
+
 const AddRoomElementContainer = styled.div`
   width: 50px;
   height: 50px;
@@ -113,33 +102,33 @@ const Container = styled.div`
 `;
 
 const Home = () => {
-  const { list, setList } = useCache();
+  const { list, userData } = useCache();
+  const myRooms = useGetMyRooms();
   const location = useLocation();
   const navigate = useNavigate();
+  const roomList = [...myRooms.response!.rooms, ...list]
 
   return (
     <Container>
       <Bar>
-        {list.map((room) => (
+        {roomList.map((room) => (
           <RoomElement
             key={room.name}
             name={room.name}
             onClick={() => navigate(`${room.name}/single`)}
-            onClickClose={() => {
-              setList(list.filter((r) => r.name !== room.name));
-              if (location.pathname.includes(room.name)) navigate("add");
-            }}
           />
         ))}
         <AddRoomElement onClick={() => navigate("add")} />
+        {userData ? (<NewRoomElement onClick={() => navigate("new")} />) : (<></>)}
       </Bar>
       <Content>
         <Routes key={location.pathname} location={location}>
           <Route path="add" element={<AddRoom />} />
+          <Route path="new" element={<CreateRoom />} />
           <Route path=":id/*" element={<RoomView />} />
         </Routes>
       </Content>
-    </Container>
+    </Container >
   );
 };
 

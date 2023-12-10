@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useCache } from "../../contexts/dataCacheContext";
+import { useRoomToken } from "../../mutations/roomToken";
 import {
   AuthorizationForm,
   Button,
@@ -13,9 +14,10 @@ const AddRoom: React.FC = () => {
   const [roomName, setRoomName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const mutateAsync = useRoomToken();
   const { list, setList } = useCache();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!roomName || !password) {
@@ -24,10 +26,12 @@ const AddRoom: React.FC = () => {
       setError("");
       setRoomName("");
       setPassword("");
-      setList([
-        ...list,
-        { name: roomName, cameras: [] },
-      ]);
+      const token = await mutateAsync({ roomName: roomName, password: password });
+      if (token) {
+        setList([...list, { name: roomName, accessToken: token }]);
+      } else {
+        setError("Could not add room");
+      }
     }
   };
 
