@@ -6,6 +6,8 @@ const CameraContainer = styled.div`
   margin-bottom: 10px;
   border: 2px solid black;
   border-radius: 10px;
+  height: 100%;
+  width: 100%;
   &:hover {
     background-color: #666;
     cursor: pointer;
