@@ -8,12 +8,14 @@ import { useCheckCamera } from "../../queries/getRecordigState";
 const CameraOutside = styled.div`
   padding: 10px;
   width: 100%;
+  flex: 5;
 `;
 
 const MainCameraContainer = styled.div`
   height: 100%;
   flex: 3;
   display: flex;
+  direction: row;
 `;
 
 export type SingleCameraProps = {
@@ -21,25 +23,25 @@ export type SingleCameraProps = {
 }
 
 const RecordContainer = styled.div`
-  height: 50px;
-  width: 100px;
-  background-color: red;
+  width: 100%;
+  flex: 1;
+  background-color: ${(props) => props.theme.colors.red};
+  background-color: ${(props) => props.theme.colors.light};
+  border-radius: 10px;
   &:hover{
-    background-color: blue;
+  background-color: ${(props) => props.theme.colors.redDark};
     cursor: pointer;
   }
 `
 
 const SingleCamera = ({ camera }: SingleCameraProps) => {
-  const isReady = useCheckCamera(camera?.id ?? "");
   const end = useEndRecording()
-  const start = useStartRecording()
   return (
     <MainCameraContainer>
-      <RecordContainer onClick={() => { end({ cameraId: camera?.id ?? "" }) }} />
       <CameraOutside>
         <Camera url={camera?.watchUrl ?? ""} name={camera?.cameraName ?? "name"} />
       </CameraOutside>
+      <RecordContainer onClick={() => { end({ cameraId: camera?.id ?? "" }) }} >RECORD</RecordContainer>
     </MainCameraContainer>
   );
 };
