@@ -12,6 +12,11 @@ const CameraGridContainer = styled.div`
   grid-row-gap: 10px;
 `;
 
+const CameraContainer = styled.div`
+  height: 30vh;
+  max-height: 30vh;
+ `
+
 
 export type SplitCameraProps = {
   cameras: WatchCamera[]
@@ -20,10 +25,10 @@ export type SplitCameraProps = {
 const SplitCamera = ({ cameras }: SplitCameraProps) => {
   return (
     <CameraGridContainer>
-      <Camera url={cameras[0].watchUrl} name={cameras[0].cameraName} />
-      <Camera url={cameras[1].watchUrl} name={cameras[1].cameraName} />
-      <Camera url={cameras[2].watchUrl} name={cameras[2].cameraName} />
-      <Camera url={cameras[3].watchUrl} name={cameras[3].cameraName} />
+      <CameraContainer ><Camera url={cameras[0].watchUrl} name={cameras[0].cameraName} /> </CameraContainer>
+      <CameraContainer ><Camera url={cameras[1].watchUrl} name={cameras[1].cameraName} /> </CameraContainer>
+      <CameraContainer ><Camera url={cameras[2].watchUrl} name={cameras[2].cameraName} /> </CameraContainer>
+      <CameraContainer ><Camera url={cameras[3].watchUrl} name={cameras[3].cameraName} /> </CameraContainer>
     </CameraGridContainer>
   );
 };
