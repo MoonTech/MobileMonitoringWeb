@@ -9,7 +9,7 @@ const CameraOutside = styled.div`
 `;
 
 const MainCameraContainer = styled.div`
-  height: 95%;
+  height: 90%;
   flex: 3;
   display: flex;
   margin: 10px;

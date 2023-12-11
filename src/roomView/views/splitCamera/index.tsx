@@ -7,7 +7,7 @@ const CameraGridContainer = styled.div`
   flex: 3;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-row: auto 50% 50%;
+  grid-row: 50% 50%;
   grid-column-gap: 10px;
   grid-row-gap: 10px;
 `;
