@@ -34,6 +34,7 @@ export const Camera = ({ url, name, onClick }: CameraProps) => {
     <CameraContainer onClick={onClick}>
       <ReactPlayer
         url={url}
+        height="100%"
         muted={true}
         playing={true}
       />
