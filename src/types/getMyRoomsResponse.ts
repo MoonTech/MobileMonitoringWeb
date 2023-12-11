@@ -1,5 +1,5 @@
-import { Room } from "./room"
+import { RoomNameRoom } from "./roomNameRoom"
 
 export type GetMyRoomsResponse = {
-  rooms: Room[]
+  rooms: RoomNameRoom[]
 }
