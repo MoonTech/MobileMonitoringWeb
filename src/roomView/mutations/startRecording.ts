@@ -1,14 +1,17 @@
 import { useMutation, useQueryClient } from "react-query";
 import { useCache } from "../../contexts/dataCacheContext";
 import { SERVER_URL } from "../../serverUrl";
+import { RecordRequest } from "../../types/recordRequest";
 
-export const useAcceptCamera = (roomName: string) => {
+export const useStartRecording = (cameraId: string) => {
   const { userData } = useCache();
   const queryClient = useQueryClient();
+
   const { mutateAsync } = useMutation(
-    async (cameraId: string) =>
-      fetch(SERVER_URL + "camera/" + cameraId, {
+    async () =>
+      fetch(SERVER_URL + "videoserver/record/start", {
         method: "PUT",
+        body: JSON.stringify({ cameraId: cameraId } as RecordRequest),
         headers: {
           authorization: `Bearer ${userData?.token}`,
           "Content-Type": "application/json",
@@ -16,11 +19,8 @@ export const useAcceptCamera = (roomName: string) => {
       }),
     {
       onSuccess: async () => {
-        console.log("Rejection successfully accepted");
-        queryClient.invalidateQueries({
-          queryKey: ["room-cameras-accept-" + roomName],
-        });
-        queryClient.invalidateQueries({ queryKey: ["watch-room-" + roomName] });
+        console.log("recording successfully accepted");
+        queryClient.invalidateQueries({ queryKey: ["check-" + cameraId] });
       },
       onError: (error) => {
         console.log(error);

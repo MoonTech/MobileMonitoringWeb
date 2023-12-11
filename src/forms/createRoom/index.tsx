@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useCreateRoom } from "../../mutations/createRoom";
 import {
   AuthorizationForm,
   Button,
@@ -6,7 +7,6 @@ import {
   ErrorMessage,
   Header,
   Input,
-  StyledLink,
 } from "../components";
 
 const CreateRoom: React.FC = () => {
@@ -14,8 +14,9 @@ const CreateRoom: React.FC = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const mutateAsync = useCreateRoom();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!roomName || !password || !confirmPassword) {
@@ -27,7 +28,10 @@ const CreateRoom: React.FC = () => {
       setRoomName("");
       setPassword("");
       setConfirmPassword("");
-      // Perform room creation logic here (e.g., API call to create room)
+      const token = await mutateAsync({ name: roomName, password: password });
+      if (!token) {
+        setError("Could not create room");
+      }
     }
   };
 
@@ -55,7 +59,6 @@ const CreateRoom: React.FC = () => {
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
         <Button type="submit">Create Room</Button>
-        <StyledLink to="/login">Go to Login</StyledLink>
       </AuthorizationForm>
     </Container>
   );

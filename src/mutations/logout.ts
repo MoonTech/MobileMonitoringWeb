@@ -3,17 +3,18 @@ import { useCache } from "../contexts/dataCacheContext";
 import { SERVER_URL } from "../serverUrl";
 
 export const useLogout = () => {
-  const { /*userData,*/ setUserData } = useCache();
+  const { userData, setUserData } = useCache();
   const { mutateAsync } = useMutation(
     async () => {
       console.log(SERVER_URL + "user/logout");
-      // return fetch(SERVER_URL + "user/logout", {
-      //   method: "DELETE",
-      //   headers: {
-      //     authorization: `Bearer ${userData?.token}`,
-      //   },
-      // });
+      var res = fetch(SERVER_URL + "user/logout", {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${userData?.token}`,
+        },
+      });
       setUserData(null);
+      return res;
     },
     {
       onSuccess: async () => {

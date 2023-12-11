@@ -1,25 +1,34 @@
 import { useMutation } from "react-query";
 import { useCache, UserData } from "../contexts/dataCacheContext";
-// import { SERVER_URL } from "../serverUrl";
+import { SERVER_URL } from "../serverUrl";
 import { LoginRequest } from "../types/loginRequest";
 
 export const useLogin = () => {
   const { setUserData } = useCache();
   const { mutateAsync } = useMutation(
     async (request: LoginRequest) => {
-      // return fetch(SERVER_URL + "user/login", {
-      //   method: "POST",
-      //   body: JSON.stringify(request),
-      //   headers: {
-      //     "Content-Type": "application/json"
-      //   },
-      // })
-      // .then(res => res.json())
-      // .then(res => {
-      //   setUserData({ token: res.accessToken, name: request.login } as UserData)
-      // });
-      setUserData({ token: "essatoken", name: request.login } as UserData);
-      return true;
+      return fetch(SERVER_URL + "user/login", {
+        method: "POST",
+        body: JSON.stringify(request),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((res) => {
+          console.log("chuj");
+          setUserData({
+            token: res.accessToken,
+            name: request.login,
+          } as UserData);
+          console.log({
+            token: res.accessToken,
+            name: request.login,
+          } as UserData);
+          return { token: res.accessToken, name: request.login } as UserData;
+        });
     },
     {
       onSuccess: async () => {

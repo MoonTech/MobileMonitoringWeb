@@ -29,12 +29,13 @@ const SignUp: React.FC = () => {
     } else {
       setName("");
       setPassword("");
-      setConfirmPassword("");
+      setConfirmPassword("LOADING");
       const result = await mutateAsync({ password: password, login: name });
       if (result) {
         navigate("../room/add");
       } else {
         setError("Sign up failed, please try again");
+        setConfirmPassword("");
       }
     }
   };

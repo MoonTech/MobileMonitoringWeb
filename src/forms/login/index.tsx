@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useCache } from "../../contexts/dataCacheContext";
 import { useLogin } from "../../mutations/login";
 import { LoginRequest } from "../../types/loginRequest";
@@ -17,8 +17,8 @@ const Login: React.FC = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
-  const { userData } = useCache();
+  // const navigate = useNavigate();
+  const { userData, setUserData } = useCache();
   const mutateAsync = useLogin();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,8 +33,10 @@ const Login: React.FC = () => {
         login: name,
         password: password,
       } as LoginRequest);
+      console.log(result);
       if (result) {
-        navigate("../room/add");
+        console.log(result);
+        setUserData(result);
       } else {
         setError("Login failed, please try again");
       }

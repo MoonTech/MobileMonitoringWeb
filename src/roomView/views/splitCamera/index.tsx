@@ -1,44 +1,41 @@
-import ReactPlayer from "react-player";
 import { styled } from "styled-components";
+import { WatchCamera } from "../../../types/watchCamera";
+import { Camera } from "../../components/camera";
 
 const CameraGridContainer = styled.div`
   height: 100%;
   flex: 3;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-row: auto auto;
+  grid-row: 30vh 30vh;
   grid-column-gap: 10px;
   grid-row-gap: 10px;
 `;
 
-const CameraBoxContainer = styled.div`
-  background-color: #333;
-  border-radius: 10px;
-  color: #fff;
-  margin: 5px;
+const CameraContainer = styled.div`
+  height: 40vh;
+  max-height: 40vh;
 `;
 
-const CameraBox = () => {
-  return (
-    <CameraBoxContainer>
-      <ReactPlayer
-        url={"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"}
-        height="100%"
-        width="100%"
-        muted={true}
-        playing={true}
-      />
-    </CameraBoxContainer>
-  );
+export type SplitCameraProps = {
+  cameras: WatchCamera[];
 };
 
-const SplitCamera = () => {
+const SplitCamera = ({ cameras }: SplitCameraProps) => {
   return (
     <CameraGridContainer>
-      <CameraBox />
-      <CameraBox />
-      <CameraBox />
-      <CameraBox />
+      <CameraContainer>
+        <Camera url={cameras[0].watchUrl} name={cameras[0].cameraName} />{" "}
+      </CameraContainer>
+      <CameraContainer>
+        <Camera url={cameras[1].watchUrl} name={cameras[1].cameraName} />{" "}
+      </CameraContainer>
+      <CameraContainer>
+        <Camera url={cameras[2].watchUrl} name={cameras[2].cameraName} />{" "}
+      </CameraContainer>
+      <CameraContainer>
+        <Camera url={cameras[3].watchUrl} name={cameras[3].cameraName} />{" "}
+      </CameraContainer>
     </CameraGridContainer>
   );
 };

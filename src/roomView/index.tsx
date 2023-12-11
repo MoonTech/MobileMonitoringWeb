@@ -13,6 +13,7 @@ import SingleCamera from "./views/singleCamera";
 import SplitCamera from "./views/splitCamera";
 import AcceptCameras from "./views/acceptCameras";
 import { useWatchRoom } from "./queries/watchRoom";
+import { useState } from "react";
 
 const MainCameraContainer = styled.div`
   height: 100%;
@@ -20,17 +21,36 @@ const MainCameraContainer = styled.div`
   display: flex;
 `;
 
+const CameraContainer = styled.div`
+  height: 250px;
+  max-height: 250px;
+`;
+
 export const RoomView = () => {
   const location = useLocation();
   const { id } = useParams();
   const screenType = location.pathname.split("/").at(-1);
-  const cameras = useWatchRoom("roomname");
+  const cameras = useWatchRoom(id!);
+  console.log(cameras);
+  const [singleCamera, setSingleCamera] = useState(
+    screenType === "single" ? cameras.data?.connectedCameras[0] : null,
+  );
+  const [splitCameras, setSplitCameras] = useState(
+    screenType === "split" ? cameras.data?.connectedCameras : null,
+  );
+
   return (
     <Container>
       <MainCameraContainer>
         <Routes key={location.pathname} location={location}>
-          <Route path="single" element={<SingleCamera />} />
-          <Route path="split" element={<SplitCamera />} />
+          <Route
+            path="single"
+            element={<SingleCamera camera={singleCamera ?? undefined} />}
+          />
+          <Route
+            path="split"
+            element={<SplitCamera cameras={splitCameras!} />}
+          />
           <Route path="accept" element={<AcceptCameras />} />
           <Route path="*" element={<h1>404</h1>} />
         </Routes>
@@ -57,11 +77,22 @@ export const RoomView = () => {
           </SideMenuOption>
         </SideMenuContainer>
         <CameraListContainer>
-          {cameras.response.map((camera) => (
-            <Camera
-              url={"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"}
-              name={camera.name}
-            />
+          {cameras.data?.connectedCameras.map((camera) => (
+            <CameraContainer>
+              <Camera
+                url={camera.watchUrl}
+                onClick={() => {
+                  if (screenType === "split") {
+                    setSplitCameras([]);
+                  }
+                  if (screenType === "single") {
+                    setSingleCamera(camera);
+                  }
+                }}
+                name={camera.cameraName}
+                key={camera.id}
+              />
+            </CameraContainer>
           ))}
         </CameraListContainer>
       </SideBarContainer>

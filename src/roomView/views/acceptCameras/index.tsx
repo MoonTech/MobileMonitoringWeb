@@ -1,10 +1,10 @@
 import { styled } from "styled-components";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import { useCameraToAccept } from "../../queries/getCamerasToAccept";
 import { useParams } from "react-router-dom";
 import { useAcceptCamera } from "../../mutations/acceptCamera";
 import { useRejectCamera } from "../../mutations/rejectCamera";
+import { useGetCameraToAccept } from "../../queries/getCamerasToAccept";
 
 const Content = styled.div`
   width: 100%;
@@ -70,16 +70,17 @@ const MiddleContainer = styled.div`
 
 type CameraElementProps = {
   cameraName: string;
+  roomName: string;
 };
 
 const CameraElement = (props: CameraElementProps) => {
-  const acceptCamera = useAcceptCamera();
-  const rejectCamera = useRejectCamera();
+  const acceptCamera = useAcceptCamera(props.roomName);
+  const rejectCamera = useRejectCamera(props.roomName);
   return (
     <CameraElementContainer>
       <ClickContainer
         onClick={async () => {
-          await acceptCamera(props.cameraName);
+          await rejectCamera(props.cameraName);
         }}
         accept={false}
         className="left"
@@ -91,7 +92,7 @@ const CameraElement = (props: CameraElementProps) => {
       </MiddleContainer>
       <ClickContainer
         onClick={async () => {
-          await rejectCamera(props.cameraName);
+          await acceptCamera(props.cameraName);
         }}
         accept={true}
         className="right"
@@ -108,13 +109,17 @@ const Title = styled.h1`
 
 const AcceptCameras = () => {
   const { id } = useParams();
-  const cameras = useCameraToAccept(id as string);
+  const cameras = useGetCameraToAccept(id as string);
   return (
     <Content>
       <List>
         <Title>Accept cameras for room: {id}</Title>
         {cameras.response?.map((camera) => (
-          <CameraElement cameraName={camera.id} key={camera.id} />
+          <CameraElement
+            cameraName={camera.id}
+            key={camera.id}
+            roomName={id as string}
+          />
         ))}
       </List>
     </Content>
