@@ -15,7 +15,7 @@ const MainCameraContainer = styled.div`
   height: 100%;
   flex: 3;
   display: flex;
-  direction: row;
+  direction: column;
 `;
 
 export type SingleCameraProps = {
@@ -26,10 +26,11 @@ const RecordContainer = styled.div`
   width: 100%;
   flex: 1;
   background-color: ${(props) => props.theme.colors.red};
-  background-color: ${(props) => props.theme.colors.light};
+  color: ${(props) => props.theme.colors.light};
   border-radius: 10px;
+  font-size: 30px;
   &:hover{
-  background-color: ${(props) => props.theme.colors.redDark};
+    background-color: ${(props) => props.theme.colors.redDark};
     cursor: pointer;
   }
 `
