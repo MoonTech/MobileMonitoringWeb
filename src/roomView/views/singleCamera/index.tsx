@@ -22,6 +22,7 @@ export type SingleCameraProps = {
 
 const RecordContainer = styled.div`
   height: 50px;
+  width: 100px;
   background-color: red;
   &:hover{
     background-color: blue;
