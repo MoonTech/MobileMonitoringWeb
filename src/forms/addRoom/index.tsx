@@ -26,7 +26,10 @@ const AddRoom: React.FC = () => {
       setError("");
       setRoomName("");
       setPassword("");
-      const token = await mutateAsync({ roomName: roomName, password: password });
+      const token = await mutateAsync({
+        roomName: roomName,
+        password: password,
+      });
       if (token) {
         setList([...list, { name: roomName, accessToken: token }]);
       } else {

@@ -51,12 +51,12 @@ const ClickContainer = styled.div<{ accept: boolean }>`
   }
   &:hover {
     background-color: ${(props) =>
-                props.accept ? props.theme.colors.green : props.theme.colors.red};
+      props.accept ? props.theme.colors.green : props.theme.colors.red};
     .icon {
       color: ${(props) =>
-                props.accept
-                        ? props.theme.colors.greenDark
-                        : props.theme.colors.redDark};
+        props.accept
+          ? props.theme.colors.greenDark
+          : props.theme.colors.redDark};
       font-size: 50px;
     }
   }
@@ -69,38 +69,38 @@ const MiddleContainer = styled.div`
 `;
 
 type CameraElementProps = {
-        cameraName: string;
-        roomName: string;
+  cameraName: string;
+  roomName: string;
 };
 
 const CameraElement = (props: CameraElementProps) => {
-        const acceptCamera = useAcceptCamera(props.roomName);
-        const rejectCamera = useRejectCamera(props.roomName);
-        return (
-                <CameraElementContainer>
-                        <ClickContainer
-                                onClick={async () => {
-                                        await rejectCamera(props.cameraName);
-                                }}
-                                accept={false}
-                                className="left"
-                        >
-                                <CloseIcon fontSize="inherit" className="icon" />
-                        </ClickContainer>
-                        <MiddleContainer>
-                                <h1>Camera: {props.cameraName}</h1>
-                        </MiddleContainer>
-                        <ClickContainer
-                                onClick={async () => {
-                                        await acceptCamera(props.cameraName);
-                                }}
-                                accept={true}
-                                className="right"
-                        >
-                                <CheckIcon fontSize="inherit" className="icon" />
-                        </ClickContainer>
-                </CameraElementContainer>
-        );
+  const acceptCamera = useAcceptCamera(props.roomName);
+  const rejectCamera = useRejectCamera(props.roomName);
+  return (
+    <CameraElementContainer>
+      <ClickContainer
+        onClick={async () => {
+          await rejectCamera(props.cameraName);
+        }}
+        accept={false}
+        className="left"
+      >
+        <CloseIcon fontSize="inherit" className="icon" />
+      </ClickContainer>
+      <MiddleContainer>
+        <h1>Camera: {props.cameraName}</h1>
+      </MiddleContainer>
+      <ClickContainer
+        onClick={async () => {
+          await acceptCamera(props.cameraName);
+        }}
+        accept={true}
+        className="right"
+      >
+        <CheckIcon fontSize="inherit" className="icon" />
+      </ClickContainer>
+    </CameraElementContainer>
+  );
 };
 
 const Title = styled.h1`
@@ -108,18 +108,22 @@ const Title = styled.h1`
 `;
 
 const AcceptCameras = () => {
-        const { id } = useParams();
-        const cameras = useGetCameraToAccept(id as string);
-        return (
-                <Content>
-                        <List>
-                                <Title>Accept cameras for room: {id}</Title>
-                                {cameras.response?.map((camera) => (
-                                        <CameraElement cameraName={camera.id} key={camera.id} roomName={id as string} />
-                                ))}
-                        </List>
-                </Content>
-        );
+  const { id } = useParams();
+  const cameras = useGetCameraToAccept(id as string);
+  return (
+    <Content>
+      <List>
+        <Title>Accept cameras for room: {id}</Title>
+        {cameras.response?.map((camera) => (
+          <CameraElement
+            cameraName={camera.id}
+            key={camera.id}
+            roomName={id as string}
+          />
+        ))}
+      </List>
+    </Content>
+  );
 };
 
 export default AcceptCameras;

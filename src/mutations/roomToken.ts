@@ -10,11 +10,11 @@ export const useRoomToken = () => {
         method: "POST",
         body: JSON.stringify(request),
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
       })
-        .then(res => res.json())
-        .then(res => (res as PostRoomTokenResponse).accessToken)
+        .then((res) => res.json())
+        .then((res) => (res as PostRoomTokenResponse).accessToken);
     },
     {
       onSuccess: async () => {

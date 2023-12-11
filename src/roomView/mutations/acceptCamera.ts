@@ -4,7 +4,7 @@ import { SERVER_URL } from "../../serverUrl";
 
 export const useAcceptCamera = (roomName: string) => {
   const { userData } = useCache();
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const { mutateAsync } = useMutation(
     async (cameraId: string) =>
       fetch(SERVER_URL + "camera/" + cameraId, {
@@ -17,8 +17,10 @@ export const useAcceptCamera = (roomName: string) => {
     {
       onSuccess: async () => {
         console.log("Rejection successfully accepted");
-        queryClient.invalidateQueries({ queryKey: ['room-cameras-accept-' + roomName] })
-        queryClient.invalidateQueries({ queryKey: ['watch-room-' + roomName] })
+        queryClient.invalidateQueries({
+          queryKey: ["room-cameras-accept-" + roomName],
+        });
+        queryClient.invalidateQueries({ queryKey: ["watch-room-" + roomName] });
       },
       onError: (error) => {
         console.log(error);

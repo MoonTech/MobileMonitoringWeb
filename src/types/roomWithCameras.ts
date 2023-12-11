@@ -4,4 +4,3 @@ export type RoomWithCameras = {
   roomName: string;
   cameras: Camera[];
 };
-

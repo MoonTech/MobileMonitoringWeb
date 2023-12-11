@@ -4,23 +4,29 @@ import { SERVER_URL } from "../serverUrl";
 import { LoginRequest } from "../types/loginRequest";
 
 export const useLogin = () => {
-  const { setUserData, userData } = useCache();
+  const { setUserData } = useCache();
   const { mutateAsync } = useMutation(
     async (request: LoginRequest) => {
       return fetch(SERVER_URL + "user/login", {
         method: "POST",
         body: JSON.stringify(request),
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
       })
-        .then(res => {
+        .then((res) => {
           return res.json();
         })
-        .then(res => {
-          console.log("chuj")
-          setUserData({ token: res.accessToken, name: request.login } as UserData)
-          console.log({ token: res.accessToken, name: request.login } as UserData)
+        .then((res) => {
+          console.log("chuj");
+          setUserData({
+            token: res.accessToken,
+            name: request.login,
+          } as UserData);
+          console.log({
+            token: res.accessToken,
+            name: request.login,
+          } as UserData);
           return { token: res.accessToken, name: request.login } as UserData;
         });
     },

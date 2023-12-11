@@ -11,12 +11,15 @@ export const useSignUp = () => {
         method: "POST",
         body: JSON.stringify(request),
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
       })
-        .then(res => res.json())
-        .then(res => {
-          setUserData({ token: res.accessToken, name: request.login } as UserData)
+        .then((res) => res.json())
+        .then((res) => {
+          setUserData({
+            token: res.accessToken,
+            name: request.login,
+          } as UserData);
           return true;
         });
     },

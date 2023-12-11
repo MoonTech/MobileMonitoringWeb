@@ -4,7 +4,7 @@ import { useCache } from "../contexts/dataCacheContext";
 import AddIcon from "@mui/icons-material/Add";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { RoomView } from "../roomView";
-import CreateIcon from '@mui/icons-material/Create';
+import CreateIcon from "@mui/icons-material/Create";
 import CreateRoom from "../forms/createRoom";
 import { useGetMyRooms } from "../queries/myRooms";
 import { Room } from "../types/room";
@@ -106,24 +106,31 @@ const Container = styled.div`
 const Home = () => {
   const { list, userData } = useCache();
   const myRooms = useGetMyRooms();
-  const roomsMapped = myRooms.isLoading ? [] : myRooms.data!.rooms.map(room => ({ name: room.roomName, accessToken: "" } as Room))
+  const roomsMapped = myRooms.isLoading
+    ? []
+    : myRooms.data!.rooms.map(
+        (room) => ({ name: room.roomName, accessToken: "" }) as Room,
+      );
   const location = useLocation();
   const navigate = useNavigate();
-  const roomList = [...roomsMapped, ...list]
+  const roomList = [...roomsMapped, ...list];
 
   return (
     <Container>
       <Bar>
-        {roomList.map((room) => (
-          room ?
+        {roomList.map((room) =>
+          room ? (
             <RoomElement
               key={room.name}
               name={room.name}
               onClick={() => navigate(`${room.name}/single`)}
-            /> : <></>
-        ))}
+            />
+          ) : (
+            <></>
+          ),
+        )}
         <AddRoomElement onClick={() => navigate("add")} />
-        {userData ? (<NewRoomElement onClick={() => navigate("new")} />) : (<></>)}
+        {userData ? <NewRoomElement onClick={() => navigate("new")} /> : <></>}
       </Bar>
       <Content>
         <Routes key={location.pathname} location={location}>
@@ -132,7 +139,7 @@ const Home = () => {
           <Route path=":id/*" element={<RoomView />} />
         </Routes>
       </Content>
-    </Container >
+    </Container>
   );
 };
 

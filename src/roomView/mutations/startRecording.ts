@@ -5,7 +5,7 @@ import { RecordRequest } from "../../types/recordRequest";
 
 export const useStartRecording = (cameraId: string) => {
   const { userData } = useCache();
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const { mutateAsync } = useMutation(
     async () =>
@@ -20,7 +20,7 @@ export const useStartRecording = (cameraId: string) => {
     {
       onSuccess: async () => {
         console.log("recording successfully accepted");
-        queryClient.invalidateQueries({ queryKey: ['check-' + cameraId] })
+        queryClient.invalidateQueries({ queryKey: ["check-" + cameraId] });
       },
       onError: (error) => {
         console.log(error);
@@ -30,4 +30,3 @@ export const useStartRecording = (cameraId: string) => {
 
   return mutateAsync;
 };
-

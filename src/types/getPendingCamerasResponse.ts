@@ -1,5 +1,5 @@
-import { Camera } from "./camera"
+import { Camera } from "./camera";
 
 export type GetPendingCamerasResponse = {
-  pendingCameras: Camera[]
-}
+  pendingCameras: Camera[];
+};

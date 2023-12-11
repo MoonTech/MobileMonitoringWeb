@@ -18,7 +18,7 @@ export const CameraContainer = styled.div`
 //   width: 100%;
 //   display: flex;
 //   justify-content: center;
-//   align-items: center;  
+//   align-items: center;
 //   color: ${(props) => props.theme.colors.light};
 // `
 
@@ -26,7 +26,7 @@ export type CameraProps = {
   url: string;
   name: string;
   onClick?: any;
-}
+};
 
 export const Camera = ({ url, name, onClick }: CameraProps) => {
   return (

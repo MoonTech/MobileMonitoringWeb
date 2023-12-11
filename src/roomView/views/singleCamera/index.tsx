@@ -20,8 +20,8 @@ const MainCameraContainer = styled.div`
 `;
 
 export type SingleCameraProps = {
-  camera?: WatchCamera,
-}
+  camera?: WatchCamera;
+};
 
 const RecordContainer = styled.div`
   width: 100%;
@@ -32,30 +32,33 @@ const RecordContainer = styled.div`
   font-size: 30px;
   vertically-align: middle;
   justify-text: center;
-  &:hover{
+  &:hover {
     background-color: ${(props) => props.theme.colors.redDark};
     cursor: pointer;
   }
-`
+`;
 
 const SingleCamera = ({ camera }: SingleCameraProps) => {
-  const end = useEndRecording(camera?.id ?? "")
-  const start = useStartRecording(camera?.id ?? "")
-  const check = useCheckCamera(camera?.id ?? "")
+  const end = useEndRecording(camera?.id ?? "");
+  const start = useStartRecording(camera?.id ?? "");
+  const check = useCheckCamera(camera?.id ?? "");
   return (
     <MainCameraContainer>
       <CameraOutside>
-        <Camera url={camera?.watchUrl ?? ""} name={camera?.cameraName ?? "name"} />
+        <Camera
+          url={camera?.watchUrl ?? ""}
+          name={camera?.cameraName ?? "name"}
+        />
       </CameraOutside>
       <RecordContainer
         onClick={() => {
           if (check.response) {
             start();
           } else {
-            end()
+            end();
           }
-        }
-        } >
+        }}
+      >
         {check.response ? "RECORD" : "STOP RECORDING"}
       </RecordContainer>
     </MainCameraContainer>

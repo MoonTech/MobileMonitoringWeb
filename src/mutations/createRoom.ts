@@ -16,8 +16,8 @@ export const useCreateRoom = () => {
           authorization: `Bearer ${userData?.token}`,
         },
       })
-        .then(res => res.json())
-        .then(res => (res as PostRoomResponse).roomName)
+        .then((res) => res.json())
+        .then((res) => (res as PostRoomResponse).roomName);
     },
     {
       onSuccess: async () => {

@@ -24,7 +24,7 @@ const MainCameraContainer = styled.div`
 const CameraContainer = styled.div`
   height: 250px;
   max-height: 250px;
-`
+`;
 
 export const RoomView = () => {
   const location = useLocation();
@@ -32,15 +32,25 @@ export const RoomView = () => {
   const screenType = location.pathname.split("/").at(-1);
   const cameras = useWatchRoom(id!);
   console.log(cameras);
-  const [singleCamera, setSingleCamera] = useState(screenType === 'single' ? cameras.data?.connectedCameras[0] : null);
-  const [splitCameras, setSplitCameras] = useState(screenType === 'split' ? cameras.data?.connectedCameras : null);
+  const [singleCamera, setSingleCamera] = useState(
+    screenType === "single" ? cameras.data?.connectedCameras[0] : null,
+  );
+  const [splitCameras, setSplitCameras] = useState(
+    screenType === "split" ? cameras.data?.connectedCameras : null,
+  );
 
   return (
     <Container>
       <MainCameraContainer>
         <Routes key={location.pathname} location={location}>
-          <Route path="single" element={<SingleCamera camera={singleCamera ?? undefined} />} />
-          <Route path="split" element={<SplitCamera cameras={splitCameras!} />} />
+          <Route
+            path="single"
+            element={<SingleCamera camera={singleCamera ?? undefined} />}
+          />
+          <Route
+            path="split"
+            element={<SplitCamera cameras={splitCameras!} />}
+          />
           <Route path="accept" element={<AcceptCameras />} />
           <Route path="*" element={<h1>404</h1>} />
         </Routes>

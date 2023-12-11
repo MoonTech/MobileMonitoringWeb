@@ -7,22 +7,23 @@ import { WatchRoomResponse } from "../../types/watchRoomResponse";
 
 export const useWatchRoom = (roomName: string) => {
   const { userData, list } = useCache();
-  const roomIndex = list.findIndex(el => el.name === roomName)
-  const query = useQuery<WatchRoomResponse>(
-    `watch-room-` + roomName,
-    () =>
-      fetch(SERVER_URL + "room/watch", {
-        method: "POST",
-        body: JSON.stringify({ roomName } as WatchRoomRequest),
-        headers: {
-          authorization: `Bearer ${roomIndex === -1 ? userData?.token : list[roomIndex].accessToken}`,
-          "Content-Type": "application/json",
-        },
-      }).then((res) => res.json())
-        .then(res => {
-          console.log(res)
-          return ({ ...res } as WatchRoomResponse)
-        })
+  const roomIndex = list.findIndex((el) => el.name === roomName);
+  const query = useQuery<WatchRoomResponse>(`watch-room-` + roomName, () =>
+    fetch(SERVER_URL + "room/watch", {
+      method: "POST",
+      body: JSON.stringify({ roomName } as WatchRoomRequest),
+      headers: {
+        authorization: `Bearer ${
+          roomIndex === -1 ? userData?.token : list[roomIndex].accessToken
+        }`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        return { ...res } as WatchRoomResponse;
+      }),
   );
   // console.log(roomName);
   // const cameras = [
