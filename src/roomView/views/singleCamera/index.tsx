@@ -8,8 +8,8 @@ import { useCheckCamera } from "../../queries/getRecordigState";
 const CameraOutside = styled.div`
   padding: 10px;
   width: 100%;
-  height: 80vh;
-  max-height: 80vh;
+  height: 75vh;
+  max-height: 75vh;
 `;
 
 const MainCameraContainer = styled.div`
@@ -40,14 +40,21 @@ const SingleCamera = ({ camera }: SingleCameraProps) => {
   const end = useEndRecording(camera?.id ?? "")
   const start = useStartRecording(camera?.id ?? "")
   const check = useCheckCamera(camera?.id ?? "")
+  console.log("ooooooo")
+  console.log(check)
   return (
     <MainCameraContainer>
       <CameraOutside>
         <Camera url={camera?.watchUrl ?? ""} name={camera?.cameraName ?? "name"} />
       </CameraOutside>
       <RecordContainer
-        onClick={() =>
-          check ? start() : end()
+        onClick={() => {
+          if (check) {
+            start();
+          } else {
+            end()
+          }
+        }
         } >
         {check ? "RECORD" : "STOP RECORDING"}
       </RecordContainer>
