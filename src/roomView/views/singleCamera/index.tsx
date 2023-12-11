@@ -31,12 +31,22 @@ const RecordContainer = styled.div`
 `
 
 const SingleCamera = ({ camera }: SingleCameraProps) => {
-  const isReady = useCheckCamera(camera?.id ?? "");
+  let isReady = useCheckCamera(camera?.id ?? "");
   const end = useEndRecording()
   const start = useStartRecording()
   return (
     <MainCameraContainer>
-      <RecordContainer onClick={() => isReady ? start({ cameraId: camera?.id ?? "" }) : end({ cameraId: camera?.id ?? "" })} />
+      <RecordContainer onClick={() => {
+        if (isReady) {
+          start({ cameraId: camera?.id ?? "" })
+          isReady = { response: false }
+        }
+        else {
+          end({ cameraId: camera?.id ?? "" })
+        }
+        isReady = { response: true }
+      }
+      } />
       <CameraOutside>
         <Camera url={camera?.watchUrl ?? ""} name={camera?.cameraName ?? "name"} />
       </CameraOutside>
