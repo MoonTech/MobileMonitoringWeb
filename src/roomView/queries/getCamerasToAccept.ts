@@ -6,7 +6,7 @@ import { Camera } from "../../types/camera";
 export const useGetCameraToAccept = (roomName: string) => {
   const { userData } = useCache();
   const query = useQuery<Camera[]>(
-    `room-cameras-accept`,
+    `room-cameras-accept-` + roomName,
     () =>
       fetch(SERVER_URL + "room/" + roomName, {
         method: "GET",

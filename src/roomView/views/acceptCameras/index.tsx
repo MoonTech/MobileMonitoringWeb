@@ -70,11 +70,12 @@ const MiddleContainer = styled.div`
 
 type CameraElementProps = {
         cameraName: string;
+        roomName: string;
 };
 
 const CameraElement = (props: CameraElementProps) => {
-        const acceptCamera = useAcceptCamera();
-        const rejectCamera = useRejectCamera();
+        const acceptCamera = useAcceptCamera(props.roomName);
+        const rejectCamera = useRejectCamera(props.roomName);
         return (
                 <CameraElementContainer>
                         <ClickContainer
@@ -114,7 +115,7 @@ const AcceptCameras = () => {
                         <List>
                                 <Title>Accept cameras for room: {id}</Title>
                                 {cameras.response?.map((camera) => (
-                                        <CameraElement cameraName={camera.id} key={camera.id} />
+                                        <CameraElement cameraName={camera.id} key={camera.id} roomName={id as string} />
                                 ))}
                         </List>
                 </Content>
