@@ -19,19 +19,15 @@ export const useEndRecording = (cameraId: string) => {
       }).then(res => res.blob()).then(res => {
         const blobUrl = URL.createObjectURL(res);
 
-        // Create an anchor element
         const a = document.createElement('a');
         a.href = blobUrl;
-        a.download = 'video-' + cameraId + '.flv'; // Set the desired file name
+        a.download = 'video-' + cameraId + '.flv';
 
-        // Append the anchor to the body and click it
         document.body.appendChild(a);
         a.click();
 
-        // Remove the anchor from the body
         document.body.removeChild(a);
 
-        // Revoke the blob URL to free up resources
         URL.revokeObjectURL(blobUrl);
         return true;
       })
