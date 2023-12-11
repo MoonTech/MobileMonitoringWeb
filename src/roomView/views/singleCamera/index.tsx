@@ -2,20 +2,18 @@ import { styled } from "styled-components";
 import { WatchCamera } from "../../../types/watchCamera";
 import { Camera } from "../../components/camera";
 import { useEndRecording } from "../../mutations/endRecording";
-import { useStartRecording } from "../../mutations/startRecording";
-import { useCheckCamera } from "../../queries/getRecordigState";
 
 const CameraOutside = styled.div`
-  padding: 10px;
   width: 100%;
-  flex: 5;
+  flex: 10;
 `;
 
 const MainCameraContainer = styled.div`
-  height: 100%;
+  height: 95%;
   flex: 3;
   display: flex;
-  direction: column;
+  margin: 10px;
+  flex-direction: column;
 `;
 
 export type SingleCameraProps = {
@@ -28,7 +26,9 @@ const RecordContainer = styled.div`
   background-color: ${(props) => props.theme.colors.red};
   color: ${(props) => props.theme.colors.light};
   border-radius: 10px;
-  font-size: 30px;
+  font-size: 60px;
+  font-weight: bold;
+  text-align:center;
   &:hover{
     background-color: ${(props) => props.theme.colors.redDark};
     cursor: pointer;
