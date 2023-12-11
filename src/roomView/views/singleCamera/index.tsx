@@ -36,7 +36,7 @@ const SingleCamera = ({ camera }: SingleCameraProps) => {
   const start = useStartRecording()
   return (
     <MainCameraContainer>
-      <RecordContainer onClick={() => isReady ? start({ cameraId: camera?.id ?? "" }) : end({ cameraId: camera?.id ?? "" })} />
+      <RecordContainer onClick={() => isReady ? end({ cameraId: camera?.id ?? "" }) : start({ cameraId: camera?.id ?? "" })} />
       <CameraOutside>
         <Camera url={camera?.watchUrl ?? ""} name={camera?.cameraName ?? "name"} />
       </CameraOutside>
