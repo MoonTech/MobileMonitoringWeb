@@ -1,6 +1,9 @@
 import { styled } from "styled-components";
 import { WatchCamera } from "../../../types/watchCamera";
 import { Camera } from "../../components/camera";
+import { useEndRecording } from "../../mutations/endRecording";
+import { useStartRecording } from "../../mutations/startRecording";
+import { useCheckCamera } from "../../queries/getRecordigState";
 
 const CameraOutside = styled.div`
   padding: 10px;
@@ -17,9 +20,22 @@ export type SingleCameraProps = {
   camera?: WatchCamera,
 }
 
+const RecordContainer = styled.div`
+  height: 50px;
+  background-color: red;
+  &:hover{
+    background-color: blue;
+    cursor: pointer;
+  }
+`
+
 const SingleCamera = ({ camera }: SingleCameraProps) => {
+  const isReady = useCheckCamera(camera?.id ?? "");
+  const end = useEndRecording()
+  const start = useStartRecording()
   return (
     <MainCameraContainer>
+      <RecordContainer onClick={() => isReady ? start({ cameraId: camera?.id ?? "" }) : end({ cameraId: camera?.id ?? "" })} />
       <CameraOutside>
         <Camera url={camera?.watchUrl ?? ""} name={camera?.cameraName ?? "name"} />
       </CameraOutside>

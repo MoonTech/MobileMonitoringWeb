@@ -14,13 +14,16 @@ import SplitCamera from "./views/splitCamera";
 import AcceptCameras from "./views/acceptCameras";
 import { useWatchRoom } from "./queries/watchRoom";
 import { useState } from "react";
-import { WatchCamera } from "../types/watchCamera";
 
 const MainCameraContainer = styled.div`
   height: 100%;
   flex: 3;
   display: flex;
 `;
+
+const CameraContainer = styled.div`
+  height: 250px;
+`
 
 export const RoomView = () => {
   const location = useLocation();
@@ -64,19 +67,21 @@ export const RoomView = () => {
         </SideMenuContainer>
         <CameraListContainer>
           {cameras.data?.connectedCameras.map((camera) => (
-            <Camera
-              url={camera.watchUrl}
-              onClick={() => {
-                if (screenType === "split") {
-                  setSplitCameras([]);
-                }
-                if (screenType === "single") {
-                  setSingleCamera(camera);
-                }
-              }}
-              name={camera.cameraName}
-              key={camera.id}
-            />
+            <CameraContainer>
+              <Camera
+                url={camera.watchUrl}
+                onClick={() => {
+                  if (screenType === "split") {
+                    setSplitCameras([]);
+                  }
+                  if (screenType === "single") {
+                    setSingleCamera(camera);
+                  }
+                }}
+                name={camera.cameraName}
+                key={camera.id}
+              />
+            </CameraContainer>
           ))}
         </CameraListContainer>
       </SideBarContainer>
