@@ -23,6 +23,7 @@ const MainCameraContainer = styled.div`
 
 const CameraContainer = styled.div`
   height: 250px;
+  max-height: 250px;
 `
 
 export const RoomView = () => {

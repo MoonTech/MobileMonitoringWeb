@@ -2,6 +2,8 @@ import { styled } from "styled-components";
 import { WatchCamera } from "../../../types/watchCamera";
 import { Camera } from "../../components/camera";
 import { useEndRecording } from "../../mutations/endRecording";
+import { useStartRecording } from "../../mutations/startRecording";
+import { useCheckCamera } from "../../queries/getRecordigState";
 
 const CameraOutside = styled.div`
   padding: 10px;
@@ -33,13 +35,20 @@ const RecordContainer = styled.div`
 `
 
 const SingleCamera = ({ camera }: SingleCameraProps) => {
-  const end = useEndRecording()
+  const end = useEndRecording(camera?.id ?? "")
+  const start = useStartRecording(camera?.id ?? "")
+  const check = useCheckCamera(camera?.id ?? "")
   return (
     <MainCameraContainer>
       <CameraOutside>
         <Camera url={camera?.watchUrl ?? ""} name={camera?.cameraName ?? "name"} />
       </CameraOutside>
-      <RecordContainer onClick={() => { end({ cameraId: camera?.id ?? "" }) }} >RECORD</RecordContainer>
+      <RecordContainer
+        onClick={() =>
+          check ? start() : end()
+        } >
+        {check ? "RECORD" : "STOP RECORDING"}
+      </RecordContainer>
     </MainCameraContainer>
   );
 };
