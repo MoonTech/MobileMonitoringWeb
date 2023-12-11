@@ -13,8 +13,8 @@ const CameraGridContainer = styled.div`
 `;
 
 const CameraContainer = styled.div`
-  height: 30vh;
-  max-height: 30vh;
+  height: 40vh;
+  max-height: 40vh;
  `
 
 
