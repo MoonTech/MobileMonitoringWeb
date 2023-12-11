@@ -8,6 +8,8 @@ import { useCheckCamera } from "../../queries/getRecordigState";
 const CameraOutside = styled.div`
   padding: 10px;
   width: 100%;
+  height: 80vh;
+  max-height: 80vh;
 `;
 
 const MainCameraContainer = styled.div`
