@@ -40,8 +40,6 @@ const SingleCamera = ({ camera }: SingleCameraProps) => {
   const end = useEndRecording(camera?.id ?? "")
   const start = useStartRecording(camera?.id ?? "")
   const check = useCheckCamera(camera?.id ?? "")
-  console.log("ooooooo")
-  console.log(check)
   return (
     <MainCameraContainer>
       <CameraOutside>
@@ -49,14 +47,14 @@ const SingleCamera = ({ camera }: SingleCameraProps) => {
       </CameraOutside>
       <RecordContainer
         onClick={() => {
-          if (check) {
+          if (check.response) {
             start();
           } else {
             end()
           }
         }
         } >
-        {check ? "RECORD" : "STOP RECORDING"}
+        {check.response ? "RECORD" : "STOP RECORDING"}
       </RecordContainer>
     </MainCameraContainer>
   );
