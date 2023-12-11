@@ -22,7 +22,7 @@ export const useEndRecording = (cameraId: string) => {
         // Create an anchor element
         const a = document.createElement('a');
         a.href = blobUrl;
-        a.download = 'downloaded-file.txt'; // Set the desired file name
+        a.download = 'video-' + cameraId + '.flv'; // Set the desired file name
 
         // Append the anchor to the body and click it
         document.body.appendChild(a);
