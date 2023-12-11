@@ -1,6 +1,7 @@
+import ReactPlayer from "react-player";
 import { styled } from "styled-components";
 import { WatchCamera } from "../../../types/watchCamera";
-import { Camera } from "../../components/camera";
+import { Camera, CameraContainer } from "../../components/camera";
 import { useEndRecording } from "../../mutations/endRecording";
 
 const CameraOutside = styled.div`
@@ -40,7 +41,15 @@ const SingleCamera = ({ camera }: SingleCameraProps) => {
   return (
     <MainCameraContainer>
       <CameraOutside>
-        <Camera url={camera?.watchUrl ?? ""} name={camera?.cameraName ?? "name"} />
+        <CameraContainer>
+          <ReactPlayer
+            url={camera?.watchUrl}
+            height="70 vh"
+            width="100%"
+            muted={true}
+            playing={true}
+          />
+        </CameraContainer>
       </CameraOutside>
       <RecordContainer onClick={() => { end({ cameraId: camera?.id ?? "" }) }} >RECORD</RecordContainer>
     </MainCameraContainer>

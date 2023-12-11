@@ -1,7 +1,7 @@
 import ReactPlayer from "react-player";
 import { styled } from "styled-components";
 
-const CameraContainer = styled.div`
+export const CameraContainer = styled.div`
   background-color: #333;
   margin-bottom: 10px;
   border: 2px solid black;
@@ -35,6 +35,7 @@ export const Camera = ({ url, name, onClick }: CameraProps) => {
       <ReactPlayer
         url={url}
         height="100%"
+        width="100%"
         muted={true}
         playing={true}
       />
