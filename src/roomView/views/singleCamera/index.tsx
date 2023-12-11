@@ -25,11 +25,13 @@ export type SingleCameraProps = {
 
 const RecordContainer = styled.div`
   width: 100%;
-  height: 80px;
+  height: 150px;
   background-color: ${(props) => props.theme.colors.red};
   color: ${(props) => props.theme.colors.light};
   border-radius: 10px;
   font-size: 30px;
+  vertically-align: middle;
+  justify-text: center;
   &:hover{
     background-color: ${(props) => props.theme.colors.redDark};
     cursor: pointer;
