@@ -1,10 +1,10 @@
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { useCache } from "../../contexts/dataCacheContext";
 import { SERVER_URL } from "../../serverUrl";
 
 export const useRejectCamera = () => {
   const { userData } = useCache();
-
+  const queryClient = useQueryClient()
   const { mutateAsync } = useMutation(
     async (cameraId: string) =>
       fetch(SERVER_URL + "camera/" + cameraId, {
@@ -17,6 +17,7 @@ export const useRejectCamera = () => {
     {
       onSuccess: async () => {
         console.log("Rejection successfully accepted");
+        queryClient.invalidateQueries({ queryKey: ['room-cameras-accept'] })
       },
       onError: (error) => {
         console.log(error);

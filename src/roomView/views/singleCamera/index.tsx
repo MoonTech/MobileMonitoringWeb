@@ -4,14 +4,14 @@ import { Camera } from "../../components/camera";
 import { useEndRecording } from "../../mutations/endRecording";
 
 const CameraOutside = styled.div`
-  maxwidth: 90%;
+  padding: 10px;
+  width: 100%;
 `;
 
 const MainCameraContainer = styled.div`
-  height: 100%;
+  max-height: calc(100% - 150px);
   flex: 3;
   display: flex;
-  margin: 10px;
   flex-direction: column;
 `;
 
@@ -25,8 +25,7 @@ const RecordContainer = styled.div`
   background-color: ${(props) => props.theme.colors.red};
   color: ${(props) => props.theme.colors.light};
   border-radius: 10px;
-  font-size: 60px;
-
+  font-size: 30px;
   &:hover{
     background-color: ${(props) => props.theme.colors.redDark};
     cursor: pointer;

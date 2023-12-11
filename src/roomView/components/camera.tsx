@@ -3,10 +3,9 @@ import { styled } from "styled-components";
 
 export const CameraContainer = styled.div`
   background-color: #333;
-  margin-bottom: 10px;
   border: 2px solid black;
   border-radius: 10px;
-  height: 90%;
+  height: 100%;
   &:hover {
     background-color: #666;
     cursor: pointer;
