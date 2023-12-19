@@ -5,7 +5,6 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import { useCache } from "../contexts/dataCacheContext";
 import { Link } from "react-router-dom";
-import { useLogout } from "../mutations/logout";
 import { useTheme } from "../contexts/themeContext";
 
 const Container = styled.div`
@@ -45,7 +44,6 @@ const HeaderButton = styled.div`
 const Header: React.FC = () => {
   const { userData, setUserData } = useCache();
   const { theme, setTheme } = useTheme();
-  const mutateAsync = useLogout();
   return (
     <Container>
       <Logo>MobileMonitoring</Logo>
@@ -67,7 +65,6 @@ const Header: React.FC = () => {
           <Link to="/login">
             <HeaderButton
               onClick={() => {
-                mutateAsync();
                 setUserData(null);
               }}
             >

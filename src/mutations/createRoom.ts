@@ -1,4 +1,4 @@
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { useCache } from "../contexts/dataCacheContext";
 import { SERVER_URL } from "../serverUrl";
 import { PostRoomRequest } from "../types/postRoomRequest";
@@ -6,9 +6,14 @@ import { PostRoomResponse } from "../types/postRoomResponse";
 
 export const useCreateRoom = () => {
   const { userData } = useCache();
-  const { mutateAsync } = useMutation(
-    async (request: PostRoomRequest) => {
-      return fetch(SERVER_URL + "room", {
+  const queryClient = useQueryClient();
+  const { mutateAsync, isError } = useMutation<
+    PostRoomResponse,
+    unknown,
+    PostRoomRequest
+  >(
+    async (request: PostRoomRequest) =>
+      fetch(SERVER_URL + "room", {
         method: "POST",
         body: JSON.stringify(request),
         headers: {
@@ -16,17 +21,22 @@ export const useCreateRoom = () => {
           authorization: `Bearer ${userData?.token}`,
         },
       })
-        .then((res) => res.json())
-        .then((res) => (res as PostRoomResponse).roomName);
-    },
+        .then((res) => {
+          if (res.ok) return res;
+          throw new Error();
+        })
+        .then((res) => res.json()),
     {
       onSuccess: async () => {
         console.log("creation successful");
+        queryClient.invalidateQueries({
+          queryKey: ["myRooms"],
+        });
       },
       onError: async (error) => {
         console.log(error);
       },
     },
   );
-  return mutateAsync;
+  return { mutateAsync, isError };
 };

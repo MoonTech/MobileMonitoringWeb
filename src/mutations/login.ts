@@ -1,13 +1,18 @@
 import { useMutation } from "react-query";
-import { useCache, UserData } from "../contexts/dataCacheContext";
+import { useCache } from "../contexts/dataCacheContext";
 import { SERVER_URL } from "../serverUrl";
 import { LoginRequest } from "../types/loginRequest";
+import { LoginResponse } from "../types/loginResponse";
 
 export const useLogin = () => {
   const { setUserData } = useCache();
-  const { mutateAsync } = useMutation(
-    async (request: LoginRequest) => {
-      return fetch(SERVER_URL + "user/login", {
+  const { mutateAsync, isError } = useMutation<
+    LoginResponse,
+    unknown,
+    LoginRequest
+  >(
+    async (request) =>
+      fetch(SERVER_URL + "user/login", {
         method: "POST",
         body: JSON.stringify(request),
         headers: {
@@ -15,29 +20,19 @@ export const useLogin = () => {
         },
       })
         .then((res) => {
-          return res.json();
+          if (res.ok) return res;
+          throw new Error();
         })
-        .then((res) => {
-          console.log("chuj");
-          setUserData({
-            token: res.accessToken,
-            name: request.login,
-          } as UserData);
-          console.log({
-            token: res.accessToken,
-            name: request.login,
-          } as UserData);
-          return { token: res.accessToken, name: request.login } as UserData;
-        });
-    },
+        .then((res) => res.json()),
     {
-      onSuccess: async () => {
-        console.log("Login successful");
+      onSuccess: ({ accessToken }, { login }) => {
+        setUserData({ name: login, token: accessToken });
       },
-      onError: async (error) => {
+      onError: (error) => {
         console.log(error);
       },
     },
   );
-  return mutateAsync;
+
+  return { mutateAsync, isError: isError as boolean };
 };

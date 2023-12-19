@@ -17,7 +17,7 @@ const SignUp: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const mutateAsync = useSignUp();
+  const { mutateAsync } = useSignUp();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,13 +29,12 @@ const SignUp: React.FC = () => {
     } else {
       setName("");
       setPassword("");
-      setConfirmPassword("LOADING");
-      const result = await mutateAsync({ password: password, login: name });
-      if (result) {
+      setConfirmPassword("");
+      try {
+        await mutateAsync({ password, login: name });
         navigate("../room/add");
-      } else {
+      } catch {
         setError("Sign up failed, please try again");
-        setConfirmPassword("");
       }
     }
   };

@@ -14,7 +14,7 @@ const AddRoom: React.FC = () => {
   const [roomName, setRoomName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const mutateAsync = useRoomToken();
+  const { mutateAsync } = useRoomToken();
   const { list, setList } = useCache();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -26,13 +26,13 @@ const AddRoom: React.FC = () => {
       setError("");
       setRoomName("");
       setPassword("");
-      const token = await mutateAsync({
-        roomName: roomName,
-        password: password,
-      });
-      if (token) {
+      try {
+        const token = await mutateAsync({
+          roomName: roomName,
+          password: password,
+        });
         setList([...list, { name: roomName, accessToken: token }]);
-      } else {
+      } catch {
         setError("Could not add room");
       }
     }
