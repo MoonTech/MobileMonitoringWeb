@@ -17,6 +17,10 @@ export const useEndRecording = (cameraId: string) => {
           "Content-Type": "application/json",
         },
       })
+        .then((res) => {
+          if (res.ok) return res;
+          throw new Error();
+        })
         .then((res) => res.blob())
         .then((res) => {
           const blobUrl = URL.createObjectURL(res);

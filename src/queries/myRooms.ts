@@ -12,9 +12,7 @@ export const useGetMyRooms = () => {
         authorization: `Bearer ${userData?.token}`,
         "Content-Type": "application/json",
       },
-    })
-      .then((res) => res.json())
-      .then((res) => res as GetMyRoomsResponse),
+    }).then((res) => res.json()),
   );
 
   return query;

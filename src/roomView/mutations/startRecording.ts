@@ -16,6 +16,9 @@ export const useStartRecording = (cameraId: string) => {
           authorization: `Bearer ${userData?.token}`,
           "Content-Type": "application/json",
         },
+      }).then((res) => {
+        if (res.ok) return res;
+        throw new Error();
       }),
     {
       onSuccess: async () => {

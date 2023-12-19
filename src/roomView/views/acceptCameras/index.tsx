@@ -80,7 +80,7 @@ const CameraElement = (props: CameraElementProps) => {
     <CameraElementContainer>
       <ClickContainer
         onClick={async () => {
-          await rejectCamera(props.cameraName);
+          await rejectCamera(props.cameraName).catch(() => {});
         }}
         accept={false}
         className="left"
@@ -92,7 +92,7 @@ const CameraElement = (props: CameraElementProps) => {
       </MiddleContainer>
       <ClickContainer
         onClick={async () => {
-          await acceptCamera(props.cameraName);
+          await acceptCamera(props.cameraName).catch(() => {});
         }}
         accept={true}
         className="right"

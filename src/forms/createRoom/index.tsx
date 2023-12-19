@@ -14,7 +14,7 @@ const CreateRoom: React.FC = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const mutateAsync = useCreateRoom();
+  const { mutateAsync } = useCreateRoom();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,9 +28,10 @@ const CreateRoom: React.FC = () => {
       setRoomName("");
       setPassword("");
       setConfirmPassword("");
-      const token = await mutateAsync({ name: roomName, password: password });
-      if (!token) {
-        setError("Could not create room");
+      try {
+        await mutateAsync({ name: roomName, password: password });
+      } catch {
+        setError("could not create room");
       }
     }
   };

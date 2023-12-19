@@ -13,6 +13,9 @@ export const useAcceptCamera = (roomName: string) => {
           authorization: `Bearer ${userData?.token}`,
           "Content-Type": "application/json",
         },
+      }).then((res) => {
+        if (res.ok) return true;
+        throw new Error();
       }),
     {
       onSuccess: async () => {

@@ -106,11 +106,12 @@ const Container = styled.div`
 const Home = () => {
   const { list, userData } = useCache();
   const myRooms = useGetMyRooms();
-  const roomsMapped = myRooms.isLoading
-    ? []
-    : myRooms.data!.rooms.map(
-        (room) => ({ name: room.roomName, accessToken: "" }) as Room,
-      );
+  const roomsMapped =
+    myRooms.isLoading || myRooms.isError
+      ? []
+      : myRooms.data!.rooms.map(
+          (room) => ({ name: room.roomName, accessToken: "" }) as Room,
+        );
   const location = useLocation();
   const navigate = useNavigate();
   const roomList = [...roomsMapped, ...list];
