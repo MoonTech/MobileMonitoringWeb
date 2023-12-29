@@ -153,7 +153,7 @@ export const RoomView = () => {
           />
           <Route path="accept" element={<AcceptCameras />} />
           <Route path="qr" element={<CodeQR />} />
-          <Route path="recordings" element={<Recordings token={isOwnedRoom ? null : list.find(r => r.name == id)?.accessToken} />} />
+          <Route path="recordings" element={<Recordings token={isOwnedRoom ? undefined : list.find(r => r.name === id)?.accessToken ?? undefined} />} />
           <Route path="*" element={<h1>404</h1>} />
         </Routes>
       </MainCameraContainer>
