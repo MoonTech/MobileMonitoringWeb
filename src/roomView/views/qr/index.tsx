@@ -25,7 +25,7 @@ export const CodeQR = () => {
         {qr.isLoading ? (
           <h1>loading</h1>
         ) : (
-          <img height="80%" src={URL.createObjectURL(qr.data as Blob)} />
+          <img alt="failed to load qr" height="80%" src={URL.createObjectURL(qr.data as Blob)} />
         )}
       </InnerContainer>
     </MainCameraContainer>
