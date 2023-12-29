@@ -16,5 +16,4 @@ export const useGetQRCode = (roomName: string) => {
   );
 
   return query;
-}
-
+};

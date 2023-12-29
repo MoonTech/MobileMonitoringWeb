@@ -13,16 +13,21 @@ const MainCameraContainer = styled.div`
 
 const InnerContainer = styled.div`
   height: calc(80% - 150px);
-`
+`;
 
 export const CodeQR = () => {
-  const { id } = useParams()
+  const { id } = useParams();
   const qr = useGetQRCode(id as string);
   return (
     <MainCameraContainer>
       <h1>Scan the QR code in your mobile application</h1>
-      <InnerContainer>{qr.isLoading ? <h1>loading</h1> : <img height="80%" src={URL.createObjectURL(qr.data as Blob)} />}</InnerContainer>
+      <InnerContainer>
+        {qr.isLoading ? (
+          <h1>loading</h1>
+        ) : (
+          <img height="80%" src={URL.createObjectURL(qr.data as Blob)} />
+        )}
+      </InnerContainer>
     </MainCameraContainer>
   );
 };
-

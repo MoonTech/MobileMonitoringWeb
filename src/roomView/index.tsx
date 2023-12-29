@@ -27,7 +27,9 @@ import { toast, ToastContainer } from "react-toastify";
 import { useTheme } from "../contexts/themeContext";
 import ReactPlayer from "react-player";
 import { CodeQR } from "./views/qr";
-import QrCode2Icon from '@mui/icons-material/QrCode2';
+import QrCode2Icon from "@mui/icons-material/QrCode2";
+import ListIcon from "@mui/icons-material/List";
+import { Recordings } from "./views/recordings";
 
 export const CameraContainer = styled.div`
   height: 250px;
@@ -44,11 +46,11 @@ const CameraBottomContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`
+`;
 
 const CameraNameContainer = styled.div`
   margin-left: 10px;
-`
+`;
 
 const CameraInclusionContainer = styled.div`
   height: 40px;
@@ -60,9 +62,9 @@ const CameraInclusionContainer = styled.div`
     background-color: ${(props) => props.theme.colors.secondary};
     cursor: pointer;
   }
-`
+`;
 
-type clickOption = 'none' | 'unavailable' | 'available' | 'selected'
+type clickOption = "none" | "unavailable" | "available" | "selected";
 
 export type CameraProps = {
   url: string;
@@ -83,11 +85,15 @@ export const Camera = ({ url, name, onClick, clickOption }: CameraProps) => {
       />
       <CameraBottomContainer>
         <CameraNameContainer>{name}</CameraNameContainer>
-        {clickOption !== 'none'
-          ? <CameraInclusionContainer onClick={onClick}>
-            {clickOption === 'available' || clickOption === 'unavailable' ? "Select" : "Remove"}
+        {clickOption !== "none" ? (
+          <CameraInclusionContainer onClick={onClick}>
+            {clickOption === "available" || clickOption === "unavailable"
+              ? "Select"
+              : "Remove"}
           </CameraInclusionContainer>
-          : <></>}
+        ) : (
+          <></>
+        )}
       </CameraBottomContainer>
     </CameraContainer>
   );
@@ -147,6 +153,7 @@ export const RoomView = () => {
           />
           <Route path="accept" element={<AcceptCameras />} />
           <Route path="qr" element={<CodeQR />} />
+          <Route path="recordings" element={<Recordings />} />
           <Route path="*" element={<h1>404</h1>} />
         </Routes>
       </MainCameraContainer>
@@ -174,6 +181,12 @@ export const RoomView = () => {
           ) : (
             <></>
           )}
+          <SideMenuOption
+            isClickable={screenType !== "recordings"}
+            link={`../${id}/recordings`}
+          >
+            <ListIcon fontSize="inherit" />
+          </SideMenuOption>
           {isOwnedRoom ? (
             <SideMenuOption
               isClickable={screenType !== "qr"}
@@ -188,23 +201,40 @@ export const RoomView = () => {
         <CameraListContainer>
           {cameras.data?.connectedCameras.map((camera) => {
             const clickOption =
-              screenType === 'accept' || screenType === 'qr'
-                ? 'none'
-                : screenType === 'split'
-                  ? (viewState as WatchCamera[]).some(cam => cam.id === camera.id) ? 'selected' : (viewState as WatchCamera[]).length === 4 ? 'unavailable' : 'available'
-                  : viewState === null || (viewState as WatchCamera).id !== camera.id ? 'available' : 'selected';
+              screenType === "accept" ||
+              screenType === "qr" ||
+              screenType === "recordings"
+                ? "none"
+                : screenType === "split"
+                ? (viewState as WatchCamera[]).some(
+                    (cam) => cam.id === camera.id,
+                  )
+                  ? "selected"
+                  : (viewState as WatchCamera[]).length === 4
+                  ? "unavailable"
+                  : "available"
+                : viewState === null ||
+                  (viewState as WatchCamera).id !== camera.id
+                ? "available"
+                : "selected";
             return (
               <Camera
                 clickOption={clickOption}
                 url={camera.watchUrl}
                 onClick={() => {
                   if (screenType === "split") {
-                    if (clickOption === 'selected') setViewState((viewState as WatchCamera[]).filter(cam => cam.id !== camera.id))
-                    if (clickOption === 'available') setViewState([...viewState as WatchCamera[], camera])
+                    if (clickOption === "selected")
+                      setViewState(
+                        (viewState as WatchCamera[]).filter(
+                          (cam) => cam.id !== camera.id,
+                        ),
+                      );
+                    if (clickOption === "available")
+                      setViewState([...(viewState as WatchCamera[]), camera]);
                   }
                   if (screenType === "single") {
-                    if (clickOption === 'available') setViewState(camera);
-                    if (clickOption === 'selected') setViewState(null);
+                    if (clickOption === "available") setViewState(camera);
+                    if (clickOption === "selected") setViewState(null);
                   }
                 }}
                 name={camera.cameraName}
