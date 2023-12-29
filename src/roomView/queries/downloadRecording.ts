@@ -11,7 +11,7 @@ export const useDownloadRecording = (
   const { mutateAsync } = useMutation(
     async () => {
       return fetch(SERVER_URL + "videoserver/record/" + recordingName, {
-        method: "PUT",
+        method: "GET",
         headers: {
           authorization: `Bearer ${token ?? userData?.token}`,
           "Content-Type": "application/json",
@@ -27,7 +27,7 @@ export const useDownloadRecording = (
 
           const a = document.createElement("a");
           a.href = blobUrl;
-          a.download = "video-" + recordingName + ".flv";
+          a.download = "video-" + recordingName;
 
           document.body.appendChild(a);
           a.click();
