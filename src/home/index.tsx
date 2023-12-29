@@ -32,7 +32,6 @@ type RoomElementProps = {
 };
 
 const RoomElement = (props: RoomElementProps) => {
-  console.log(props.name);
   return (
     <RoomOuter>
       <RoomInner onClick={props.onClick}>{props.name.charAt(0)}</RoomInner>
@@ -107,7 +106,7 @@ const Home = () => {
   const { list, userData } = useCache();
   const myRooms = useGetMyRooms();
   const roomsMapped =
-    myRooms.isLoading || myRooms.isError
+    myRooms.isLoading || myRooms.isError || userData === null
       ? []
       : myRooms.data!.rooms.map(
           (room) => ({ name: room.roomName, accessToken: "" }) as Room,

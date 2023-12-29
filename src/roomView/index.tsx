@@ -6,14 +6,92 @@ import { SideMenuOption } from "./components/sideMenuOption";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { OneCameraIcon } from "./components/oneCameraIcon";
 import { SplitCameraIcon } from "./components/splitCameraIcon";
-import { Camera } from "./components/camera";
 import { Container } from "./components/container";
-import { Route, Routes, useLocation, useParams } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import SingleCamera from "./views/singleCamera";
 import SplitCamera from "./views/splitCamera";
 import AcceptCameras from "./views/acceptCameras";
 import { useWatchRoom } from "./queries/watchRoom";
 import { useState } from "react";
+import { WatchCamera } from "../types/watchCamera";
+import { useCache } from "../contexts/dataCacheContext";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { useDeleteRoom } from "./mutations/deleteRoom";
+import { toast, ToastContainer } from "react-toastify";
+import { useTheme } from "../contexts/themeContext";
+import ReactPlayer from "react-player";
+import { CodeQR } from "./views/qr";
+import QrCode2Icon from '@mui/icons-material/QrCode2';
+
+export const CameraContainer = styled.div`
+  height: 250px;
+  max-height: 250px;
+  background-color: #333;
+  border: 2px solid black;
+  border-radius: 10px;
+`;
+
+const CameraBottomContainer = styled.div`
+  height: 50px;
+  font-size: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const CameraNameContainer = styled.div`
+  margin-left: 10px;
+`
+
+const CameraInclusionContainer = styled.div`
+  height: 40px;
+  margin-right: 10px;
+  background-color: ${(props) => props.theme.colors.secondaryDark};
+  border-radius: 10px;
+  transition: 0.2s all;
+  &:hover {
+    background-color: ${(props) => props.theme.colors.secondary};
+    cursor: pointer;
+  }
+`
+
+type clickOption = 'none' | 'unavailable' | 'available' | 'selected'
+
+export type CameraProps = {
+  url: string;
+  name: string;
+  onClick?: any;
+  clickOption: clickOption;
+};
+
+export const Camera = ({ url, name, onClick, clickOption }: CameraProps) => {
+  return (
+    <CameraContainer onClick={onClick}>
+      <ReactPlayer
+        url={url}
+        height="200px"
+        width="100%"
+        muted={true}
+        playing={true}
+      />
+      <CameraBottomContainer>
+        <CameraNameContainer>{name}</CameraNameContainer>
+        {clickOption !== 'none'
+          ? <CameraInclusionContainer onClick={onClick}>
+            {clickOption === 'available' || clickOption === 'unavailable' ? "Select" : "Remove"}
+          </CameraInclusionContainer>
+          : <></>}
+      </CameraBottomContainer>
+    </CameraContainer>
+  );
+};
 
 const MainCameraContainer = styled.div`
   height: 100%;
@@ -21,9 +99,24 @@ const MainCameraContainer = styled.div`
   display: flex;
 `;
 
-const CameraContainer = styled.div`
-  height: 250px;
-  max-height: 250px;
+const DeleteContainer = styled.div`
+  background-color: ${(props) => props.theme.colors.secondaryDark};
+  height: 80px;
+  padding: 5px;
+`;
+
+const DeleteButtonContainer = styled.div`
+  border-radius: 10px;
+  transition: 0.2s all;
+  &:hover {
+    background-color: ${(props) => props.theme.colors.secondary};
+    cursor: pointer;
+  }
+  font-size: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => props.theme.colors.light};
 `;
 
 export const RoomView = () => {
@@ -31,13 +124,14 @@ export const RoomView = () => {
   const { id } = useParams();
   const screenType = location.pathname.split("/").at(-1);
   const cameras = useWatchRoom(id!);
-  console.log(cameras);
-  const [singleCamera, setSingleCamera] = useState(
-    screenType === "single" ? cameras.data?.connectedCameras[0] : null,
-  );
-  const [splitCameras, setSplitCameras] = useState(
-    screenType === "split" ? cameras.data?.connectedCameras : null,
-  );
+  const { theme } = useTheme();
+  const { list, setList } = useCache();
+  const navigate = useNavigate();
+  const isOwnedRoom = !list.some((room) => room.name === id);
+  const { mutateAsync } = useDeleteRoom(id as string);
+  const [viewState, setViewState] = useState<
+    WatchCamera | WatchCamera[] | null
+  >(screenType === "split" ? [] : null);
 
   return (
     <Container>
@@ -45,13 +139,14 @@ export const RoomView = () => {
         <Routes key={location.pathname} location={location}>
           <Route
             path="single"
-            element={<SingleCamera camera={singleCamera ?? undefined} />}
+            element={<SingleCamera camera={viewState as WatchCamera | null} />}
           />
           <Route
             path="split"
-            element={<SplitCamera cameras={splitCameras!} />}
+            element={<SplitCamera cameras={viewState as WatchCamera[]} />}
           />
           <Route path="accept" element={<AcceptCameras />} />
+          <Route path="qr" element={<CodeQR />} />
           <Route path="*" element={<h1>404</h1>} />
         </Routes>
       </MainCameraContainer>
@@ -69,33 +164,81 @@ export const RoomView = () => {
           >
             <SplitCameraIcon />
           </SideMenuOption>
-          <SideMenuOption
-            isClickable={screenType !== "accept"}
-            link={`../${id}/accept`}
-          >
-            <CheckBoxIcon fontSize="inherit" />
-          </SideMenuOption>
+          {isOwnedRoom ? (
+            <SideMenuOption
+              isClickable={screenType !== "accept"}
+              link={`../${id}/accept`}
+            >
+              <CheckBoxIcon fontSize="inherit" />
+            </SideMenuOption>
+          ) : (
+            <></>
+          )}
+          {isOwnedRoom ? (
+            <SideMenuOption
+              isClickable={screenType !== "qr"}
+              link={`../${id}/qr`}
+            >
+              <QrCode2Icon fontSize="inherit" />
+            </SideMenuOption>
+          ) : (
+            <></>
+          )}
         </SideMenuContainer>
         <CameraListContainer>
-          {cameras.data?.connectedCameras.map((camera) => (
-            <CameraContainer>
+          {cameras.data?.connectedCameras.map((camera) => {
+            const clickOption =
+              screenType === 'accept' || screenType === 'qr'
+                ? 'none'
+                : screenType === 'split'
+                  ? (viewState as WatchCamera[]).some(cam => cam.id === camera.id) ? 'selected' : (viewState as WatchCamera[]).length === 4 ? 'unavailable' : 'available'
+                  : viewState === null || (viewState as WatchCamera).id !== camera.id ? 'available' : 'selected';
+            return (
               <Camera
+                clickOption={clickOption}
                 url={camera.watchUrl}
                 onClick={() => {
                   if (screenType === "split") {
-                    setSplitCameras([]);
+                    if (clickOption === 'selected') setViewState((viewState as WatchCamera[]).filter(cam => cam.id !== camera.id))
+                    if (clickOption === 'available') setViewState([...viewState as WatchCamera[], camera])
                   }
                   if (screenType === "single") {
-                    setSingleCamera(camera);
+                    if (clickOption === 'available') setViewState(camera);
+                    if (clickOption === 'selected') setViewState(null);
                   }
                 }}
                 name={camera.cameraName}
                 key={camera.id}
               />
-            </CameraContainer>
-          ))}
+            );
+          })}
         </CameraListContainer>
+        <DeleteContainer>
+          <DeleteButtonContainer
+            onClick={async () => {
+              if (isOwnedRoom) {
+                try {
+                  await mutateAsync();
+                  navigate("../add");
+                } catch {
+                  toast("Could not delete a room", {
+                    position: "bottom-left",
+                    autoClose: 5000,
+                    closeOnClick: true,
+                    theme,
+                  });
+                }
+              } else {
+                setList(list.filter((item) => item.name !== id));
+                navigate("../add");
+              }
+            }}
+          >
+            <DeleteForeverIcon fontSize="inherit" />
+          </DeleteButtonContainer>
+        </DeleteContainer>
       </SideBarContainer>
+      <ToastContainer />
     </Container>
   );
 };

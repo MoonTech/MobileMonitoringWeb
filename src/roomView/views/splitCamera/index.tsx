@@ -1,6 +1,9 @@
 import { styled } from "styled-components";
 import { WatchCamera } from "../../../types/watchCamera";
-import { Camera } from "../../components/camera";
+import {
+  Camera,
+  CameraContainer as CameraContainerInner,
+} from "../../components/camera";
 
 const CameraGridContainer = styled.div`
   height: 100%;
@@ -25,16 +28,32 @@ const SplitCamera = ({ cameras }: SplitCameraProps) => {
   return (
     <CameraGridContainer>
       <CameraContainer>
-        <Camera url={cameras[0].watchUrl} name={cameras[0].cameraName} />{" "}
+        {cameras.length > 0 ? (
+          <Camera url={cameras[0].watchUrl} name={cameras[0].cameraName} />
+        ) : (
+          <CameraContainerInner />
+        )}
       </CameraContainer>
       <CameraContainer>
-        <Camera url={cameras[1].watchUrl} name={cameras[1].cameraName} />{" "}
+        {cameras.length > 1 ? (
+          <Camera url={cameras[1].watchUrl} name={cameras[1].cameraName} />
+        ) : (
+          <CameraContainerInner />
+        )}
       </CameraContainer>
       <CameraContainer>
-        <Camera url={cameras[2].watchUrl} name={cameras[2].cameraName} />{" "}
+        {cameras.length > 2 ? (
+          <Camera url={cameras[2].watchUrl} name={cameras[2].cameraName} />
+        ) : (
+          <CameraContainerInner />
+        )}
       </CameraContainer>
       <CameraContainer>
-        <Camera url={cameras[3].watchUrl} name={cameras[3].cameraName} />{" "}
+        {cameras.length > 3 ? (
+          <Camera url={cameras[3].watchUrl} name={cameras[3].cameraName} />
+        ) : (
+          <CameraContainerInner />
+        )}
       </CameraContainer>
     </CameraGridContainer>
   );
