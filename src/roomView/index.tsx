@@ -153,7 +153,7 @@ export const RoomView = () => {
           />
           <Route path="accept" element={<AcceptCameras />} />
           <Route path="qr" element={<CodeQR />} />
-          <Route path="recordings" element={<Recordings />} />
+          <Route path="recordings" element={<Recordings token={isOwnedRoom ? null : list.find(r => r.name == id)?.accessToken} />} />
           <Route path="*" element={<h1>404</h1>} />
         </Routes>
       </MainCameraContainer>
@@ -202,21 +202,21 @@ export const RoomView = () => {
           {cameras.data?.connectedCameras.map((camera) => {
             const clickOption =
               screenType === "accept" ||
-              screenType === "qr" ||
-              screenType === "recordings"
+                screenType === "qr" ||
+                screenType === "recordings"
                 ? "none"
                 : screenType === "split"
-                ? (viewState as WatchCamera[]).some(
+                  ? (viewState as WatchCamera[]).some(
                     (cam) => cam.id === camera.id,
                   )
-                  ? "selected"
-                  : (viewState as WatchCamera[]).length === 4
-                  ? "unavailable"
-                  : "available"
-                : viewState === null ||
-                  (viewState as WatchCamera).id !== camera.id
-                ? "available"
-                : "selected";
+                    ? "selected"
+                    : (viewState as WatchCamera[]).length === 4
+                      ? "unavailable"
+                      : "available"
+                  : viewState === null ||
+                    (viewState as WatchCamera).id !== camera.id
+                    ? "available"
+                    : "selected";
             return (
               <Camera
                 clickOption={clickOption}
