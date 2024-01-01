@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
 import { useSignUp } from "../../mutations/signUp";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -37,12 +36,6 @@ const SignUp: React.FC = () => {
         navigate("../room/add");
       } catch {
         setError("Sign up failed, please try again");
-        toast("Request failed", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-        });
       }
     }
   };
@@ -73,7 +66,6 @@ const SignUp: React.FC = () => {
         <Button type="submit">Submit</Button>
         <StyledLink to="/login">Go to Login</StyledLink>
       </AuthorizationForm>
-      <ToastContainer />
     </Container>
   );
 };

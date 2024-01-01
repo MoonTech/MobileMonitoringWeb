@@ -5,6 +5,9 @@ import { toast } from "react-toastify";
 import { useTheme } from "../../../contexts/themeContext";
 import { useGetRoomRecordings } from "../../queries/getRoomRecordings";
 import { useDownloadRecording } from "../../queries/downloadRecording";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { useCache } from "../../../contexts/dataCacheContext";
+import { useDeleteRecording } from "../../mutations/deleteRecording";
 
 const Content = styled.div`
   width: 100%;
@@ -56,11 +59,17 @@ const MiddleContainer = styled.div`
 type RecordingElementProps = {
   recordingName: string;
   token?: string;
+  isOwnedRoom: boolean;
 };
 
-const RecordingElement = ({ recordingName, token }: RecordingElementProps) => {
+const RecordingElement = ({
+  recordingName,
+  token,
+  isOwnedRoom,
+}: RecordingElementProps) => {
   const { theme } = useTheme();
   const downloadRecording = useDownloadRecording(recordingName, token ?? null);
+  const { mutateAsync } = useDeleteRecording(recordingName);
   return (
     <CameraElementContainer>
       <MiddleContainer>
@@ -80,6 +89,24 @@ const RecordingElement = ({ recordingName, token }: RecordingElementProps) => {
       >
         <DownloadIcon fontSize="inherit" className="icon" />
       </ClickContainer>
+      {isOwnedRoom ? (
+        <ClickContainer
+          onClick={async () => {
+            await mutateAsync().catch(() => {
+              toast("Could not delete the recording", {
+                position: "bottom-left",
+                autoClose: 5000,
+                closeOnClick: true,
+                theme,
+              });
+            });
+          }}
+        >
+          <DeleteForeverIcon fontSize="inherit" className="icon" />
+        </ClickContainer>
+      ) : (
+        <></>
+      )}
     </CameraElementContainer>
   );
 };
@@ -95,6 +122,9 @@ export type RecordingsProps = {
 export const Recordings = ({ token }: RecordingsProps) => {
   const { id } = useParams();
   const recordings = useGetRoomRecordings(id as string, token ?? null);
+  const { list } = useCache();
+  const isOwnedRoom = !list.some((room) => room.name === id);
+
   return (
     <Content>
       <List>
@@ -104,6 +134,7 @@ export const Recordings = ({ token }: RecordingsProps) => {
             recordingName={recording.name}
             token={token}
             key={recording.name}
+            isOwnedRoom={isOwnedRoom}
           />
         ))}
       </List>

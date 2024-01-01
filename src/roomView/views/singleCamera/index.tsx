@@ -21,6 +21,7 @@ const MainCameraContainer = styled.div`
 
 export type SingleCameraProps = {
   camera: WatchCamera | null;
+  isOwnedRoom: boolean;
 };
 
 const RecordContainer = styled.div`
@@ -38,7 +39,7 @@ const RecordContainer = styled.div`
   }
 `;
 
-const SingleCamera = ({ camera }: SingleCameraProps) => {
+const SingleCamera = ({ camera, isOwnedRoom }: SingleCameraProps) => {
   const end = useEndRecording(camera?.id ?? "");
   const start = useStartRecording(camera?.id ?? "");
   const check = useCheckCamera(camera?.id ?? "");
@@ -52,17 +53,21 @@ const SingleCamera = ({ camera }: SingleCameraProps) => {
               name={camera?.cameraName ?? "name"}
             />
           </CameraOutside>
-          <RecordContainer
-            onClick={() => {
-              if (check.response) {
-                start();
-              } else {
-                end();
-              }
-            }}
-          >
-            {check.response ? "RECORD" : "STOP RECORDING"}
-          </RecordContainer>
+          {isOwnedRoom ? (
+            <RecordContainer
+              onClick={() => {
+                if (check.response) {
+                  start();
+                } else {
+                  end();
+                }
+              }}
+            >
+              {check.response ? "RECORD" : "STOP RECORDING"}
+            </RecordContainer>
+          ) : (
+            <></>
+          )}
         </>
       ) : (
         <CameraContainer>No camera chosen</CameraContainer>
