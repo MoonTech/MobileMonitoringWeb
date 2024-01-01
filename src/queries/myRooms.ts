@@ -5,14 +5,17 @@ import { GetMyRoomsResponse } from "../types/getMyRoomsResponse";
 
 export const useGetMyRooms = () => {
   const { userData } = useCache();
-  const query = useQuery<GetMyRoomsResponse>(`myRooms`, () =>
-    fetch(SERVER_URL + "room", {
-      method: "GET",
-      headers: {
-        authorization: `Bearer ${userData?.token}`,
-        "Content-Type": "application/json",
-      },
-    }).then((res) => res.json()),
+  const query = useQuery<GetMyRoomsResponse>(
+    `myRooms`,
+    () =>
+      fetch(SERVER_URL + "room", {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${userData?.token}`,
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.json()),
+    { enabled: userData !== null },
   );
 
   return query;

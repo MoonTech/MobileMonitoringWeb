@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { WatchCamera } from "../../../types/watchCamera";
-import { Camera } from "../../components/camera";
+import { Camera, CameraContainer } from "../../components/camera";
 import { useEndRecording } from "../../mutations/endRecording";
 import { useStartRecording } from "../../mutations/startRecording";
 import { useCheckCamera } from "../../queries/getRecordigState";
@@ -20,7 +20,8 @@ const MainCameraContainer = styled.div`
 `;
 
 export type SingleCameraProps = {
-  camera?: WatchCamera;
+  camera: WatchCamera | null;
+  isOwnedRoom: boolean;
 };
 
 const RecordContainer = styled.div`
@@ -38,29 +39,39 @@ const RecordContainer = styled.div`
   }
 `;
 
-const SingleCamera = ({ camera }: SingleCameraProps) => {
+const SingleCamera = ({ camera, isOwnedRoom }: SingleCameraProps) => {
   const end = useEndRecording(camera?.id ?? "");
   const start = useStartRecording(camera?.id ?? "");
   const check = useCheckCamera(camera?.id ?? "");
   return (
     <MainCameraContainer>
-      <CameraOutside>
-        <Camera
-          url={camera?.watchUrl ?? ""}
-          name={camera?.cameraName ?? "name"}
-        />
-      </CameraOutside>
-      <RecordContainer
-        onClick={() => {
-          if (check.response) {
-            start();
-          } else {
-            end();
-          }
-        }}
-      >
-        {check.response ? "RECORD" : "STOP RECORDING"}
-      </RecordContainer>
+      {camera ? (
+        <>
+          <CameraOutside>
+            <Camera
+              url={camera?.watchUrl ?? ""}
+              name={camera?.cameraName ?? "name"}
+            />
+          </CameraOutside>
+          {isOwnedRoom ? (
+            <RecordContainer
+              onClick={() => {
+                if (check.response) {
+                  start();
+                } else {
+                  end();
+                }
+              }}
+            >
+              {check.response ? "RECORD" : "STOP RECORDING"}
+            </RecordContainer>
+          ) : (
+            <></>
+          )}
+        </>
+      ) : (
+        <CameraContainer>No camera chosen</CameraContainer>
+      )}
     </MainCameraContainer>
   );
 };

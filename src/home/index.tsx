@@ -32,7 +32,6 @@ type RoomElementProps = {
 };
 
 const RoomElement = (props: RoomElementProps) => {
-  console.log(props.name);
   return (
     <RoomOuter>
       <RoomInner onClick={props.onClick}>{props.name.charAt(0)}</RoomInner>
@@ -104,17 +103,21 @@ const Container = styled.div`
 `;
 
 const Home = () => {
-  const { list, userData } = useCache();
+  const { list, setList, userData } = useCache();
   const myRooms = useGetMyRooms();
   const roomsMapped =
-    myRooms.isLoading || myRooms.isError
+    myRooms.isLoading || myRooms.isError || userData === null
       ? []
       : myRooms.data!.rooms.map(
           (room) => ({ name: room.roomName, accessToken: "" }) as Room,
         );
   const location = useLocation();
   const navigate = useNavigate();
-  const roomList = [...roomsMapped, ...list];
+  const filteredList = list.filter(
+    (room) => !roomsMapped.some((r) => r.name === room.name),
+  );
+  if (list.length !== filteredList.length) setList(filteredList);
+  const roomList = [...roomsMapped, ...filteredList];
 
   return (
     <Container>

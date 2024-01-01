@@ -1,8 +1,7 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCache } from "../../contexts/dataCacheContext";
 import { useLogin } from "../../mutations/login";
-import { LoginRequest } from "../../types/loginRequest";
 import {
   AuthorizationForm,
   Button,
@@ -19,6 +18,7 @@ const Login: React.FC = () => {
   const [error, setError] = useState("");
   const { userData } = useCache();
   const { mutateAsync } = useLogin();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,10 +29,8 @@ const Login: React.FC = () => {
       setName("");
       setPassword("");
       try {
-        await mutateAsync({
-          login: name,
-          password: password,
-        } as LoginRequest);
+        await mutateAsync({ password, login: name });
+        navigate("../room/add");
       } catch (error) {
         setError("login failed. try again");
       }

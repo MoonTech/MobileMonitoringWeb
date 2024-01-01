@@ -6,10 +6,6 @@ export const CameraContainer = styled.div`
   border: 2px solid black;
   border-radius: 10px;
   height: 100%;
-  &:hover {
-    background-color: #666;
-    cursor: pointer;
-  }
 `;
 
 // const NameContainer = styled.div`

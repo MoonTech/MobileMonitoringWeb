@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSignUp } from "../../mutations/signUp";
+import "react-toastify/dist/ReactToastify.css";
 import {
   AuthorizationForm,
   Button,

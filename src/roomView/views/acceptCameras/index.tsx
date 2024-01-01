@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import { useAcceptCamera } from "../../mutations/acceptCamera";
 import { useRejectCamera } from "../../mutations/rejectCamera";
 import { useGetCameraToAccept } from "../../queries/getCamerasToAccept";
+import { toast } from "react-toastify";
+import { useTheme } from "../../../contexts/themeContext";
 
 const Content = styled.div`
   width: 100%;
@@ -76,11 +78,18 @@ type CameraElementProps = {
 const CameraElement = (props: CameraElementProps) => {
   const acceptCamera = useAcceptCamera(props.roomName);
   const rejectCamera = useRejectCamera(props.roomName);
+  const { theme } = useTheme();
   return (
     <CameraElementContainer>
       <ClickContainer
         onClick={async () => {
           await rejectCamera(props.cameraName).catch(() => {});
+          toast("Could not reject the camera", {
+            position: "bottom-left",
+            autoClose: 5000,
+            closeOnClick: true,
+            theme,
+          });
         }}
         accept={false}
         className="left"
@@ -92,7 +101,14 @@ const CameraElement = (props: CameraElementProps) => {
       </MiddleContainer>
       <ClickContainer
         onClick={async () => {
-          await acceptCamera(props.cameraName).catch(() => {});
+          await acceptCamera(props.cameraName).catch(() => {
+            toast("Could not accept the camera", {
+              position: "bottom-left",
+              autoClose: 5000,
+              closeOnClick: true,
+              theme,
+            });
+          });
         }}
         accept={true}
         className="right"
