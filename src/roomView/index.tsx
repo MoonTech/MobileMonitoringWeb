@@ -80,19 +80,17 @@ export const Camera = ({ url, name, onClick, clickOption }: CameraProps) => {
         url={url}
         height="200px"
         width="100%"
-        muted={true}
+        muted={false}
         playing={true}
       />
       <CameraBottomContainer>
         <CameraNameContainer>{name}</CameraNameContainer>
-        {clickOption !== "none" ? (
+        {clickOption !== "none" && (
           <CameraInclusionContainer onClick={onClick}>
             {clickOption === "available" || clickOption === "unavailable"
               ? "Select"
               : "Remove"}
           </CameraInclusionContainer>
-        ) : (
-          <></>
         )}
       </CameraBottomContainer>
     </CameraContainer>

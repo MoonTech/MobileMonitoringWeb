@@ -73,7 +73,7 @@ const RecordingElement = ({
   return (
     <CameraElementContainer>
       <MiddleContainer>
-        <h1>{recordingName}</h1>
+        <h2>{recordingName}</h2>
       </MiddleContainer>
       <ClickContainer
         onClick={async () => {

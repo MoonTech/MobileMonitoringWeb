@@ -1,16 +1,10 @@
+import ReactPlayer from "react-player";
 import { styled } from "styled-components";
 import { WatchCamera } from "../../../types/watchCamera";
-import { Camera, CameraContainer } from "../../components/camera";
+import { CameraContainer } from "../../components/camera";
 import { useEndRecording } from "../../mutations/endRecording";
 import { useStartRecording } from "../../mutations/startRecording";
 import { useCheckCamera } from "../../queries/getRecordigState";
-
-const CameraOutside = styled.div`
-  padding: 10px;
-  width: 100%;
-  height: 75vh;
-  max-height: 75vh;
-`;
 
 const MainCameraContainer = styled.div`
   max-height: calc(100% - 150px);
@@ -47,13 +41,17 @@ const SingleCamera = ({ camera, isOwnedRoom }: SingleCameraProps) => {
     <MainCameraContainer>
       {camera ? (
         <>
-          <CameraOutside>
-            <Camera
+          <CameraContainer>
+            <ReactPlayer
               url={camera?.watchUrl ?? ""}
-              name={camera?.cameraName ?? "name"}
+              height="70vh"
+              width="100%"
+              muted={false}
+              playing={true}
             />
-          </CameraOutside>
-          {isOwnedRoom ? (
+            <h3>{camera.cameraName}</h3>
+          </CameraContainer>
+          {isOwnedRoom && (
             <RecordContainer
               onClick={() => {
                 if (check.response) {
@@ -65,12 +63,12 @@ const SingleCamera = ({ camera, isOwnedRoom }: SingleCameraProps) => {
             >
               {check.response ? "RECORD" : "STOP RECORDING"}
             </RecordContainer>
-          ) : (
-            <></>
           )}
         </>
       ) : (
-        <CameraContainer>No camera chosen</CameraContainer>
+        <CameraContainer>
+          <h1>No camera chosen</h1>
+        </CameraContainer>
       )}
     </MainCameraContainer>
   );
