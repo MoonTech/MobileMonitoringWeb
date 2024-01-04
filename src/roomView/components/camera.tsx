@@ -8,15 +8,15 @@ export const CameraContainer = styled.div`
   height: 100%;
 `;
 
-// const NameContainer = styled.div`
-//   height: 50px;
-//   font-size: 30px;
-//   width: 100%;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   color: ${(props) => props.theme.colors.light};
-// `
+const NameContainer = styled.div`
+  height: 50px;
+  font-size: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => props.theme.colors.backgroundFont};
+`
 
 export type CameraProps = {
   url: string;
@@ -31,9 +31,10 @@ export const Camera = ({ url, name, onClick }: CameraProps) => {
         url={url}
         height="100%"
         width="100%"
-        muted={true}
+        muted={false}
         playing={true}
       />
+      <NameContainer>{name}</NameContainer>
     </CameraContainer>
   );
 };

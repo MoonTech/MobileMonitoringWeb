@@ -18,9 +18,9 @@ export const useDeleteRecording = (roomName: string) => {
       }),
     {
       onSuccess: async () => {
-        console.log("deleted room");
+        console.log("deleted recording");
         queryClient.invalidateQueries({
-          queryKey: ["watch-room-" + roomName],
+          queryKey: ["room-recordings-" + roomName],
         });
       },
       onError: (error) => {
