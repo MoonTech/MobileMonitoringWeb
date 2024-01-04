@@ -17,26 +17,5 @@ export const useGetCameraToAccept = (roomName: string) => {
 
   const response = query.isLoading ? null : query.data;
 
-  // const response = [
-  //   {
-  //     name: "camera1",
-  //     id: "213rewqfdsa",
-  //     cameraToken: "fsafd23",
-  //     acceptationState: false
-  //   },
-  //   {
-  //     name: "camera2",
-  //     id: "213rewqf2sa",
-  //     cameraToken: "fsafd23",
-  //     acceptationState: false
-  //   },
-  //   {
-  //     name: "camera3",
-  //     id: "213rewqf3sa",
-  //     cameraToken: "fsafd23",
-  //     acceptationState: false
-  //   },
-  // ] as Camera[];
-
   return { response };
 };

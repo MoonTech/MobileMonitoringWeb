@@ -35,6 +35,7 @@ export const CameraContainer = styled.div`
   height: 250px;
   max-height: 250px;
   background-color: #333;
+  color: #ddd;
   border: 2px solid black;
   border-radius: 10px;
 `;
@@ -216,21 +217,21 @@ export const RoomView = () => {
           {cameras.data?.connectedCameras.map((camera) => {
             const clickOption =
               screenType === "accept" ||
-              screenType === "qr" ||
-              screenType === "recordings"
+                screenType === "qr" ||
+                screenType === "recordings"
                 ? "none"
                 : screenType === "split"
-                ? (viewState as WatchCamera[]).some(
+                  ? (viewState as WatchCamera[]).some(
                     (cam) => cam.id === camera.id,
                   )
-                  ? "selected"
-                  : (viewState as WatchCamera[]).length === 4
-                  ? "unavailable"
-                  : "available"
-                : viewState === null ||
-                  (viewState as WatchCamera).id !== camera.id
-                ? "available"
-                : "selected";
+                    ? "selected"
+                    : (viewState as WatchCamera[]).length === 4
+                      ? "unavailable"
+                      : "available"
+                  : viewState === null ||
+                    (viewState as WatchCamera).id !== camera.id
+                    ? "available"
+                    : "selected";
             return (
               <Camera
                 clickOption={clickOption}
