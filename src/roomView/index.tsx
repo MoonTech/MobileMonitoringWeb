@@ -18,7 +18,7 @@ import SingleCamera from "./views/singleCamera";
 import SplitCamera from "./views/splitCamera";
 import AcceptCameras from "./views/acceptCameras";
 import { useWatchRoom } from "./queries/watchRoom";
-import { useState } from "react";
+import React, { useState } from "react";
 import { WatchCamera } from "../types/watchCamera";
 import { useCache } from "../contexts/dataCacheContext";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -81,8 +81,13 @@ export const Camera = ({ url, name, onClick, clickOption }: CameraProps) => {
         url={url}
         height="200px"
         width="100%"
-        muted={false}
+        muted={true}
         playing={true}
+        config={{
+          file: {
+            forceFLV: true
+          }
+        }}
       />
       <CameraBottomContainer>
         <CameraNameContainer>{name}</CameraNameContainer>

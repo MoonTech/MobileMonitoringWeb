@@ -12,15 +12,13 @@ export const useWatchRoom = (roomName: string) => {
       method: "POST",
       body: JSON.stringify({ roomName } as WatchRoomRequest),
       headers: {
-        authorization: `Bearer ${
-          roomIndex === -1 ? userData?.token : list[roomIndex].accessToken
-        }`,
+        authorization: `Bearer ${roomIndex === -1 ? userData?.token : list[roomIndex].accessToken
+          }`,
         "Content-Type": "application/json",
       },
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         return { ...res } as WatchRoomResponse;
       }),
   );

@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
-const StyledLink = styled(Link)`
+const StyledLink = styled.div`
   text-decoration: none;
   width: 100%;
   display: flex;
@@ -27,10 +27,10 @@ const SideMenuOptionContainer = styled.div<{ isClickable?: boolean }>`
   transition: 0.2s all;
   &:hover {
     ${(props) =>
-      props.isClickable
-        ? `background-color: ${props.theme.colors.secondary};\n
+    props.isClickable
+      ? `background-color: ${props.theme.colors.secondary};\n
     cursor: pointer;`
-        : ""}
+      : ""}
   }
   font-size: 60px;
   display: flex;
@@ -44,10 +44,14 @@ export const SideMenuOption = ({
   link,
   children,
 }: SideMenuOptionProps) => {
+  const navigate = useNavigate();
   return (
     <SideMenuOptionContainer isClickable={isClickable}>
       {isClickable ? (
-        <StyledLink to={link!}>{children}</StyledLink>
+        <StyledLink onClick={() => {
+          navigate(link!);
+          window.location.reload()
+        }}>{children}</StyledLink>
       ) : (
         <>{children}</>
       )}
