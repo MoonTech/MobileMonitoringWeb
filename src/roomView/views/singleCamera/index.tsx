@@ -4,6 +4,7 @@ import { WatchCamera } from "../../../types/watchCamera";
 import { useEndRecording } from "../../mutations/endRecording";
 import { useStartRecording } from "../../mutations/startRecording";
 import { useCheckCamera } from "../../queries/getRecordigState";
+import ReactFlvPlayer from "../../../wrapper/ReactFlvPlayer";
 
 const MainCameraContainer = styled.div`
   max-height: calc(100% - 150px);
@@ -48,16 +49,16 @@ const SingleCamera = ({ camera, isOwnedRoom }: SingleCameraProps) => {
     <MainCameraContainer>
       {camera ? (
         <>
-          <CameraContainer>
-            <ReactPlayer
-              url={camera?.watchUrl ?? ""}
-              height="70vh"
-              width="100%"
-              muted={false}
-              playing={true}
-            />
+          camera?.watchUrl != null ?
+            <CameraContainer>
+              <ReactFlvPlayer
+                  url = {camera?.watchUrl ?? ""}
+                  height = "70vh"
+                  width = "100%"
+                  showControls = {false}
+              /> : <div/>
             <h3>{camera.cameraName}</h3>
-          </CameraContainer>
+          </CameraContainer> : <div/>
           {isOwnedRoom && (
             <RecordContainer
               onClick={() => {

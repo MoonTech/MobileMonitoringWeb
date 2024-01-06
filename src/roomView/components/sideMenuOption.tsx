@@ -51,7 +51,7 @@ export const SideMenuOption = ({
         <StyledLink
           onClick={() => {
             navigate(link!);
-            window.location.reload();
+            // window.location.reload();
           }}
         >
           {children}
