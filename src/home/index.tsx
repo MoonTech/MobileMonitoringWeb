@@ -127,13 +127,21 @@ const Home = () => {
             <RoomElement
               key={room.name}
               name={room.name}
-              onClick={() => navigate(`${room.name}/single`)}
+              onClick={() => {
+                navigate(`${room.name}/single`);
+                window.location.reload();
+              }}
             />
           ) : (
             <></>
           ),
         )}
-        <AddRoomElement onClick={() => navigate("add")} />
+        <AddRoomElement
+          onClick={() => {
+            navigate("add");
+            window.location.reload();
+          }}
+        />
         {userData ? <NewRoomElement onClick={() => navigate("new")} /> : <></>}
       </Bar>
       <Content>

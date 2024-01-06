@@ -5,18 +5,18 @@ export const CameraContainer = styled.div`
   background-color: #333;
   border: 2px solid black;
   border-radius: 10px;
-  height: 100%;
+  height: 40vh;
 `;
 
 const NameContainer = styled.div`
-  height: 50px;
+  height: 5vh;
   font-size: 30px;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${(props) => props.theme.colors.backgroundFont};
-`
+  color: #ddd;
+`;
 
 export type CameraProps = {
   url: string;
@@ -29,7 +29,7 @@ export const Camera = ({ url, name, onClick }: CameraProps) => {
     <CameraContainer onClick={onClick}>
       <ReactPlayer
         url={url}
-        height="100%"
+        height="35vh"
         width="100%"
         muted={false}
         playing={true}
