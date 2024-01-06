@@ -53,12 +53,12 @@ const ClickContainer = styled.div<{ accept: boolean }>`
   }
   &:hover {
     background-color: ${(props) =>
-                props.accept ? props.theme.colors.green : props.theme.colors.red};
+      props.accept ? props.theme.colors.green : props.theme.colors.red};
     .icon {
       color: ${(props) =>
-                props.accept
-                        ? props.theme.colors.greenDark
-                        : props.theme.colors.redDark};
+        props.accept
+          ? props.theme.colors.greenDark
+          : props.theme.colors.redDark};
       font-size: 50px;
     }
   }
@@ -71,53 +71,53 @@ const MiddleContainer = styled.div`
 `;
 
 type CameraElementProps = {
-        name: string;
-        roomName: string;
-        id: string
+  name: string;
+  roomName: string;
+  id: string;
 };
 
 const CameraElement = (props: CameraElementProps) => {
-        const acceptCamera = useAcceptCamera(props.roomName);
-        const rejectCamera = useRejectCamera(props.roomName);
-        const { theme } = useTheme();
-        return (
-                <CameraElementContainer>
-                        <ClickContainer
-                                onClick={async () => {
-                                        await rejectCamera(props.id).catch(() => { });
-                                        toast("Could not reject the camera", {
-                                                position: "bottom-left",
-                                                autoClose: 5000,
-                                                closeOnClick: true,
-                                                theme,
-                                        });
-                                }}
-                                accept={false}
-                                className="left"
-                        >
-                                <CloseIcon fontSize="inherit" className="icon" />
-                        </ClickContainer>
-                        <MiddleContainer>
-                                <h1>Camera: {props.name}</h1>
-                        </MiddleContainer>
-                        <ClickContainer
-                                onClick={async () => {
-                                        await acceptCamera(props.id).catch(() => {
-                                                toast("Could not accept the camera", {
-                                                        position: "bottom-left",
-                                                        autoClose: 5000,
-                                                        closeOnClick: true,
-                                                        theme,
-                                                });
-                                        });
-                                }}
-                                accept={true}
-                                className="right"
-                        >
-                                <CheckIcon fontSize="inherit" className="icon" />
-                        </ClickContainer>
-                </CameraElementContainer>
-        );
+  const acceptCamera = useAcceptCamera(props.roomName);
+  const rejectCamera = useRejectCamera(props.roomName);
+  const { theme } = useTheme();
+  return (
+    <CameraElementContainer>
+      <ClickContainer
+        onClick={async () => {
+          await rejectCamera(props.id).catch(() => {});
+          toast("Could not reject the camera", {
+            position: "bottom-left",
+            autoClose: 5000,
+            closeOnClick: true,
+            theme,
+          });
+        }}
+        accept={false}
+        className="left"
+      >
+        <CloseIcon fontSize="inherit" className="icon" />
+      </ClickContainer>
+      <MiddleContainer>
+        <h1>Camera: {props.name}</h1>
+      </MiddleContainer>
+      <ClickContainer
+        onClick={async () => {
+          await acceptCamera(props.id).catch(() => {
+            toast("Could not accept the camera", {
+              position: "bottom-left",
+              autoClose: 5000,
+              closeOnClick: true,
+              theme,
+            });
+          });
+        }}
+        accept={true}
+        className="right"
+      >
+        <CheckIcon fontSize="inherit" className="icon" />
+      </ClickContainer>
+    </CameraElementContainer>
+  );
 };
 
 const Title = styled.h1`
@@ -125,23 +125,23 @@ const Title = styled.h1`
 `;
 
 const AcceptCameras = () => {
-        const { id } = useParams();
-        const cameras = useGetCameraToAccept(id as string);
-        return (
-                <Content>
-                        <List>
-                                <Title>Accept cameras for room: {id}</Title>
-                                {cameras.response?.map((camera) => (
-                                        <CameraElement
-                                                name={camera.cameraName}
-                                                id={camera.id}
-                                                key={camera.id}
-                                                roomName={id as string}
-                                        />
-                                ))}
-                        </List>
-                </Content>
-        );
+  const { id } = useParams();
+  const cameras = useGetCameraToAccept(id as string);
+  return (
+    <Content>
+      <List>
+        <Title>Accept cameras for room: {id}</Title>
+        {cameras.response?.map((camera) => (
+          <CameraElement
+            name={camera.cameraName}
+            id={camera.id}
+            key={camera.id}
+            roomName={id as string}
+          />
+        ))}
+      </List>
+    </Content>
+  );
 };
 
 export default AcceptCameras;

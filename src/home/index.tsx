@@ -109,8 +109,8 @@ const Home = () => {
     myRooms.isLoading || myRooms.isError || userData === null
       ? []
       : myRooms.data!.rooms.map(
-        (room) => ({ name: room.roomName, accessToken: "" }) as Room,
-      );
+          (room) => ({ name: room.roomName, accessToken: "" }) as Room,
+        );
   const location = useLocation();
   const navigate = useNavigate();
   const filteredList = list.filter(
@@ -136,10 +136,12 @@ const Home = () => {
             <></>
           ),
         )}
-        <AddRoomElement onClick={() => {
-          navigate("add")
-          window.location.reload();
-        }} />
+        <AddRoomElement
+          onClick={() => {
+            navigate("add");
+            window.location.reload();
+          }}
+        />
         {userData ? <NewRoomElement onClick={() => navigate("new")} /> : <></>}
       </Bar>
       <Content>

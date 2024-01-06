@@ -27,10 +27,10 @@ const SideMenuOptionContainer = styled.div<{ isClickable?: boolean }>`
   transition: 0.2s all;
   &:hover {
     ${(props) =>
-    props.isClickable
-      ? `background-color: ${props.theme.colors.secondary};\n
+      props.isClickable
+        ? `background-color: ${props.theme.colors.secondary};\n
     cursor: pointer;`
-      : ""}
+        : ""}
   }
   font-size: 60px;
   display: flex;
@@ -48,10 +48,14 @@ export const SideMenuOption = ({
   return (
     <SideMenuOptionContainer isClickable={isClickable}>
       {isClickable ? (
-        <StyledLink onClick={() => {
-          navigate(link!);
-          window.location.reload()
-        }}>{children}</StyledLink>
+        <StyledLink
+          onClick={() => {
+            navigate(link!);
+            window.location.reload();
+          }}
+        >
+          {children}
+        </StyledLink>
       ) : (
         <>{children}</>
       )}

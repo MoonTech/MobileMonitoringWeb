@@ -16,7 +16,7 @@ const NameContainer = styled.div`
   justify-content: center;
   align-items: center;
   color: ${(props) => props.theme.colors.backgroundFont};
-`
+`;
 
 export type CameraProps = {
   url: string;

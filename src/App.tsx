@@ -5,6 +5,7 @@ import GlobalStyle from "./styles/global";
 import Header from "./components/header";
 import Home from "./home";
 import { DataCacheProvider } from "./contexts/dataCacheContext";
+import { RoomOptionsProvider } from "./contexts/roomOptionsContext";
 import SignUp from "./forms/signUp";
 import Login from "./forms/login";
 import { lightTheme } from "./styles/themes/light";
@@ -18,18 +19,20 @@ const ThemedApp = () => {
       <GlobalStyle />
       <QueryClientProvider client={new QueryClient()}>
         <DataCacheProvider>
-          <Container>
-            <Header />
-            <Content>
-              <Routes>
-                <Route path="/room/*" element={<Home />} />
-                <Route path="" element={<Navigate to="room/add" />} />
-                <Route path="signup" element={<SignUp />} />
-                <Route path="login" element={<Login />} />
-                <Route path="*" element={<h1>404</h1>} />
-              </Routes>
-            </Content>
-          </Container>
+          <RoomOptionsProvider>
+            <Container>
+              <Header />
+              <Content>
+                <Routes>
+                  <Route path="/room/*" element={<Home />} />
+                  <Route path="" element={<Navigate to="room/add" />} />
+                  <Route path="signup" element={<SignUp />} />
+                  <Route path="login" element={<Login />} />
+                  <Route path="*" element={<h1>404</h1>} />
+                </Routes>
+              </Content>
+            </Container>
+          </RoomOptionsProvider>
         </DataCacheProvider>
       </QueryClientProvider>
     </ThemeProvider>

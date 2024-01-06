@@ -11,7 +11,7 @@ const MainCameraContainer = styled.div`
   flex: 3;
   display: flex;
   flex-direction: column;
-  color: #ddd
+  color: #ddd;
 `;
 
 export type SingleCameraProps = {
