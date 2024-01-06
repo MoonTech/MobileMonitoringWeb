@@ -1,7 +1,6 @@
 import ReactPlayer from "react-player";
 import { styled } from "styled-components";
 import { WatchCamera } from "../../../types/watchCamera";
-import { CameraContainer } from "../../components/camera";
 import { useEndRecording } from "../../mutations/endRecording";
 import { useStartRecording } from "../../mutations/startRecording";
 import { useCheckCamera } from "../../queries/getRecordigState";
@@ -12,6 +11,13 @@ const MainCameraContainer = styled.div`
   display: flex;
   flex-direction: column;
   color: #ddd;
+`;
+
+export const CameraContainer = styled.div`
+  background-color: #333;
+  border: 2px solid black;
+  border-radius: 10px;
+  height: 100%;
 `;
 
 export type SingleCameraProps = {
