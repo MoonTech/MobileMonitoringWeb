@@ -1,5 +1,6 @@
 import ReactPlayer from "react-player";
 import { styled } from "styled-components";
+import ReactFlvPlayer from "../../wrapper/ReactFlvPlayer";
 
 export const CameraContainer = styled.div`
   background-color: #333;
