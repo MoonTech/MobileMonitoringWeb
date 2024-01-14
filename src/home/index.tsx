@@ -129,7 +129,7 @@ const Home = () => {
               name={room.name}
               onClick={() => {
                 navigate(`${room.name}/single`);
-                window.location.reload();
+                // window.location.reload();
               }}
             />
           ) : (
@@ -139,7 +139,7 @@ const Home = () => {
         <AddRoomElement
           onClick={() => {
             navigate("add");
-            window.location.reload();
+            // window.location.reload();
           }}
         />
         {userData ? <NewRoomElement onClick={() => navigate("new")} /> : <></>}

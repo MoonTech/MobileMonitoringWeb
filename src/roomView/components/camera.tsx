@@ -1,5 +1,5 @@
-import ReactPlayer from "react-player";
 import { styled } from "styled-components";
+import ReactFlvPlayer from "../../components/ReactFlvPlayer";
 
 export const CameraContainer = styled.div`
   background-color: #333;
@@ -27,13 +27,7 @@ export type CameraProps = {
 export const Camera = ({ url, name, onClick }: CameraProps) => {
   return (
     <CameraContainer onClick={onClick}>
-      <ReactPlayer
-        url={url}
-        height="35vh"
-        width="100%"
-        muted={false}
-        playing={true}
-      />
+      <ReactFlvPlayer url={url} height="40vh" width="100%" />
       <NameContainer>{name}</NameContainer>
     </CameraContainer>
   );

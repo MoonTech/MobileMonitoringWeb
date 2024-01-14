@@ -23,12 +23,12 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { useDeleteRoom } from "./mutations/deleteRoom";
 import { toast, ToastContainer } from "react-toastify";
 import { useTheme } from "../contexts/themeContext";
-import ReactPlayer from "react-player";
 import { CodeQR } from "./views/qr";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 import ListIcon from "@mui/icons-material/List";
 import { Recordings } from "./views/recordings";
 import { useRoomOptions } from "../contexts/roomOptionsContext";
+import ReactFlvPlayer from "../components/ReactFlvPlayer";
 
 export const CameraContainer = styled.div`
   height: 250px;
@@ -85,18 +85,7 @@ export const Camera = ({ url, name, onClick, clickOption }: CameraProps) => {
       {clickOption === "selected" ? (
         <SelectedHeader>selected</SelectedHeader>
       ) : (
-        <ReactPlayer
-          url={url}
-          height="200px"
-          width="100%"
-          muted={true}
-          playing={true}
-          config={{
-            file: {
-              forceFLV: true,
-            },
-          }}
-        />
+        <ReactFlvPlayer url={url} height="200px" width="100%" />
       )}
       <CameraBottomContainer>
         <CameraNameContainer>{name}</CameraNameContainer>
@@ -283,7 +272,7 @@ export const RoomView = () => {
                       setRoomDictionary(clone);
                     }
                   }
-                  window.location.reload();
+                  // window.location.reload();
                 }}
                 name={camera.cameraName}
                 key={camera.id}

@@ -1,9 +1,9 @@
-import ReactPlayer from "react-player";
 import { styled } from "styled-components";
 import { WatchCamera } from "../../../types/watchCamera";
 import { useEndRecording } from "../../mutations/endRecording";
 import { useStartRecording } from "../../mutations/startRecording";
 import { useCheckCamera } from "../../queries/getRecordigState";
+import ReactFlvPlayer from "../../../components/ReactFlvPlayer";
 
 const MainCameraContainer = styled.div`
   max-height: calc(100% - 150px);
@@ -49,12 +49,10 @@ const SingleCamera = ({ camera, isOwnedRoom }: SingleCameraProps) => {
       {camera ? (
         <>
           <CameraContainer>
-            <ReactPlayer
+            <ReactFlvPlayer
               url={camera?.watchUrl ?? ""}
               height="70vh"
               width="100%"
-              muted={false}
-              playing={true}
             />
             <h3>{camera.cameraName}</h3>
           </CameraContainer>
