@@ -1,4 +1,3 @@
-import ReactPlayer from "react-player";
 import { styled } from "styled-components";
 import ReactFlvPlayer from "../../wrapper/ReactFlvPlayer";
 
@@ -28,12 +27,7 @@ export type CameraProps = {
 export const Camera = ({ url, name, onClick }: CameraProps) => {
   return (
     <CameraContainer onClick={onClick}>
-        <ReactFlvPlayer
-            url = {url}
-            height = "40vh"
-            width = "100%"
-            showControls = {false}
-        />
+      <ReactFlvPlayer url={url} height="40vh" width="100%" />
       <NameContainer>{name}</NameContainer>
     </CameraContainer>
   );

@@ -1,4 +1,3 @@
-import ReactPlayer from "react-player";
 import { styled } from "styled-components";
 import { WatchCamera } from "../../../types/watchCamera";
 import { useEndRecording } from "../../mutations/endRecording";
@@ -49,16 +48,14 @@ const SingleCamera = ({ camera, isOwnedRoom }: SingleCameraProps) => {
     <MainCameraContainer>
       {camera ? (
         <>
-          camera?.watchUrl != null ?
-            <CameraContainer>
-              <ReactFlvPlayer
-                  url = {camera?.watchUrl ?? ""}
-                  height = "70vh"
-                  width = "100%"
-                  showControls = {false}
-              /> : <div/>
+          <CameraContainer>
+            <ReactFlvPlayer
+              url={camera?.watchUrl ?? ""}
+              height="70vh"
+              width="100%"
+            />
             <h3>{camera.cameraName}</h3>
-          </CameraContainer> : <div/>
+          </CameraContainer>
           {isOwnedRoom && (
             <RecordContainer
               onClick={() => {
