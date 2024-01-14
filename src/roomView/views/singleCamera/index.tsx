@@ -40,6 +40,17 @@ const RecordContainer = styled.div`
   }
 `;
 
+const NameContainer = styled.div`
+  font-size: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ddd;
+  background-color: #333;
+  border-radius: 10px;
+`;
+
 const SingleCamera = ({ camera, isOwnedRoom }: SingleCameraProps) => {
   const end = useEndRecording(camera?.id ?? "");
   const start = useStartRecording(camera?.id ?? "");
@@ -54,7 +65,7 @@ const SingleCamera = ({ camera, isOwnedRoom }: SingleCameraProps) => {
               height="70vh"
               width="100%"
             />
-            <h3>{camera.cameraName}</h3>
+            <NameContainer>{camera.cameraName}</NameContainer>
           </CameraContainer>
           {isOwnedRoom && (
             <RecordContainer

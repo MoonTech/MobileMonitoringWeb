@@ -16,6 +16,8 @@ const NameContainer = styled.div`
   justify-content: center;
   align-items: center;
   color: #ddd;
+  background-color: #111;
+  border-radius: 10px;
 `;
 
 export type CameraProps = {
@@ -27,7 +29,7 @@ export type CameraProps = {
 export const Camera = ({ url, name, onClick }: CameraProps) => {
   return (
     <CameraContainer onClick={onClick}>
-      <ReactFlvPlayer url={url} height="40vh" width="100%" />
+      <ReactFlvPlayer url={url} height="35vh" width="100%" />
       <NameContainer>{name}</NameContainer>
     </CameraContainer>
   );

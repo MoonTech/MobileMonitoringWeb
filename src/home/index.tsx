@@ -4,8 +4,8 @@ import { useCache } from "../contexts/dataCacheContext";
 import AddIcon from "@mui/icons-material/Add";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { RoomView } from "../roomView";
-import CreateIcon from "@mui/icons-material/Create";
 import CreateRoom from "../forms/createRoom";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useGetMyRooms } from "../queries/myRooms";
 import { Room } from "../types/room";
 
@@ -68,7 +68,7 @@ type AddRoomElementProps = {
 const AddRoomElement = (props: AddRoomElementProps) => {
   return (
     <AddRoomElementContainer onClick={props.onClick}>
-      <AddIcon fontSize="large" />
+      <VisibilityIcon fontSize="large" />
     </AddRoomElementContainer>
   );
 };
@@ -76,7 +76,7 @@ const AddRoomElement = (props: AddRoomElementProps) => {
 const NewRoomElement = (props: AddRoomElementProps) => {
   return (
     <AddRoomElementContainer onClick={props.onClick}>
-      <CreateIcon fontSize="large" />
+      <AddIcon fontSize="large" />
     </AddRoomElementContainer>
   );
 };
@@ -122,27 +122,26 @@ const Home = () => {
   return (
     <Container>
       <Bar>
-        {roomList.map((room) =>
-          room ? (
-            <RoomElement
-              key={room.name}
-              name={room.name}
-              onClick={() => {
-                navigate(`${room.name}/single`);
-                // window.location.reload();
-              }}
-            />
-          ) : (
-            <></>
-          ),
+        {roomList.map(
+          (room) =>
+            room && (
+              <RoomElement
+                key={room.name}
+                name={room.name}
+                onClick={() => {
+                  navigate(`${room.name}/single`);
+                  window.location.reload();
+                }}
+              />
+            ),
         )}
         <AddRoomElement
           onClick={() => {
             navigate("add");
-            // window.location.reload();
+            window.location.reload();
           }}
         />
-        {userData ? <NewRoomElement onClick={() => navigate("new")} /> : <></>}
+        {userData && <NewRoomElement onClick={() => navigate("new")} />}
       </Bar>
       <Content>
         <Routes key={location.pathname} location={location}>
