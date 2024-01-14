@@ -28,7 +28,7 @@ import QrCode2Icon from "@mui/icons-material/QrCode2";
 import ListIcon from "@mui/icons-material/List";
 import { Recordings } from "./views/recordings";
 import { useRoomOptions } from "../contexts/roomOptionsContext";
-import ReactFlvPlayer from "../wrapper/ReactFlvPlayer";
+import ReactFlvPlayer from "../components/ReactFlvPlayer";
 
 export const CameraContainer = styled.div`
   height: 250px;
@@ -85,11 +85,7 @@ export const Camera = ({ url, name, onClick, clickOption }: CameraProps) => {
       {clickOption === "selected" ? (
         <SelectedHeader>selected</SelectedHeader>
       ) : (
-        <ReactFlvPlayer
-          url={url}
-          height="200px"
-          width="100%"
-        />
+        <ReactFlvPlayer url={url} height="200px" width="100%" />
       )}
       <CameraBottomContainer>
         <CameraNameContainer>{name}</CameraNameContainer>

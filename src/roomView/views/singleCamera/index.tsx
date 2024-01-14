@@ -3,7 +3,7 @@ import { WatchCamera } from "../../../types/watchCamera";
 import { useEndRecording } from "../../mutations/endRecording";
 import { useStartRecording } from "../../mutations/startRecording";
 import { useCheckCamera } from "../../queries/getRecordigState";
-import ReactFlvPlayer from "../../../wrapper/ReactFlvPlayer";
+import ReactFlvPlayer from "../../../components/ReactFlvPlayer";
 
 const MainCameraContainer = styled.div`
   max-height: calc(100% - 150px);
