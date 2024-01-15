@@ -19,6 +19,9 @@ export const lightTheme = {
     background: "#FFF",
     backgroundLight: "#E7E4FE",
     backgroundFont: "#2b2927",
+    cameraDark: "#333",
+    cameraDarker: "#111",
+    cameraLight: "#eee",
   },
   fonts: ["sans-serif", "Montserrat"],
   fontSizes: {

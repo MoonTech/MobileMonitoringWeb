@@ -4,7 +4,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-    background: teal;
+    background: white;
     font-family: 'Maven Pro', sans-serif;
     h1 {
       font-family: 'Maven Pro', sans-serif;

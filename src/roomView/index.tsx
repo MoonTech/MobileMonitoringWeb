@@ -36,8 +36,8 @@ import DeleteConfirmationPopup from "./components/deleteConfirmationPopup";
 export const CameraContainer = styled.div`
   height: 250px;
   max-height: 250px;
-  background-color: #333;
-  color: #ddd;
+  background-color: ${(props) => props.theme.colors.cameraDark};
+  color: ${(props) => props.theme.colors.cameraLight};
   border: 2px solid black;
   border-radius: 10px;
 `;
@@ -46,7 +46,7 @@ const CameraBottomContainer = styled.div`
   height: 50px;
   font-size: 30px;
   width: 100%;
-  background-color: #111;
+  background-color: ${(props) => props.theme.colors.cameraDark};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -193,7 +193,12 @@ export const RoomView = () => {
           />
           <Route
             path="split"
-            element={<SplitCamera cameras={roomState.split} />}
+            element={
+              <SplitCamera
+                cameras={roomState.split}
+                isOwnedRoom={isOwnedRoom}
+              />
+            }
           />
           <Route path="accept" element={<AcceptCameras />} />
           <Route path="qr" element={<CodeQR />} />
