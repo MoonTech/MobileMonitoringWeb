@@ -29,12 +29,15 @@ import ListIcon from "@mui/icons-material/List";
 import { Recordings } from "./views/recordings";
 import { useRoomOptions } from "../contexts/roomOptionsContext";
 import ReactFlvPlayer from "../components/ReactFlvPlayer";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useState } from "react";
+import DeleteConfirmationPopup from "./components/deleteConfirmationPopup";
 
 export const CameraContainer = styled.div`
   height: 250px;
   max-height: 250px;
-  background-color: #333;
-  color: #ddd;
+  background-color: ${(props) => props.theme.colors.cameraDark};
+  color: ${(props) => props.theme.colors.cameraLight};
   border: 2px solid black;
   border-radius: 10px;
 `;
@@ -43,7 +46,7 @@ const CameraBottomContainer = styled.div`
   height: 50px;
   font-size: 30px;
   width: 100%;
-  background-color: #111;
+  background-color: ${(props) => props.theme.colors.cameraDark};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -133,7 +136,7 @@ export const RoomView = () => {
   const screenType = location.pathname.split("/").at(-1);
   const cameras = useWatchRoom(id!);
   const { theme } = useTheme();
-  const { list, setList } = useCache();
+  const { userData, list, setList } = useCache();
   const { roomDictionary, setRoomDictionary } = useRoomOptions();
   const navigate = useNavigate();
   const isOwnedRoom = !list.some((room) => room.name === id);
@@ -143,6 +146,37 @@ export const RoomView = () => {
     setRoomDictionary(roomDictionary);
   }
   const roomState = roomDictionary[id!]!;
+
+  const [isConfirmationPopupOpen, setConfirmationPopupOpen] = useState(false);
+
+  const handleDeleteClick = () => {
+    setConfirmationPopupOpen(true);
+  };
+
+  const handleCloseConfirmationPopup = () => {
+    setConfirmationPopupOpen(false);
+  };
+
+  const handleConfirmDelete = async () => {
+    setConfirmationPopupOpen(false);
+
+    if (isOwnedRoom) {
+      try {
+        await mutateAsync();
+        navigate("../add");
+      } catch {
+        toast("Could not delete a room", {
+          position: "bottom-left",
+          autoClose: 5000,
+          closeOnClick: true,
+          theme,
+        });
+      }
+    } else {
+      setList(list.filter((item) => item.name !== id));
+      navigate("../add");
+    }
+  };
 
   return (
     <Container>
@@ -159,7 +193,12 @@ export const RoomView = () => {
           />
           <Route
             path="split"
-            element={<SplitCamera cameras={roomState.split} />}
+            element={
+              <SplitCamera
+                cameras={roomState.split}
+                isOwnedRoom={isOwnedRoom}
+              />
+            }
           />
           <Route path="accept" element={<AcceptCameras />} />
           <Route path="qr" element={<CodeQR />} />
@@ -192,15 +231,13 @@ export const RoomView = () => {
           >
             <SplitCameraIcon />
           </SideMenuOption>
-          {isOwnedRoom ? (
+          {isOwnedRoom && (
             <SideMenuOption
               isClickable={screenType !== "accept"}
               link={`../${id}/accept`}
             >
               <CheckBoxIcon fontSize="inherit" />
             </SideMenuOption>
-          ) : (
-            <></>
           )}
           <SideMenuOption
             isClickable={screenType !== "recordings"}
@@ -208,33 +245,31 @@ export const RoomView = () => {
           >
             <ListIcon fontSize="inherit" />
           </SideMenuOption>
-          {isOwnedRoom ? (
+          {isOwnedRoom && (
             <SideMenuOption
               isClickable={screenType !== "qr"}
               link={`../${id}/qr`}
             >
               <QrCode2Icon fontSize="inherit" />
             </SideMenuOption>
-          ) : (
-            <></>
           )}
         </SideMenuContainer>
         <CameraListContainer>
           {cameras.data?.connectedCameras.map((camera) => {
             const clickOption =
               screenType === "accept" ||
-                screenType === "qr" ||
-                screenType === "recordings"
+              screenType === "qr" ||
+              screenType === "recordings"
                 ? "none"
                 : screenType === "split"
-                  ? roomState.split.some((cam) => cam.id === camera.id)
-                    ? "selected"
-                    : roomState.split.length === 4
-                      ? "unavailable"
-                      : "available"
-                  : roomState.single === null || roomState.single.id !== camera.id
-                    ? "available"
-                    : "selected";
+                ? roomState.split.some((cam) => cam.id === camera.id)
+                  ? "selected"
+                  : roomState.split.length === 4
+                  ? "unavailable"
+                  : "available"
+                : roomState.single === null || roomState.single.id !== camera.id
+                ? "available"
+                : "selected";
             return (
               <Camera
                 clickOption={clickOption}
@@ -272,7 +307,6 @@ export const RoomView = () => {
                       setRoomDictionary(clone);
                     }
                   }
-                  // window.location.reload();
                 }}
                 name={camera.cameraName}
                 key={camera.id}
@@ -281,31 +315,23 @@ export const RoomView = () => {
           })}
         </CameraListContainer>
         <DeleteContainer>
-          <DeleteButtonContainer
-            onClick={async () => {
-              if (isOwnedRoom) {
-                try {
-                  await mutateAsync();
-                  navigate("../add");
-                } catch {
-                  toast("Could not delete a room", {
-                    position: "bottom-left",
-                    autoClose: 5000,
-                    closeOnClick: true,
-                    theme,
-                  });
-                }
-              } else {
-                setList(list.filter((item) => item.name !== id));
-                navigate("../add");
-              }
-            }}
-          >
-            <DeleteForeverIcon fontSize="inherit" />
+          <DeleteButtonContainer onClick={handleDeleteClick}>
+            {userData ? (
+              <DeleteForeverIcon fontSize="inherit" />
+            ) : (
+              <VisibilityOffIcon fontSize="inherit" />
+            )}
           </DeleteButtonContainer>
         </DeleteContainer>
       </SideBarContainer>
       <ToastContainer />
+      {isConfirmationPopupOpen && (
+        <DeleteConfirmationPopup
+          onClose={handleCloseConfirmationPopup}
+          onConfirm={handleConfirmDelete}
+          isOwnedRoom={isOwnedRoom}
+        />
+      )}
     </Container>
   );
 };

@@ -5,9 +5,8 @@ import { SERVER_URL } from "../../serverUrl";
 export const useGetQRCode = (roomName: string) => {
   const { userData } = useCache();
   const query = useQuery(`qr` + roomName, () =>
-    fetch(SERVER_URL + "room/qrCode", {
-      method: "POST",
-      body: JSON.stringify({ roomName }),
+    fetch(SERVER_URL + "room/qrCode/" + roomName, {
+      method: "GET",
       headers: {
         authorization: `Bearer ${userData?.token}`,
         "Content-Type": "application/json",

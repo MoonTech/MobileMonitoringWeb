@@ -22,35 +22,56 @@ const CameraContainer = styled.div`
 
 export type SplitCameraProps = {
   cameras: WatchCamera[];
+  isOwnedRoom: boolean;
 };
 
-const SplitCamera = ({ cameras }: SplitCameraProps) => {
+const SplitCamera = ({ cameras, isOwnedRoom }: SplitCameraProps) => {
   return (
     <CameraGridContainer>
       <CameraContainer>
         {cameras.length > 0 ? (
-          <Camera url={cameras[0].watchUrl} name={cameras[0].cameraName} />
+          <Camera
+            url={cameras[0].watchUrl}
+            name={cameras[0].cameraName}
+            isOwnedRoom={isOwnedRoom}
+            id={cameras[0].id}
+          />
         ) : (
           <CameraContainerInner />
         )}
       </CameraContainer>
       <CameraContainer>
         {cameras.length > 1 ? (
-          <Camera url={cameras[1].watchUrl} name={cameras[1].cameraName} />
+          <Camera
+            url={cameras[1].watchUrl}
+            name={cameras[1].cameraName}
+            isOwnedRoom={isOwnedRoom}
+            id={cameras[1].id}
+          />
         ) : (
           <CameraContainerInner />
         )}
       </CameraContainer>
       <CameraContainer>
         {cameras.length > 2 ? (
-          <Camera url={cameras[2].watchUrl} name={cameras[2].cameraName} />
+          <Camera
+            url={cameras[2].watchUrl}
+            name={cameras[2].cameraName}
+            isOwnedRoom={isOwnedRoom}
+            id={cameras[2].id}
+          />
         ) : (
           <CameraContainerInner />
         )}
       </CameraContainer>
       <CameraContainer>
         {cameras.length > 3 ? (
-          <Camera url={cameras[3].watchUrl} name={cameras[3].cameraName} />
+          <Camera
+            url={cameras[3].watchUrl}
+            name={cameras[3].cameraName}
+            isOwnedRoom={isOwnedRoom}
+            id={cameras[3].id}
+          />
         ) : (
           <CameraContainerInner />
         )}
