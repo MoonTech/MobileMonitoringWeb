@@ -3,7 +3,7 @@ import "@testing-library/jest-dom";
 import { testRender } from "../../testHelpers/testRender";
 import SignUp from "./../signUp";
 
-describe("Login Component", () => {
+describe("SignUp Component", () => {
   it("renders without crashing", () => {
     testRender(<SignUp />);
   });
