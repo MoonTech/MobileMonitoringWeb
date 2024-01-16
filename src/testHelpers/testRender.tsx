@@ -5,17 +5,20 @@ import { lightTheme } from "../styles/themes/light";
 import { DataCacheProvider } from "../contexts/dataCacheContext";
 import { RoomOptionsProvider } from "../contexts/roomOptionsContext";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ThemeSettingProvider } from "../contexts/themeContext";
 
 export const testRender = (component: React.ReactNode) => {
   return rtlRender(
     <MemoryRouter>
-      <QueryClientProvider client={new QueryClient()}>
-        <DataCacheProvider>
-          <RoomOptionsProvider>
-            <ThemeProvider theme={lightTheme}>{component}</ThemeProvider>
-          </RoomOptionsProvider>
-        </DataCacheProvider>
-      </QueryClientProvider>
+      <ThemeSettingProvider>
+        <QueryClientProvider client={new QueryClient()}>
+          <DataCacheProvider>
+            <RoomOptionsProvider>
+              <ThemeProvider theme={lightTheme}>{component}</ThemeProvider>
+            </RoomOptionsProvider>
+          </DataCacheProvider>
+        </QueryClientProvider>
+      </ThemeSettingProvider>
     </MemoryRouter>,
   );
 };
