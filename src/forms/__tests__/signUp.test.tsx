@@ -1,26 +1,26 @@
 import { fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Login from "./../login";
 import { testRender } from "../../testHelpers/testRender";
+import SignUp from "./../signUp";
 
 describe("Login Component", () => {
   it("renders without crashing", () => {
-    testRender(<Login />);
+    testRender(<SignUp />);
   });
 
   it("displays error message when submitting with empty fields", () => {
-    testRender(<Login />);
-    const loginButton = screen.queryByRole("button");
-    fireEvent.click(loginButton);
+    testRender(<SignUp />);
+    const signUpButton = screen.queryByRole("button");
+    fireEvent.click(signUpButton);
     const errorMessage = screen.getByText("Please fill in all fields.");
     expect(errorMessage).toBeInTheDocument();
   });
 
   it("navigates to the login page on 'Go to Login' link click", () => {
-    const { container } = testRender(<Login />);
-    const loginLink = screen.getByText("Go to Sign up");
+    const { container } = testRender(<SignUp />);
+    const loginLink = screen.getByText("Go to Login");
     fireEvent.click(loginLink);
 
-    expect(container.innerHTML).toMatch("/signup");
+    expect(container.innerHTML).toMatch("/login");
   });
 });
