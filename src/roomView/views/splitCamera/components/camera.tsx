@@ -1,17 +1,10 @@
 import { styled } from "styled-components";
-import ReactFlvPlayer from "../../components/ReactFlvPlayer";
-import { useEndRecording } from "../mutations/endRecording";
-import { useStartRecording } from "../mutations/startRecording";
-import { useCheckCamera } from "../queries/getRecordigState";
+import ReactFlvPlayer from "../../../../components/ReactFlvPlayer";
+import { useEndRecording } from "../../../mutations/endRecording";
+import { useStartRecording } from "../../../mutations/startRecording";
+import { useCheckCamera } from "../../../queries/getRecordigState";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
-
-export const CameraContainer = styled.div`
-  background-color: ${(props) => props.theme.colors.cameraDark};
-  border: 2px solid black;
-  border-radius: 10px;
-  height: 40vh;
-`;
 
 const BottomContainer = styled.div`
   height: 5vh;
@@ -23,6 +16,13 @@ const BottomContainer = styled.div`
   color: ${(props) => props.theme.colors.cameraLight};
   background-color: ${(props) => props.theme.colors.cameraDarker};
   border-radius: 10px;
+`;
+
+const CameraContainer = styled.div`
+  background-color: ${(props) => props.theme.colors.cameraDark};
+  border: 2px solid black;
+  border-radius: 10px;
+  height: 40vh;
 `;
 
 const NameContainer = styled.div`

@@ -15,17 +15,12 @@ const MainCameraContainer = styled.div`
   color: ${(props) => props.theme.colors.cameraLight};
 `;
 
-export const CameraContainer = styled.div`
+const CameraContainer = styled.div`
   background-color: ${(props) => props.theme.colors.cameraDark};
   border: 2px solid black;
   border-radius: 10px;
   height: 80vh;
 `;
-
-export type SingleCameraProps = {
-  camera: WatchCamera | null;
-  isOwnedRoom: boolean;
-};
 
 const RecordContainer = styled.div`
   width: 60px;
@@ -61,6 +56,11 @@ const NameContainer = styled.div`
   justify-content: flex-start;
   color: ${(props) => props.theme.colors.cameraLight};
 `;
+
+export type SingleCameraProps = {
+  camera: WatchCamera | null;
+  isOwnedRoom: boolean;
+};
 
 const SingleCamera = ({ camera, isOwnedRoom }: SingleCameraProps) => {
   const end = useEndRecording(camera?.id ?? "");
