@@ -46,12 +46,12 @@ export const SideMenuOption = ({
 }: SideMenuOptionProps) => {
   const navigate = useNavigate();
   return (
-    <SideMenuOptionContainer isClickable={isClickable}>
+    <SideMenuOptionContainer data-testid="test" isClickable={isClickable}>
       {isClickable ? (
         <StyledLink
+          data-testid="click"
           onClick={() => {
             navigate(link!);
-            // window.location.reload();
           }}
         >
           {children}

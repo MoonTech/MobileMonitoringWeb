@@ -42,9 +42,9 @@ const DeleteConfirmationPopup = ({
   isOwnedRoom,
 }: DeleteConfirmationPopupProps) => {
   return (
-    <PopupWrapper>
-      <CloseButton onClick={onClose}>&times;</CloseButton>
-      <PopupContent>
+    <PopupWrapper data-testid="popup-wrapper">
+      <CloseButton data-testid="close-button" onClick={onClose}>&times;</CloseButton>
+      <PopupContent data-testid="popup-content">
         <p>
           Are you sure you want to {isOwnedRoom ? "delete" : "stop observing"}{" "}
           the room?
