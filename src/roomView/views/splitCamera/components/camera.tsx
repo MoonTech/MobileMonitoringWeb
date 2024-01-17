@@ -1,10 +1,11 @@
-import { styled } from "styled-components";
+import { styled, useTheme } from "styled-components";
 import ReactFlvPlayer from "../../../../components/ReactFlvPlayer";
 import { useEndRecording } from "../../../mutations/endRecording";
 import { useStartRecording } from "../../../mutations/startRecording";
 import { useCheckCamera } from "../../../queries/getRecordigState";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
+import { toast } from "react-toastify";
 
 const BottomContainer = styled.div`
   height: 5vh;
@@ -54,6 +55,10 @@ export type CameraProps = {
   isOwnedRoom: boolean;
 };
 
+const VideoContainer = styled.div`
+  cursor: pointer;
+`;
+
 export const Camera = ({
   url,
   name,
@@ -64,21 +69,39 @@ export const Camera = ({
   const end = useEndRecording(id ?? "");
   const start = useStartRecording(id ?? "");
   const check = useCheckCamera(id ?? "");
+  const { theme } = useTheme();
+
+  const handleRecordClick = () => {
+    if (check.response) {
+      start().catch(() => {
+        toast("Unable start recording on an inactive transimission", {
+          position: "bottom-left",
+          autoClose: 5000,
+          closeOnClick: true,
+          theme,
+        });
+      });
+    } else {
+      end().catch(() => {
+        toast("Unable finish recording", {
+          position: "bottom-left",
+          autoClose: 5000,
+          closeOnClick: true,
+          theme,
+        });
+      });
+    }
+  };
+
   return (
-    <CameraContainer onClick={onClick}>
-      <ReactFlvPlayer url={url} height="35vh" width="100%" />
+    <CameraContainer>
+      <VideoContainer onClick={onClick}>
+        <ReactFlvPlayer url={url} height="35vh" width="100%" />
+      </VideoContainer>
       <BottomContainer>
         <NameContainer>{name}</NameContainer>
         {isOwnedRoom && (
-          <RecordContainer
-            onClick={() => {
-              if (check.response) {
-                start();
-              } else {
-                end();
-              }
-            }}
-          >
+          <RecordContainer onClick={handleRecordClick}>
             {check.response ? (
               <RadioButtonCheckedIcon fontSize="inherit" />
             ) : (

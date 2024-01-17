@@ -6,9 +6,11 @@ import { useCheckCamera } from "../../queries/getRecordigState";
 import ReactFlvPlayer from "../../../components/ReactFlvPlayer";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
+import { useTheme } from "../../../contexts/themeContext";
+import { toast } from "react-toastify";
 
 const MainCameraContainer = styled.div`
-  max-height: calc(100% - 150px);
+  max-height: 100%;
   flex: 3;
   display: flex;
   flex-direction: column;
@@ -20,6 +22,16 @@ const CameraContainer = styled.div`
   border: 2px solid black;
   border-radius: 10px;
   height: 80vh;
+`;
+
+const NotSelectedCameraContainer = styled.div`
+  height: 80vh;
+  background-color: ${(props) => props.theme.colors.cameraDark};
+  border: 2px solid black;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 `;
 
 const RecordContainer = styled.div`
@@ -50,7 +62,6 @@ const BottomContainer = styled.div`
 
 const NameContainer = styled.div`
   font-size: 40px;
-  hight: 50px;
   display: flex;
   margin-left: 10px;
   justify-content: flex-start;
@@ -66,6 +77,30 @@ const SingleCamera = ({ camera, isOwnedRoom }: SingleCameraProps) => {
   const end = useEndRecording(camera?.id ?? "");
   const start = useStartRecording(camera?.id ?? "");
   const check = useCheckCamera(camera?.id ?? "");
+  const { theme } = useTheme();
+
+  const handleRecordClick = () => {
+    if (check.response) {
+      start().catch(() => {
+        toast("Unable start recording on an inactive transimission", {
+          position: "bottom-left",
+          autoClose: 5000,
+          closeOnClick: true,
+          theme,
+        });
+      });
+    } else {
+      end().catch(() => {
+        toast("Unable finish recording", {
+          position: "bottom-left",
+          autoClose: 5000,
+          closeOnClick: true,
+          theme,
+        });
+      });
+    }
+  };
+
   return (
     <MainCameraContainer>
       {camera ? (
@@ -78,15 +113,7 @@ const SingleCamera = ({ camera, isOwnedRoom }: SingleCameraProps) => {
           <BottomContainer>
             <NameContainer>{camera.cameraName}</NameContainer>
             {isOwnedRoom && (
-              <RecordContainer
-                onClick={() => {
-                  if (check.response) {
-                    start();
-                  } else {
-                    end();
-                  }
-                }}
-              >
+              <RecordContainer onClick={handleRecordClick}>
                 {check.response ? (
                   <RadioButtonCheckedIcon fontSize="inherit" />
                 ) : (
@@ -97,9 +124,9 @@ const SingleCamera = ({ camera, isOwnedRoom }: SingleCameraProps) => {
           </BottomContainer>
         </CameraContainer>
       ) : (
-        <CameraContainer>
+        <NotSelectedCameraContainer>
           <h1>No camera chosen</h1>
-        </CameraContainer>
+        </NotSelectedCameraContainer>
       )}
     </MainCameraContainer>
   );

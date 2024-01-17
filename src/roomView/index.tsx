@@ -28,81 +28,13 @@ import QrCode2Icon from "@mui/icons-material/QrCode2";
 import ListIcon from "@mui/icons-material/List";
 import { Recordings } from "./views/recordings";
 import { useRoomOptions } from "../contexts/roomOptionsContext";
-import ReactFlvPlayer from "../components/ReactFlvPlayer";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
 import DeleteConfirmationPopup from "./components/deleteConfirmationPopup";
+import { WatchCamera } from "../types/watchCamera";
+import { Camera } from "./components/camera";
 
-export const CameraContainer = styled.div`
-  height: 250px;
-  max-height: 250px;
-  background-color: ${(props) => props.theme.colors.cameraDark};
-  color: ${(props) => props.theme.colors.cameraLight};
-  border: 2px solid black;
-  border-radius: 10px;
-`;
-
-const CameraBottomContainer = styled.div`
-  height: 50px;
-  font-size: 30px;
-  width: 100%;
-  background-color: ${(props) => props.theme.colors.cameraDark};
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 10px;
-`;
-
-const CameraNameContainer = styled.div`
-  margin-left: 10px;
-`;
-
-const CameraInclusionContainer = styled.div`
-  height: 40px;
-  margin-right: 10px;
-  background-color: ${(props) => props.theme.colors.secondaryDark};
-  border-radius: 10px;
-  transition: 0.2s all;
-  &:hover {
-    background-color: ${(props) => props.theme.colors.secondary};
-    cursor: pointer;
-  }
-`;
-
-const SelectedHeader = styled.h1`
-  height: 160px;
-`;
-
-type clickOption = "none" | "unavailable" | "available" | "selected";
-
-export type CameraProps = {
-  url: string;
-  name: string;
-  onClick?: any;
-  clickOption: clickOption;
-};
-
-export const Camera = ({ url, name, onClick, clickOption }: CameraProps) => {
-  return (
-    <CameraContainer onClick={onClick}>
-      {clickOption === "selected" ? (
-        <SelectedHeader>selected</SelectedHeader>
-      ) : (
-        <ReactFlvPlayer url={url} height="200px" width="100%" />
-      )}
-      <CameraBottomContainer>
-        <CameraNameContainer>{name}</CameraNameContainer>
-        {clickOption !== "none" && (
-          <CameraInclusionContainer onClick={onClick}>
-            {clickOption === "available" || clickOption === "unavailable"
-              ? "Select"
-              : "Remove"}
-          </CameraInclusionContainer>
-        )}
-      </CameraBottomContainer>
-    </CameraContainer>
-  );
-};
+export type clickOption = "none" | "unavailable" | "available" | "selected";
 
 const MainCameraContainer = styled.div`
   height: 100%;
@@ -177,6 +109,54 @@ export const RoomView = () => {
       navigate("../add");
     }
   };
+
+  const handleClickCamera = (clickOption: clickOption, camera: WatchCamera) => {
+    return () => {
+      let clone = { ...roomDictionary };
+      let current = clone[id!]!;
+      if (screenType === "split") {
+        if (clickOption === "selected") {
+          current.split = current.split.filter((cam) => cam.id !== camera.id);
+          clone[id!] = current;
+          setRoomDictionary(clone);
+        }
+        if (clickOption === "available") {
+          current.split = current.split.some((c) => c.id === camera.id)
+            ? current.split
+            : [...current.split, camera];
+          clone[id!] = current;
+          setRoomDictionary(clone);
+        }
+      }
+      if (screenType === "single") {
+        if (clickOption === "available") {
+          current.single = camera;
+          clone[id!] = current;
+          setRoomDictionary(clone);
+        }
+        if (clickOption === "selected") {
+          current.single = null;
+          clone[id!] = current;
+          setRoomDictionary(clone);
+        }
+      }
+    };
+  };
+
+  const computeClickOption = (camera: WatchCamera) =>
+    screenType === "accept" ||
+    screenType === "qr" ||
+    screenType === "recordings"
+      ? "none"
+      : screenType === "split"
+      ? roomState.split.some((cam) => cam.id === camera.id)
+        ? "selected"
+        : roomState.split.length === 4
+        ? "unavailable"
+        : "available"
+      : roomState.single === null || roomState.single.id !== camera.id
+      ? "available"
+      : "selected";
 
   return (
     <Container>
@@ -256,58 +236,12 @@ export const RoomView = () => {
         </SideMenuContainer>
         <CameraListContainer>
           {cameras.data?.connectedCameras.map((camera) => {
-            const clickOption =
-              screenType === "accept" ||
-              screenType === "qr" ||
-              screenType === "recordings"
-                ? "none"
-                : screenType === "split"
-                ? roomState.split.some((cam) => cam.id === camera.id)
-                  ? "selected"
-                  : roomState.split.length === 4
-                  ? "unavailable"
-                  : "available"
-                : roomState.single === null || roomState.single.id !== camera.id
-                ? "available"
-                : "selected";
+            const clickOption = computeClickOption(camera);
             return (
               <Camera
                 clickOption={clickOption}
                 url={camera.watchUrl}
-                onClick={() => {
-                  let clone = { ...roomDictionary };
-                  let current = clone[id!]!;
-                  if (screenType === "split") {
-                    if (clickOption === "selected") {
-                      current.split = current.split.filter(
-                        (cam) => cam.id !== camera.id,
-                      );
-                      clone[id!] = current;
-                      setRoomDictionary(clone);
-                    }
-                    if (clickOption === "available") {
-                      current.split = current.split.some(
-                        (c) => c.id === camera.id,
-                      )
-                        ? current.split
-                        : [...current.split, camera];
-                      clone[id!] = current;
-                      setRoomDictionary(clone);
-                    }
-                  }
-                  if (screenType === "single") {
-                    if (clickOption === "available") {
-                      current.single = camera;
-                      clone[id!] = current;
-                      setRoomDictionary(clone);
-                    }
-                    if (clickOption === "selected") {
-                      current.single = null;
-                      clone[id!] = current;
-                      setRoomDictionary(clone);
-                    }
-                  }
-                }}
+                onClick={handleClickCamera(clickOption, camera)}
                 name={camera.cameraName}
                 key={camera.id}
               />

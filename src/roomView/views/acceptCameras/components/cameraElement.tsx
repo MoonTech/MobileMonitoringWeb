@@ -35,12 +35,12 @@ const ClickContainer = styled.div<{ accept: boolean }>`
   }
   &:hover {
     background-color: ${(props) =>
-    props.accept ? props.theme.colors.green : props.theme.colors.red};
+      props.accept ? props.theme.colors.green : props.theme.colors.red};
     .icon {
       color: ${(props) =>
-    props.accept
-      ? props.theme.colors.greenDark
-      : props.theme.colors.redDark};
+        props.accept
+          ? props.theme.colors.greenDark
+          : props.theme.colors.redDark};
       font-size: 50px;
     }
   }
@@ -66,7 +66,7 @@ export const CameraElement = (props: CameraElementProps) => {
     <CameraElementContainer>
       <ClickContainer
         onClick={async () => {
-          await rejectCamera(props.id).catch(() => { });
+          await rejectCamera(props.id).catch(() => {});
           toast("Could not reject the camera", {
             position: "bottom-left",
             autoClose: 5000,

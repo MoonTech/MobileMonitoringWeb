@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import { useCache } from "../../contexts/dataCacheContext";
+import { useTheme } from "../../contexts/themeContext";
 import { useLogin } from "../../mutations/login";
 import {
   AuthorizationForm,
@@ -19,6 +21,7 @@ const Login: React.FC = () => {
   const { userData } = useCache();
   const { mutateAsync } = useLogin();
   const navigate = useNavigate();
+  const { theme } = useTheme();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,13 +29,18 @@ const Login: React.FC = () => {
     if (!name || !password) {
       setError("Please fill in all fields.");
     } else {
-      setName("");
-      setPassword("");
       try {
         await mutateAsync({ password, login: name });
+        setName("");
+        setPassword("");
         navigate("../room/add");
       } catch (error) {
-        setError("login failed. try again");
+        toast("Error occured while logging in", {
+          position: "bottom-left",
+          autoClose: 5000,
+          closeOnClick: true,
+          theme,
+        });
       }
     }
   };
@@ -59,8 +67,10 @@ const Login: React.FC = () => {
           />
           <Button type="submit">Submit</Button>
           <StyledLink to="/signup">Go to Sign up</StyledLink>
+          <StyledLink to="/room/add">Go back to monitoring</StyledLink>
         </AuthorizationForm>
       )}
+      <ToastContainer />
     </Container>
   );
 };

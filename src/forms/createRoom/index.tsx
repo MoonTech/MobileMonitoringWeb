@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import { useTheme } from "../../contexts/themeContext";
 import { useCreateRoom } from "../../mutations/createRoom";
 import {
   AuthorizationForm,
@@ -15,6 +17,7 @@ const CreateRoom: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const { mutateAsync } = useCreateRoom();
+  const { theme } = useTheme();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,14 +27,19 @@ const CreateRoom: React.FC = () => {
     } else if (password !== confirmPassword) {
       setError("Passwords do not match.");
     } else {
-      setError("");
-      setRoomName("");
-      setPassword("");
-      setConfirmPassword("");
       try {
         await mutateAsync({ name: roomName, password: password });
+        setError("");
+        setRoomName("");
+        setPassword("");
+        setConfirmPassword("");
       } catch {
-        setError("could not create room");
+        toast("Error occured while creating a room", {
+          position: "bottom-left",
+          autoClose: 5000,
+          closeOnClick: true,
+          theme,
+        });
       }
     }
   };
@@ -61,6 +69,7 @@ const CreateRoom: React.FC = () => {
         />
         <Button type="submit">Create Room</Button>
       </AuthorizationForm>
+      <ToastContainer />
     </Container>
   );
 };

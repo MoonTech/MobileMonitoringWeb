@@ -1,4 +1,6 @@
+import { useNavigate, useParams } from "react-router-dom";
 import { styled } from "styled-components";
+import { useRoomOptions } from "../../../contexts/roomOptionsContext";
 import { WatchCamera } from "../../../types/watchCamera";
 import { Camera } from "./components/camera";
 
@@ -12,11 +14,15 @@ const CameraGridContainer = styled.div`
   grid-row-gap: 10px;
 `;
 
-const CameraContainer = styled.div`
+const NotSelectedCameraContainer = styled.div`
+  color: ${(props) => props.theme.colors.cameraLight};
+  height: 40vh;
   background-color: ${(props) => props.theme.colors.cameraDark};
   border: 2px solid black;
   border-radius: 10px;
-  height: 40vh;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 `;
 
 const CameraOutside = styled.div`
@@ -30,6 +36,21 @@ export type SplitCameraProps = {
 };
 
 const SplitCamera = ({ cameras, isOwnedRoom }: SplitCameraProps) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { roomDictionary, setRoomDictionary } = useRoomOptions();
+
+  const redirectToSingle = (n: number) => {
+    return () => {
+      if (cameras.length <= n) return;
+      let clone = { ...roomDictionary };
+      let current = clone[id!]!;
+      current.single = cameras[n];
+      clone[id!] = current;
+      setRoomDictionary(clone);
+      navigate(`../../${id!}/single`);
+    };
+  };
   return (
     <CameraGridContainer>
       {Array.from({ length: 4 }, (_, index) => index).map((n) => (
@@ -40,9 +61,12 @@ const SplitCamera = ({ cameras, isOwnedRoom }: SplitCameraProps) => {
               name={cameras[n].cameraName}
               isOwnedRoom={isOwnedRoom}
               id={cameras[n].id}
+              onClick={redirectToSingle(n)}
             />
           ) : (
-            <CameraContainer />
+            <NotSelectedCameraContainer>
+              <h2>No camera selected</h2>
+            </NotSelectedCameraContainer>
           )}
         </CameraOutside>
       ))}
