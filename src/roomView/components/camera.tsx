@@ -1,92 +1,81 @@
 import { styled } from "styled-components";
+import { clickOption } from "..";
 import ReactFlvPlayer from "../../components/ReactFlvPlayer";
-import { useEndRecording } from "../mutations/endRecording";
-import { useStartRecording } from "../mutations/startRecording";
-import { useCheckCamera } from "../queries/getRecordigState";
-import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
-import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 
 export const CameraContainer = styled.div`
+  height: 250px;
+  max-height: 250px;
   background-color: ${(props) => props.theme.colors.cameraDark};
+  color: ${(props) => props.theme.colors.cameraLight};
   border: 2px solid black;
   border-radius: 10px;
-  height: 40vh;
 `;
 
-const BottomContainer = styled.div`
-  height: 5vh;
+const CameraBottomContainer = styled.div`
+  height: 50px;
   font-size: 30px;
   width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  color: ${(props) => props.theme.colors.cameraLight};
   background-color: ${(props) => props.theme.colors.cameraDarker};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-radius: 10px;
 `;
 
-const NameContainer = styled.div`
+const CameraNameContainer = styled.div`
   margin-left: 10px;
-  width: 100%;
 `;
 
-const RecordContainer = styled.div`
-  width: 30px;
-  height: 30px;
-  color: ${(props) => props.theme.colors.red};
-  border-radius: 15px;
-  transition: 0.2s all;
+const CameraInclusionContainer = styled.div`
+  height: 40px;
   margin-right: 10px;
-  font-size: 30px;
-  vertically-align: middle;
-  justify-text: center;
+  background-color: ${(props) => props.theme.colors.secondaryDark};
+  border-radius: 10px;
+  transition: 0.2s all;
   &:hover {
-    background-color: ${(props) => props.theme.colors.cameraDark};
+    background-color: ${(props) => props.theme.colors.secondary};
     cursor: pointer;
   }
+`;
+
+const SelectedContainer = styled.div`
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+`;
+
+const SelectedHeader = styled.h1`
+  flex: 1;
 `;
 
 export type CameraProps = {
   url: string;
   name: string;
-  id?: string;
   onClick?: any;
-  isOwnedRoom: boolean;
+  clickOption: clickOption;
 };
 
-export const Camera = ({
-  url,
-  name,
-  onClick,
-  id,
-  isOwnedRoom,
-}: CameraProps) => {
-  const end = useEndRecording(id ?? "");
-  const start = useStartRecording(id ?? "");
-  const check = useCheckCamera(id ?? "");
+export const Camera = ({ url, name, onClick, clickOption }: CameraProps) => {
   return (
-    <CameraContainer onClick={onClick}>
-      <ReactFlvPlayer url={url} height="35vh" width="100%" />
-      <BottomContainer>
-        <NameContainer>{name}</NameContainer>
-        {isOwnedRoom && (
-          <RecordContainer
-            onClick={() => {
-              if (check.response) {
-                start();
-              } else {
-                end();
-              }
-            }}
-          >
-            {check.response ? (
-              <RadioButtonCheckedIcon fontSize="inherit" />
-            ) : (
-              <RadioButtonUncheckedIcon fontSize="inherit" />
-            )}
-          </RecordContainer>
+    <CameraContainer>
+      {clickOption === "selected" ? (
+        <SelectedContainer>
+          <SelectedHeader>selected</SelectedHeader>
+        </SelectedContainer>
+      ) : (
+        <ReactFlvPlayer url={url} height="200px" width="100%" />
+      )}
+      <CameraBottomContainer>
+        <CameraNameContainer>{name}</CameraNameContainer>
+        {clickOption !== "none" && (
+          <CameraInclusionContainer onClick={onClick}>
+            {clickOption === "available" || clickOption === "unavailable"
+              ? "Select"
+              : "Remove"}
+          </CameraInclusionContainer>
         )}
-      </BottomContainer>
+      </CameraBottomContainer>
     </CameraContainer>
   );
 };

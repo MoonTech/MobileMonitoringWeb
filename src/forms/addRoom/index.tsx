@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import { useCache } from "../../contexts/dataCacheContext";
+import { useTheme } from "../../contexts/themeContext";
 import { useRoomToken } from "../../mutations/roomToken";
 import {
   AuthorizationForm,
@@ -16,6 +18,7 @@ const AddRoom: React.FC = () => {
   const [error, setError] = useState("");
   const { mutateAsync } = useRoomToken();
   const { list, setList } = useCache();
+  const { theme } = useTheme();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +36,12 @@ const AddRoom: React.FC = () => {
         });
         setList([...list, { name: roomName, accessToken: token }]);
       } catch {
-        setError("Could not add room");
+        toast("Error occured while observing a room", {
+          position: "bottom-left",
+          autoClose: 5000,
+          closeOnClick: true,
+          theme,
+        });
       }
     }
   };
@@ -57,6 +65,7 @@ const AddRoom: React.FC = () => {
         />
         <Button type="submit">Submit</Button>
       </AuthorizationForm>
+      <ToastContainer />
     </Container>
   );
 };

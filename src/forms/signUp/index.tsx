@@ -11,6 +11,8 @@ import {
   Input,
   StyledLink,
 } from "../components";
+import { toast, ToastContainer } from "react-toastify";
+import { useTheme } from "../../contexts/themeContext";
 
 const SignUp: React.FC = () => {
   const [name, setName] = useState("");
@@ -19,6 +21,7 @@ const SignUp: React.FC = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { mutateAsync } = useSignUp();
+  const { theme } = useTheme();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,14 +31,19 @@ const SignUp: React.FC = () => {
     } else if (password !== confirmPassword) {
       setError("Passwords do not match.");
     } else {
-      setName("");
-      setPassword("");
-      setConfirmPassword("");
       try {
         await mutateAsync({ password, login: name });
+        setName("");
+        setPassword("");
+        setConfirmPassword("");
         navigate("../room/add");
       } catch {
-        setError("Sign up failed, please try again");
+        toast("Error occured while signing in", {
+          position: "bottom-left",
+          autoClose: 5000,
+          closeOnClick: true,
+          theme,
+        });
       }
     }
   };
@@ -65,7 +73,9 @@ const SignUp: React.FC = () => {
         />
         <Button type="submit">Submit</Button>
         <StyledLink to="/login">Go to Login</StyledLink>
+        <StyledLink to="/room/add">Go back to monitoring</StyledLink>
       </AuthorizationForm>
+      <ToastContainer />
     </Container>
   );
 };
