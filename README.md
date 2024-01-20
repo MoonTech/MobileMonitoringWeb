@@ -1,6 +1,6 @@
 ## Mobile Mobitoring 
 An application designed mobile devices for monitoring.
-see [https://github.com/MoonTech/MobileMonitoringBackend](backend) and [mobile](https://github.com/MoonTech/MobileMonitoringMobile/) repositories.
+see [backend](https://github.com/MoonTech/MobileMonitoringBackend) and [mobile](https://github.com/MoonTech/MobileMonitoringMobile/) repositories.
 the site is available at http://161.35.206.64:3000/
 
 ## Available Scripts
