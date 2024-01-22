@@ -1,6 +1,8 @@
-# Getting Started with Create React App
+## Mobile Mobitoring 
+An application designed mobile devices for monitoring.
+see [backend](https://github.com/MoonTech/MobileMonitoringBackend) and [mobile](https://github.com/MoonTech/MobileMonitoringMobile/) repositories.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The site is available at http://161.35.206.64:3000/
 
 ## Available Scripts
 
