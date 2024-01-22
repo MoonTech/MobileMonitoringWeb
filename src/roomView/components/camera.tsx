@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import { clickOption } from "..";
 import ReactFlvPlayer from "../../components/ReactFlvPlayer";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export const CameraContainer = styled.div`
   height: 250px;
@@ -23,11 +24,14 @@ const CameraBottomContainer = styled.div`
 `;
 
 const CameraNameContainer = styled.div`
+  flex: 1;
   margin-left: 10px;
 `;
 
-const CameraInclusionContainer = styled.div`
+const ButtonContainer = styled.div`
   height: 40px;
+  flex: 1;
+  text-align: center;
   margin-right: 10px;
   background-color: ${(props) => props.theme.colors.secondaryDark};
   border-radius: 10px;
@@ -38,9 +42,14 @@ const CameraInclusionContainer = styled.div`
   }
 `;
 
+const DeleteButtonContainer = styled(ButtonContainer)`
+  font-size: 40px;
+`;
+
 const SelectedContainer = styled.div`
   height: 200px;
   display: flex;
+  flex: 1;
   justify-content: center;
   text-align: center;
 `;
@@ -52,11 +61,20 @@ const SelectedHeader = styled.h1`
 export type CameraProps = {
   url: string;
   name: string;
-  onClick?: any;
+  onClick: () => void;
+  onDelete?: () => void;
   clickOption: clickOption;
+  isOwnedRoom: boolean;
 };
 
-export const Camera = ({ url, name, onClick, clickOption }: CameraProps) => {
+export const Camera = ({
+  url,
+  name,
+  onClick,
+  onDelete,
+  clickOption,
+  isOwnedRoom,
+}: CameraProps) => {
   return (
     <CameraContainer>
       {clickOption === "selected" ? (
@@ -69,11 +87,16 @@ export const Camera = ({ url, name, onClick, clickOption }: CameraProps) => {
       <CameraBottomContainer>
         <CameraNameContainer>{name}</CameraNameContainer>
         {clickOption !== "none" && (
-          <CameraInclusionContainer onClick={onClick}>
+          <ButtonContainer onClick={onClick}>
             {clickOption === "available" || clickOption === "unavailable"
               ? "Select"
               : "Remove"}
-          </CameraInclusionContainer>
+          </ButtonContainer>
+        )}
+        {isOwnedRoom && (
+          <DeleteButtonContainer onClick={onDelete}>
+            <DeleteIcon fontSize="inherit" />
+          </DeleteButtonContainer>
         )}
       </CameraBottomContainer>
     </CameraContainer>

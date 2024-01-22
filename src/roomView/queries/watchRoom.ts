@@ -1,11 +1,13 @@
 import { useQuery } from "react-query";
-import { useCache } from "../../contexts/dataCacheContext";
+import { useList } from "../../contexts/listDataContext";
+import { useUserData } from "../../contexts/userDataContext";
 import { SERVER_URL } from "../../serverUrl";
 import { WatchRoomRequest } from "../../types/watchRoomRequest";
 import { WatchRoomResponse } from "../../types/watchRoomResponse";
 
 export const useWatchRoom = (roomName: string) => {
-  const { userData, list } = useCache();
+  const { userData } = useUserData();
+  const { list } = useList();
   const roomIndex = list.findIndex((el) => el.name === roomName);
   const query = useQuery<WatchRoomResponse>(`watch-room-` + roomName, () =>
     fetch(SERVER_URL + "room/watch", {

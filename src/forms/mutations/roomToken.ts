@@ -1,7 +1,7 @@
 import { useMutation } from "react-query";
-import { SERVER_URL } from "../serverUrl";
-import { PostRoomTokenRequest } from "../types/postRoomTokenRequest";
-import { PostRoomTokenResponse } from "../types/postRoomTokenResponse";
+import { SERVER_URL } from "../../serverUrl";
+import { PostRoomTokenRequest } from "../../types/postRoomTokenRequest";
+import { PostRoomTokenResponse } from "../../types/postRoomTokenResponse";
 
 export const useRoomToken = () => {
   const { mutateAsync, isError } = useMutation<

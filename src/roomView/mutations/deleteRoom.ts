@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from "react-query";
-import { useCache } from "../../contexts/dataCacheContext";
+import { useUserData } from "../../contexts/userDataContext";
 import { SERVER_URL } from "../../serverUrl";
 
 export const useDeleteRoom = (roomName: string) => {
-  const { userData } = useCache();
+  const { userData } = useUserData();
   const queryClient = useQueryClient();
   const { mutateAsync, isError } = useMutation(
     async () =>

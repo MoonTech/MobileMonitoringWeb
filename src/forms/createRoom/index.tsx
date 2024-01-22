@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { useTheme } from "../../contexts/themeContext";
-import { useCreateRoom } from "../../mutations/createRoom";
+import { useCreateRoom } from "../mutations/createRoom";
 import {
   AuthorizationForm,
   Button,

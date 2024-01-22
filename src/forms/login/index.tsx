@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { useCache } from "../../contexts/dataCacheContext";
 import { useTheme } from "../../contexts/themeContext";
-import { useLogin } from "../../mutations/login";
+import { useLogin } from "../mutations/login";
 import {
   AuthorizationForm,
   Button,
@@ -13,12 +12,13 @@ import {
   Input,
   StyledLink,
 } from "../components";
+import { useUserData } from "../../contexts/userDataContext";
 
 const Login: React.FC = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { userData } = useCache();
+  const { userData } = useUserData();
   const { mutateAsync } = useLogin();
   const navigate = useNavigate();
   const { theme } = useTheme();

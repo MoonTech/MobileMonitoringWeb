@@ -18,7 +18,6 @@ import SingleCamera from "./views/singleCamera";
 import SplitCamera from "./views/splitCamera";
 import AcceptCameras from "./views/acceptCameras";
 import { useWatchRoom } from "./queries/watchRoom";
-import { useCache } from "../contexts/dataCacheContext";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { useDeleteRoom } from "./mutations/deleteRoom";
 import { toast, ToastContainer } from "react-toastify";
@@ -33,6 +32,9 @@ import { useState } from "react";
 import DeleteConfirmationPopup from "./components/deleteConfirmationPopup";
 import { WatchCamera } from "../types/watchCamera";
 import { Camera } from "./components/camera";
+import { useList } from "../contexts/listDataContext";
+import { useUserData } from "../contexts/userDataContext";
+import { useRejectCamera } from "./mutations/rejectCamera";
 
 export type clickOption = "none" | "unavailable" | "available" | "selected";
 
@@ -68,11 +70,13 @@ export const RoomView = () => {
   const screenType = location.pathname.split("/").at(-1);
   const cameras = useWatchRoom(id!);
   const { theme } = useTheme();
-  const { userData, list, setList } = useCache();
+  const { list, setList } = useList();
+  const { userData } = useUserData();
   const { roomDictionary, setRoomDictionary } = useRoomOptions();
   const navigate = useNavigate();
   const isOwnedRoom = !list.some((room) => room.name === id);
-  const { mutateAsync } = useDeleteRoom(id as string);
+  const { mutateAsync: deleteRoom } = useDeleteRoom(id as string);
+  const deleteCamera = useRejectCamera(id as string);
   if (roomDictionary[id!] === undefined) {
     roomDictionary[id!] = { split: [], single: null };
     setRoomDictionary(roomDictionary);
@@ -89,12 +93,35 @@ export const RoomView = () => {
     setConfirmationPopupOpen(false);
   };
 
+  const handleCameraDelete = (cameraId: string) => {
+    return async () => {
+      if (!isOwnedRoom) return;
+      let clone = { ...roomDictionary };
+      let current = clone[id!]!;
+      current.split = current.split.filter((cam) => cam.id !== cameraId);
+      if (current.single?.id === cameraId) current.single = null;
+      await deleteCamera(cameraId)
+        .catch(() => {
+          toast("Could not delete the camera", {
+            position: "bottom-left",
+            autoClose: 5000,
+            closeOnClick: true,
+            theme,
+          });
+        })
+        .finally(() => {
+          clone[id!] = current;
+          setRoomDictionary(clone);
+        });
+    };
+  };
+
   const handleConfirmDelete = async () => {
     setConfirmationPopupOpen(false);
 
     if (isOwnedRoom) {
       try {
-        await mutateAsync();
+        await deleteRoom();
         navigate("../add");
       } catch {
         toast("Could not delete a room", {
@@ -244,6 +271,8 @@ export const RoomView = () => {
                 onClick={handleClickCamera(clickOption, camera)}
                 name={camera.cameraName}
                 key={camera.id}
+                isOwnedRoom={isOwnedRoom}
+                onDelete={handleCameraDelete(camera.id)}
               />
             );
           })}

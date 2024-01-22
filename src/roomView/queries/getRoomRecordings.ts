@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { useCache } from "../../contexts/dataCacheContext";
+import { useUserData } from "../../contexts/userDataContext";
 import { SERVER_URL } from "../../serverUrl";
 import { Recording } from "../../types/getRecordingsReponse";
 
@@ -7,8 +7,8 @@ export const useGetRoomRecordings = (
   roomName: string,
   token: string | null,
 ) => {
-  const { userData } = useCache();
-  const query = useQuery<Recording[]>(`room-recordings-` + roomName, () =>
+  const { userData } = useUserData();
+  const query = useQuery<Recording[]>("recordings-" + roomName, () =>
     fetch(SERVER_URL + "room/recordings/" + roomName, {
       method: "GET",
       headers: {

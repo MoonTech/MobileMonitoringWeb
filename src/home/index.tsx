@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import AddRoom from "../forms/addRoom";
-import { useCache } from "../contexts/dataCacheContext";
 import AddIcon from "@mui/icons-material/Add";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { RoomView } from "../roomView";
@@ -8,6 +7,8 @@ import CreateRoom from "../forms/createRoom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useGetMyRooms } from "../queries/myRooms";
 import { Room } from "../types/room";
+import { useList } from "../contexts/listDataContext";
+import { useUserData } from "../contexts/userDataContext";
 
 const Bar = styled.div`
   background-color: ${(props) => props.theme.colors.primaryLight};
@@ -84,6 +85,7 @@ const NewRoomElement = (props: AddRoomElementProps) => {
 const AddRoomElementContainer = styled.div`
   width: 50px;
   height: 50px;
+  color: ${(props) => props.theme.colors.primaryDark};
   border-radius: 25px;
   padding: auto;
   display: flex;
@@ -103,7 +105,8 @@ const Container = styled.div`
 `;
 
 const Home = () => {
-  const { list, setList, userData } = useCache();
+  const { list, setList } = useList();
+  const { userData } = useUserData();
   const myRooms = useGetMyRooms();
   const roomsMapped =
     myRooms.isLoading || myRooms.isError || userData === null

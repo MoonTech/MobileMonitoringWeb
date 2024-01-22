@@ -4,13 +4,14 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import GlobalStyle from "./styles/global";
 import Header from "./components/header";
 import Home from "./home";
-import { DataCacheProvider } from "./contexts/dataCacheContext";
 import { RoomOptionsProvider } from "./contexts/roomOptionsContext";
 import SignUp from "./forms/signUp";
 import Login from "./forms/login";
 import { lightTheme } from "./styles/themes/light";
 import { darkTheme } from "./styles/themes/dark";
 import { ThemeSettingProvider, useTheme } from "./contexts/themeContext";
+import { ListDataProvider } from "./contexts/listDataContext";
+import { UserDataProvider } from "./contexts/userDataContext";
 
 const ThemedApp = () => {
   const { theme } = useTheme();
@@ -18,22 +19,24 @@ const ThemedApp = () => {
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <GlobalStyle />
       <QueryClientProvider client={new QueryClient()}>
-        <DataCacheProvider>
-          <RoomOptionsProvider>
-            <Container>
-              <Header />
-              <Content>
-                <Routes>
-                  <Route path="/room/*" element={<Home />} />
-                  <Route path="" element={<Navigate to="room/add" />} />
-                  <Route path="signup" element={<SignUp />} />
-                  <Route path="login" element={<Login />} />
-                  <Route path="*" element={<h1>404</h1>} />
-                </Routes>
-              </Content>
-            </Container>
-          </RoomOptionsProvider>
-        </DataCacheProvider>
+        <UserDataProvider>
+          <ListDataProvider>
+            <RoomOptionsProvider>
+              <Container>
+                <Header />
+                <Content>
+                  <Routes>
+                    <Route path="/room/*" element={<Home />} />
+                    <Route path="" element={<Navigate to="room/add" />} />
+                    <Route path="signup" element={<SignUp />} />
+                    <Route path="login" element={<Login />} />
+                    <Route path="*" element={<h1>404</h1>} />
+                  </Routes>
+                </Content>
+              </Container>
+            </RoomOptionsProvider>
+          </ListDataProvider>
+        </UserDataProvider>
       </QueryClientProvider>
     </ThemeProvider>
   );

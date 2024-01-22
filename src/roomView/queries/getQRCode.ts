@@ -1,9 +1,9 @@
 import { useQuery } from "react-query";
-import { useCache } from "../../contexts/dataCacheContext";
+import { useUserData } from "../../contexts/userDataContext";
 import { SERVER_URL } from "../../serverUrl";
 
 export const useGetQRCode = (roomName: string) => {
-  const { userData } = useCache();
+  const { userData } = useUserData();
   const query = useQuery(`qr` + roomName, () =>
     fetch(SERVER_URL + "room/qrCode/" + roomName, {
       method: "GET",

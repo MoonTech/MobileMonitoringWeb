@@ -9,6 +9,7 @@ const MainCameraContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: ${(props) => props.theme.colors.backgroundFont};
 `;
 
 const InnerContainer = styled.div`

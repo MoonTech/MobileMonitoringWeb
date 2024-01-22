@@ -3,9 +3,9 @@ import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
-import { useCache } from "../contexts/dataCacheContext";
 import { Link } from "react-router-dom";
 import { useTheme } from "../contexts/themeContext";
+import { useUserData } from "../contexts/userDataContext";
 
 const Container = styled.div`
   display: flex;
@@ -42,7 +42,7 @@ const HeaderButton = styled.div`
 `;
 
 const Header: React.FC = () => {
-  const { userData, setUserData } = useCache();
+  const { userData, setUserData } = useUserData();
   const { theme, setTheme } = useTheme();
   return (
     <Container>

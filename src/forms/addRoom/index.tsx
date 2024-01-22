@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import { useCache } from "../../contexts/dataCacheContext";
 import { useTheme } from "../../contexts/themeContext";
-import { useRoomToken } from "../../mutations/roomToken";
+import { useRoomToken } from "../mutations/roomToken";
 import {
   AuthorizationForm,
   Button,
@@ -11,13 +10,14 @@ import {
   Header,
   Input,
 } from "../components";
+import { useList } from "../../contexts/listDataContext";
 
 const AddRoom: React.FC = () => {
   const [roomName, setRoomName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { mutateAsync } = useRoomToken();
-  const { list, setList } = useCache();
+  const { list, setList } = useList();
   const { theme } = useTheme();
 
   const handleSubmit = async (e: React.FormEvent) => {

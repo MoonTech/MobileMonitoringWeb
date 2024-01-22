@@ -1,12 +1,12 @@
 import { useMutation } from "react-query";
-import { useCache } from "../../contexts/dataCacheContext";
+import { useUserData } from "../../contexts/userDataContext";
 import { SERVER_URL } from "../../serverUrl";
 
 export const useDownloadRecording = (
   recordingName: string,
   token: string | null,
 ) => {
-  const { userData } = useCache();
+  const { userData } = useUserData();
 
   const { mutateAsync } = useMutation(
     async () => {

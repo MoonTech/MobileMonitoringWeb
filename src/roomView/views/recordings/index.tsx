@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
 import { useParams } from "react-router-dom";
 import { useGetRoomRecordings } from "../../queries/getRoomRecordings";
-import { useCache } from "../../../contexts/dataCacheContext";
 import { RecordingElement } from "./components/recordingElement";
+import { useList } from "../../../contexts/listDataContext";
 
 const Content = styled.div`
   width: 100%;
@@ -31,7 +31,7 @@ export type RecordingsProps = {
 export const Recordings = ({ token }: RecordingsProps) => {
   const { id } = useParams();
   const recordings = useGetRoomRecordings(id as string, token ?? null);
-  const { list } = useCache();
+  const { list } = useList();
   const isOwnedRoom = !list.some((room) => room.name === id);
 
   return (

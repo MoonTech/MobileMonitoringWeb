@@ -1,18 +1,18 @@
 import { useMutation } from "react-query";
-import { useCache } from "../contexts/dataCacheContext";
-import { SERVER_URL } from "../serverUrl";
-import { LoginResponse } from "../types/loginResponse";
-import { SignUpRequest } from "../types/signUpRequest";
+import { useUserData } from "../../contexts/userDataContext";
+import { SERVER_URL } from "../../serverUrl";
+import { LoginRequest } from "../../types/loginRequest";
+import { LoginResponse } from "../../types/loginResponse";
 
-export const useSignUp = () => {
-  const { setUserData } = useCache();
+export const useLogin = () => {
+  const { setUserData } = useUserData();
   const { mutateAsync, isError } = useMutation<
     LoginResponse,
     unknown,
-    SignUpRequest
+    LoginRequest
   >(
-    async (request: SignUpRequest) =>
-      fetch(SERVER_URL + "user", {
+    async (request) =>
+      fetch(SERVER_URL + "user/login", {
         method: "POST",
         body: JSON.stringify(request),
         headers: {
@@ -28,10 +28,11 @@ export const useSignUp = () => {
       onSuccess: ({ accessToken }, { login }) => {
         setUserData({ name: login, token: accessToken });
       },
-      onError: async (error) => {
+      onError: (error) => {
         console.log(error);
       },
     },
   );
-  return { mutateAsync, isError };
+
+  return { mutateAsync, isError: isError as boolean };
 };

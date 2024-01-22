@@ -1,10 +1,10 @@
 import { useQuery } from "react-query";
-import { useCache } from "../contexts/dataCacheContext";
+import { useUserData } from "../contexts/userDataContext";
 import { SERVER_URL } from "../serverUrl";
 import { GetMyRoomsResponse } from "../types/getMyRoomsResponse";
 
 export const useGetMyRooms = () => {
-  const { userData } = useCache();
+  const { userData } = useUserData();
   const query = useQuery<GetMyRoomsResponse>(
     `myRooms`,
     () =>

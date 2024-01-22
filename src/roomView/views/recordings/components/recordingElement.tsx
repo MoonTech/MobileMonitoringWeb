@@ -5,6 +5,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DownloadIcon from "@mui/icons-material/Download";
 import { useDeleteRecording } from "../../../mutations/deleteRecording";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 
 const CameraElementContainer = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -49,8 +50,9 @@ export const RecordingElement = ({
   isOwnedRoom,
 }: RecordingElementProps) => {
   const { theme } = useTheme();
+  const { id } = useParams();
   const downloadRecording = useDownloadRecording(recordingName, token ?? null);
-  const { mutateAsync } = useDeleteRecording(recordingName);
+  const { mutateAsync } = useDeleteRecording(id!);
   return (
     <CameraElementContainer>
       <MiddleContainer>
@@ -73,7 +75,7 @@ export const RecordingElement = ({
       {isOwnedRoom && (
         <ClickContainer
           onClick={async () => {
-            await mutateAsync().catch(() => {
+            await mutateAsync(recordingName).catch(() => {
               toast("Could not delete the recording", {
                 position: "bottom-left",
                 autoClose: 5000,

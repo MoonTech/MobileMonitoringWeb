@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from "react-query";
-import { useCache } from "../contexts/dataCacheContext";
-import { SERVER_URL } from "../serverUrl";
-import { PostRoomRequest } from "../types/postRoomRequest";
-import { PostRoomResponse } from "../types/postRoomResponse";
+import { useUserData } from "../../contexts/userDataContext";
+import { SERVER_URL } from "../../serverUrl";
+import { PostRoomRequest } from "../../types/postRoomRequest";
+import { PostRoomResponse } from "../../types/postRoomResponse";
 
 export const useCreateRoom = () => {
-  const { userData } = useCache();
+  const { userData } = useUserData();
   const queryClient = useQueryClient();
   const { mutateAsync, isError } = useMutation<
     PostRoomResponse,
